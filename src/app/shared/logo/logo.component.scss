@@ -1,0 +1,19 @@
+@import "../../../styles/palette";
+
+.brand-title {
+  font-size: 25px;
+  color: $primary-color;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.logobar {
+  display: flex;
+  flex-direction: row;
+  color: #fff;
+
+  .logo {
+    width: 25px;
+  }
+}
+

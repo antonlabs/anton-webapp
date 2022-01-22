@@ -1,0 +1,8 @@
+@import "palette";
+
+.alert {
+  padding: 10px;
+  background: $primary-danger;
+  border-radius: 5px;
+  color: #fff;
+}

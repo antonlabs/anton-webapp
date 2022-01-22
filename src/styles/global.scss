@@ -1,0 +1,119 @@
+@import "palette";
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  font-family: 'IBM Plex Sans', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: $primary-color-dark;
+  font-size: 15px;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+.bg-primary {
+  background: $primary-color;
+  color: $primary-color-text;
+}
+
+.bg-danger {
+  background: $primary-danger;
+  color: $primary-color-text;
+}
+
+.bg-active {
+  background: $primary-active;
+  color: $primary-color-text;
+}
+
+.primary {
+  color: $primary-color;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  &.center {
+    justify-content: center;
+  }
+  &.end{
+    justify-content: end;
+  }
+  &.between {
+    justify-content: space-between;
+  }
+  &.space {
+    justify-content: space-around;
+  }
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  &.center {
+    justify-content: center;
+  }
+  &.end{
+    justify-content: end;
+  }
+  &.between {
+    justify-content: space-between;
+  }
+}
+
+$margins: 1em, 2em, 3em, 4em, 5em;
+$marginsPixels: 10px, 20px, 30px, 40px, 50px;
+
+@each $size in $margins {
+  .mt-#{$size} {
+    margin-top: $size;
+  }
+  .ml-#{$size} {
+    margin-left: $size;
+  }
+  .mr-#{$size} {
+    margin-right: $size;
+  }
+  .mb-#{$size} {
+    margin-bottom: $size;
+  }
+}
+
+@each $size in $marginsPixels {
+  .mt-#{$size} {
+    margin-top: $size;
+  }
+  .ml-#{$size} {
+    margin-left: $size;
+  }
+  .mr-#{$size} {
+    margin-right: $size;
+  }
+  .mb-#{$size} {
+    margin-bottom: $size;
+  }
+}
+
+
+.w-100 {
+  width: 100%;
+}
+
+@media(min-width: 768px){
+  .desktop-only{
+    display: block;
+  }
+  .mobile-only{
+    display: none;
+  }
+}
+

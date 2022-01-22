@@ -1,0 +1,15 @@
+@import "../../../styles/palette";
+
+.menu-bar {
+  width: 100%;
+  max-height: 70px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  background: $primary-color-dark;
+}
+
+.content {
+  height: calc(100% - 70px);
+  overflow: auto;
+}

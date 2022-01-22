@@ -1,0 +1,9 @@
+.auth-methods {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .method {
+    transition: .3s ease padding;
+  }
+}

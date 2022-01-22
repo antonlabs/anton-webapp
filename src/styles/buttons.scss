@@ -1,0 +1,42 @@
+@import "palette";
+
+.anton-button {
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0 1px 0;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+
+  &.icon {
+    background: transparent!important;
+    color: $primary-color-dark;
+    box-shadow: none;
+    padding: 0;
+    height: 0;
+  }
+
+  &.no-back {
+    background: transparent!important;
+    box-shadow: none;
+    color: $primary-color;
+  }
+
+  &.primary {
+    background-color: $primary-color;
+    color: $primary-color-text;
+  }
+  &.danger {
+    background-color: $primary-danger;
+    color: $primary-danger-text;
+  }
+  &.active {
+    background-color: $primary-active;
+    color: $primary-active-text;
+  }
+
+  &.disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,8 @@
+<div class="login">
+  <h1 i18n>Anton wallets login</h1>
+  <h5 i18n>Welcome back colleague! Login with to check your journey’s status</h5>
+  <app-auth-methods (method)="currentMethod = $event"></app-auth-methods>
+  <app-email-login *ngIf="currentMethod === 'email'"></app-email-login>
+  <app-telegram-login *ngIf="currentMethod === 'telegram'"></app-telegram-login>
+  <app-phone-login *ngIf="currentMethod === 'phone'"></app-phone-login>
+</div>

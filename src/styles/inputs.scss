@@ -1,0 +1,26 @@
+@import "./palette";
+
+.anton-input {
+  padding: 10px;
+  font-size: 20px;
+  border: 1px solid #C4C4C4;
+  border-radius: 3px;
+  background: #fff;
+
+  &.dashed {
+    border: none;
+    background: transparent;
+    border-bottom: dashed $primary-color;
+  }
+
+  &:active, &:focus {
+    outline: none;
+  }
+}
+
+@media only screen and (max-width: 768px) { //mobile
+  .anton-input {
+    font-size: 14px;
+  }
+}
+

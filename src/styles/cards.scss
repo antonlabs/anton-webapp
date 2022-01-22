@@ -1,0 +1,21 @@
+@import "palette";
+
+.card-plain {
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+
+  h1 {
+    font-size: 50px;
+  }
+  h2 {
+    padding-bottom: 20px;
+    font-size: 25px;
+  }
+  h5, p {
+    color: #9f9f9f;
+  }
+  h5 {
+    font-size: 20px;
+  }
+}

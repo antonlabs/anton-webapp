@@ -1,0 +1,11 @@
+<div class="auth-methods">
+  <button (click)="setMethod('email')" class="anton-button method {{currentMethod === 'email' ? 'primary' : 'no-back'}}" i18n>
+    Email
+  </button>
+  <button (click)="setMethod('telegram')" class="anton-button method {{currentMethod === 'telegram' ? 'primary' : 'no-back'}}" i18n>
+    Telegram
+  </button>
+  <button (click)="setMethod('phone')" class="anton-button method {{currentMethod === 'phone' ? 'primary' : 'no-back'}}" i18n>
+    Phone
+  </button>
+</div>
