@@ -1,1 +1,8 @@
-<p>phone-login works!</p>
+<form class='form mt-20px' [formGroup]="form">
+  <label i18n>Phone</label>
+  <input type="email" class="anton-input mt-10px" />
+  <label class="mt-10px" i18n>Password</label>
+  <input type="password" class="anton-input mt-10px" />
+  <button class="anton-button primary mt-10px" i18n>Login</button>
+  <a class="primary mt-10px" [routerLink]="['..', 'recover']" [queryParams]="{user: form.value.phone}" i18n>Forgot password?</a>
+</form>

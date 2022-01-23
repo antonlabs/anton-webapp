@@ -18,6 +18,10 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "@ng-icons/core": "^13.3.0",
+    "@ng-icons/jam-icons": "^13.3.0",
+    "@ng-icons/material-icons": "^13.3.0",
+    "lightweight-charts": "^3.7.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

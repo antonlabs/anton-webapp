@@ -20,6 +20,10 @@ a {
   }
 }
 
+li {
+  list-style: none;
+}
+
 .bg-primary {
   background: $primary-color;
   color: $primary-color-text;

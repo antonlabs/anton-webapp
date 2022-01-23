@@ -9,6 +9,11 @@ import { AuthMethodsComponent } from './auth-methods/auth-methods.component';
 import { EmailLoginComponent } from './login/email-login/email-login.component';
 import { TelegramLoginComponent } from './login/telegram-login/telegram-login.component';
 import { PhoneLoginComponent } from './login/phone-login/phone-login.component';
+import {NgIconsModule} from "@ng-icons/core";
+import { SendRecoveryMailComponent } from './challenges/send-recovery-mail/send-recovery-mail.component';
+import { RecoveryPasswordFallbackComponent } from './challenges/recovery-password-fallback/recovery-password-fallback.component';
+import { MfaRequiredComponent } from './challenges/mfa-required/mfa-required.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -18,12 +23,17 @@ import { PhoneLoginComponent } from './login/phone-login/phone-login.component';
     AuthMethodsComponent,
     EmailLoginComponent,
     TelegramLoginComponent,
-    PhoneLoginComponent
+    PhoneLoginComponent,
+    SendRecoveryMailComponent,
+    RecoveryPasswordFallbackComponent,
+    MfaRequiredComponent
   ],
   imports: [
     SharedModule,
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    NgIconsModule,
+    ReactiveFormsModule
   ]
 })
 export class AuthModule { }

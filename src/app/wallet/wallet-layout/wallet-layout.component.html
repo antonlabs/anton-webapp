@@ -1,1 +1,17 @@
-<p>wallet-layout works!</p>
+<div class="wallet-layout">
+  <div class="menu-bar">
+    <app-logo></app-logo>
+  </div>
+  <div class="content">
+    <div class="sidebar">
+      <nav>
+        <li id="overview-menu" [class]="liClass('overview')" i18n>Overview</li>
+        <li id="orders-menu" [class]="liClass('orders')" i18n>Orders</li>
+        <li id="strategy-menu" [class]="liClass('strategy')" i18n>Strategy</li>
+        <li id="settings-menu" [class]="liClass('settings')" i18n>Settings</li>
+        <li id="errors-menu" [class]="liClass('errors')" i18n>Errors</li>
+      </nav>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

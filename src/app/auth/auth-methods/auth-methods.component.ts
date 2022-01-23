@@ -1,4 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 
 export type method = 'email' | 'telegram' | 'phone';
 
@@ -9,18 +10,17 @@ export type method = 'email' | 'telegram' | 'phone';
 })
 export class AuthMethodsComponent implements OnInit {
 
+  @Input()
   currentMethod: method = 'email';
 
-  @Output() method: EventEmitter<method> = new EventEmitter<method>();
-
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   setMethod(method: method) {
     this.currentMethod = method;
-    this.method.emit(method);
+    this.router.navigate(['/auth', method]);
   }
 
 }

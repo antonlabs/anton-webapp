@@ -1,0 +1,16 @@
+<div class="send-recovery-mail">
+  <a class="primary" [routerLink]="['..']">
+    <ng-icon class="mt-10px" name="jam-arrow-circle-left-f"></ng-icon>
+  </a>
+  <h1 i18n>Send recovery mail</h1>
+  <h5 i18n>If you have forgotten your password and you want to recover it, write up your mail / phone</h5>
+
+  <form class='form mt-20px' [formGroup]="form">
+    <label i18n>Email or Phone</label>
+    <input type="text" class="anton-input mt-10px" />
+    <button class="anton-button primary mt-10px" i18n>Recover</button>
+  </form>
+</div>
+
+
+

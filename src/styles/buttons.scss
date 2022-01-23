@@ -22,6 +22,14 @@
     color: $primary-color;
   }
 
+  &.telegram {
+    color: #fff;
+    background: #229ED9;
+    ng-icon {
+      transform: translateY(3px);
+    }
+  }
+
   &.primary {
     background-color: $primary-color;
     color: $primary-color-text;
