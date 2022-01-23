@@ -3,4 +3,23 @@
 .wallet-overview {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .counters, .history {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-evenly;
+    padding-left: 15px;
+  }
+
+  .counters {
+    flex: 1;
+  }
+
+  .history {
+    flex: 3;
+  }
+
 }

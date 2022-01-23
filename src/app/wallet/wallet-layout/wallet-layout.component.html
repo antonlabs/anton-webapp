@@ -2,7 +2,7 @@
   <div class="menu-bar">
     <app-logo></app-logo>
   </div>
-  <div class="content">
+  <div class="content-wrapper">
     <div class="sidebar">
       <nav>
         <li id="overview-menu" [class]="liClass('overview')" i18n>Overview</li>
@@ -12,6 +12,8 @@
         <li id="errors-menu" [class]="liClass('errors')" i18n>Errors</li>
       </nav>
     </div>
-    <router-outlet></router-outlet>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

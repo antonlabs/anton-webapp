@@ -1,16 +1,19 @@
 @import "palette";
 
 .card-plain {
-  padding: 20px;
-  background: #fff;
-  border-radius: 10px;
+  padding: 10px;
+  background: #2F2F2F;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 
   h1 {
-    font-size: 50px;
+    font-size: 25px;
+    color: $primary-color;
   }
   h2 {
-    padding-bottom: 20px;
-    font-size: 25px;
+    padding-bottom: 15px;
+    font-size: 20px;
+    color: #fff;
   }
   h5, p {
     color: #9f9f9f;
