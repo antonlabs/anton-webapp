@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {method} from "../auth-methods/auth-methods.component";
-import {ActivatedRoute, Router} from "@angular/router";
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
+import {ReCaptchaV3Service} from "ng-recaptcha";
+import {AuthService} from "../auth.service";
+import {Form} from "../form";
 
 @Component({
   selector: 'app-login',
@@ -10,24 +11,20 @@ import {AntiMemLeak} from "../../shared/anti-mem-leak";
 })
 export class LoginComponent extends AntiMemLeak implements OnInit {
 
-  currentMethod: method = this.router.url.split('/').slice(-1)[0] as method;
-
   constructor(
-    private activatedRouter: ActivatedRoute,
-    private router: Router
-  ) {
-    super();
+    private recaptchaV3Service: ReCaptchaV3Service,
+    private authService: AuthService
+  ) {super();}
+
+  ngOnInit(): void {}
+
+  onMountChild(component: Form) {
+    component?.submit.subscribe((val) => this.login(val));
   }
 
-  ngOnInit(): void {
-    console.log();
-    this.sub.add(this.activatedRouter.url.subscribe(url => {
-      if(url[url.length - 1]) {
-        this.currentMethod = url[url.length - 1].path as method;
-      }
-    }));
+  public login(data: any): void {
+    this.authService.login(data.user, data.password);
   }
-
 
 
 }

@@ -1,25 +1,114 @@
 @import "../../../styles/palette";
 
+
+.card-plain {
+  img {
+    width: 20%;
+    max-width: 200px;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+
 .wallet-overview {
-  width: 100%;
-  height: 100%;
+  height: calc(100% - 100px);
+  padding: 15px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 
-  .counters, .history {
+  .reports, .controls {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    justify-content: space-evenly;
-    padding-left: 15px;
   }
 
-  .counters {
-    flex: 1;
-  }
-
-  .history {
+  .reports {
     flex: 3;
+    .journey, .orders {
+      margin: 10px;
+      flex: 1;
+    }
+
+    .orders {
+      h2 {
+        text-align: center;
+      }
+    }
+
+    .journey {
+      padding: 15px;
+      border-radius: 5px;
+      background: $secondary-color-light;
+      h2 {
+        color: $primary-color;
+      }
+    }
   }
 
+  .controls {
+    flex: 1;
+    .blacklist-panel {
+      margin: 10px;
+      flex: 5;
+      overflow: hidden;
+      white-space: normal;
+    }
+    .counters {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex: 1;
+
+      .counter {
+        margin: 10px;
+        flex: 1;
+        text-align: center;
+        max-height: 200px;
+        h2, h5 {
+          margin: 0;
+        }
+        h2 {
+          font-size: 30px;
+        }
+        h5 {
+          font-size: 28px;
+          font-weight: bold;
+          color: $primary-active;
+        }
+      }
+    }
+
+    .settings {
+      margin: 10px;
+      flex: 5;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      form {
+        margin-right: 10px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 2;
+        div {
+          label {
+            display: block;
+          }
+        }
+        .save {
+          position: relative;
+          bottom: 0;
+        }
+      }
+
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) { //mobile
+  .wallet-overview {
+    flex-direction: column;
+  }
 }

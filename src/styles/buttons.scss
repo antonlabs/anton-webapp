@@ -25,6 +25,8 @@
   &.telegram {
     color: #fff;
     background: #229ED9;
+    height: 40px;
+    transform: translateY(25%);
     ng-icon {
       transform: translateY(3px);
     }

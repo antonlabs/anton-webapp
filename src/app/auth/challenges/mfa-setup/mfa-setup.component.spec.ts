@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TelegramLoginComponent } from './telegram-login.component';
+import { MfaSetupComponent } from './mfa-setup.component';
 
-describe('TelegramLoginComponent', () => {
-  let component: TelegramLoginComponent;
-  let fixture: ComponentFixture<TelegramLoginComponent>;
+describe('MfaSetupComponent', () => {
+  let component: MfaSetupComponent;
+  let fixture: ComponentFixture<MfaSetupComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TelegramLoginComponent ]
+      declarations: [ MfaSetupComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TelegramLoginComponent);
+    fixture = TestBed.createComponent(MfaSetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

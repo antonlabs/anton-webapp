@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PhoneLoginComponent } from './phone-login.component';
+import { VerifyFallbackComponent } from './verify-fallback.component';
 
-describe('PhoneLoginComponent', () => {
-  let component: PhoneLoginComponent;
-  let fixture: ComponentFixture<PhoneLoginComponent>;
+describe('VerifyFallbackComponent', () => {
+  let component: VerifyFallbackComponent;
+  let fixture: ComponentFixture<VerifyFallbackComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PhoneLoginComponent ]
+      declarations: [ VerifyFallbackComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PhoneLoginComponent);
+    fixture = TestBed.createComponent(VerifyFallbackComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

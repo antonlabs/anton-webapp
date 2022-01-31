@@ -5,6 +5,8 @@ import { WalletRoutingModule } from './wallet-routing.module';
 import { WalletLayoutComponent } from './wallet-layout/wallet-layout.component';
 import { WalletOverviewComponent } from './wallet-overview/wallet-overview.component';
 import {SharedModule} from "../shared/shared.module";
+import {ReactiveFormsModule} from "@angular/forms";
+import {NgIconsModule} from "@ng-icons/core";
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import {SharedModule} from "../shared/shared.module";
     imports: [
         CommonModule,
         WalletRoutingModule,
-        SharedModule
+        SharedModule,
+        ReactiveFormsModule,
+        NgIconsModule
     ]
 })
 export class WalletModule { }

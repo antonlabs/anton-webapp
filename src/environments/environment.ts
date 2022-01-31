@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  region: 'eu-west-1',
+  beUrl: 'https://dev.api.anton.finance/v1',
+  cognitoAppClientId: '56n6651d1um28rb3vbimmdsu31'
 };
 
 /*

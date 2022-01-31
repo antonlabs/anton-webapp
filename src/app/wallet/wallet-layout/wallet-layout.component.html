@@ -1,16 +1,30 @@
 <div class="wallet-layout">
-  <div class="menu-bar">
+  <div class="sidebar">
     <app-logo></app-logo>
+    <nav>
+      <li id="overview-menu" [class]="liClass('overview')" i18n>Home</li>
+      <li id="orders-menu" [class]="liClass('orders')" i18n>Orders</li>
+    </nav>
   </div>
   <div class="content-wrapper">
-    <div class="sidebar">
-      <nav>
-        <li id="overview-menu" [class]="liClass('overview')" i18n>Overview</li>
-        <li id="orders-menu" [class]="liClass('orders')" i18n>Orders</li>
-        <li id="strategy-menu" [class]="liClass('strategy')" i18n>Strategy</li>
-        <li id="settings-menu" [class]="liClass('settings')" i18n>Settings</li>
-        <li id="errors-menu" [class]="liClass('errors')" i18n>Errors</li>
-      </nav>
+    <div class="menu-bar">
+      <div class="flex-row wallets">
+        <img alt="wallet" src="/assets/wallet.png" />
+        <select class="anton-select">
+          <option>My wallet</option>
+        </select>
+      </div>
+      <a>
+        <ng-icon name="jam-user-circle"></ng-icon>
+        Paolo
+        <div class="dropdown">
+          <nav>
+            <li i18n>My Profile</li>
+            <li i18n>Subscriptions</li>
+            <li i18n>Logout</li>
+          </nav>
+        </div>
+      </a>
     </div>
     <div class="content">
       <router-outlet></router-outlet>

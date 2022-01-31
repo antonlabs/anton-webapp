@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="login" *ngIf="!success">
+    <h1 i18n>Create your Anton account</h1>
+    <h5 i18n>Welcome to our platform, join to our team and get start to invest!</h5>
+    <p>{{error}}</p>
+    <div class="forms">
+      <router-outlet (activate)="onMountChild($event)"></router-outlet>
+    </div>
+    <a class="primary" i18n>Have you already have an account?</a>
+  </div>
+
+  <div class="success-message" *ngIf="success">
+    <h1 i18n>Congratulations!</h1>
+    <h5 i18n>You have successfully signup! Go to your email and complete email confirmation</h5>
+  </div>
+
+</div>

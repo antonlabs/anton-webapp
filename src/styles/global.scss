@@ -6,17 +6,40 @@ html, body {
   margin: 0;
   overflow-x: hidden;
   font-family: 'IBM Plex Sans', sans-serif !important;
+  background: $secondary-color-light-gradient;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
 }
 
 a {
   text-decoration: none;
   color: $primary-color-dark;
   font-size: 15px;
+  cursor: pointer;
+  position: relative;
+
+  .dropdown {
+    display: none;
+  }
 
   &:hover {
     color: $primary-color;
+
+    .dropdown {
+      display: block;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: rgba(0, 0, 0, 0.04) 0 3px 5px;
+      position: relative;
+      top:0;
+      left:0;
+      z-index: 9999;
+      min-height: 10px;
+    }
   }
 }
 

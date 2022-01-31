@@ -1,19 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import {SharedModule} from "../shared/shared.module";
 import { AuthMethodsComponent } from './auth-methods/auth-methods.component';
-import { EmailLoginComponent } from './login/email-login/email-login.component';
-import { TelegramLoginComponent } from './login/telegram-login/telegram-login.component';
-import { PhoneLoginComponent } from './login/phone-login/phone-login.component';
 import {NgIconsModule} from "@ng-icons/core";
-import { SendRecoveryMailComponent } from './challenges/send-recovery-mail/send-recovery-mail.component';
-import { RecoveryPasswordFallbackComponent } from './challenges/recovery-password-fallback/recovery-password-fallback.component';
-import { MfaRequiredComponent } from './challenges/mfa-required/mfa-required.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from "ng-recaptcha";
+import {RegisterComponent} from './register/register.component';
+import {EmailLoginComponent} from './email-login/email-login.component';
+import {VerifyFallbackComponent} from './verify-fallback/verify-fallback.component';
+import {SendRecoveryMailComponent} from "./send-recovery-mail/send-recovery-mail.component";
 
 
 @NgModule({
@@ -22,18 +20,22 @@ import {ReactiveFormsModule} from "@angular/forms";
     AuthLayoutComponent,
     AuthMethodsComponent,
     EmailLoginComponent,
-    TelegramLoginComponent,
-    PhoneLoginComponent,
     SendRecoveryMailComponent,
-    RecoveryPasswordFallbackComponent,
-    MfaRequiredComponent
+    RegisterComponent,
+    VerifyFallbackComponent
   ],
   imports: [
     SharedModule,
     CommonModule,
+    RecaptchaV3Module,
     AuthRoutingModule,
     NgIconsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
+  ],
+  providers: [
+    { provide: RECAPTCHA_V3_SITE_KEY, useValue: "6Ldd2RQeAAAAABidUe7PPYzpYUnwIa599ZatjTf_" }
   ]
 })
 export class AuthModule { }
+

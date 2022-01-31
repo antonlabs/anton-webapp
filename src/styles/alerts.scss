@@ -5,4 +5,9 @@
   background: $primary-danger;
   border-radius: 5px;
   color: #fff;
+  &.warn {
+    background: transparent;
+    color: $primary-color-dark;
+    border: 2px dashed $warn-warning;
+  }
 }

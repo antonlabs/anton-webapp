@@ -1,5 +1,6 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, Input, OnInit} from '@angular/core';
 import { createChart } from 'lightweight-charts';
+import {darkTheme, lightTheme} from "./themes";
 
 const makeid = (length: number) => {
   let result           = '';
@@ -12,6 +13,11 @@ const makeid = (length: number) => {
   return result;
 }
 
+const themes = {
+  dark: darkTheme,
+  light: lightTheme
+}
+
 @Component({
   selector: 'app-anton-chart',
   templateUrl: './anton-chart.component.html',
@@ -20,28 +26,42 @@ const makeid = (length: number) => {
 export class AntonChartComponent implements OnInit, AfterViewInit {
   chart: any;
   id: string = makeid(10);
+  lastSize: any = {};
 
   constructor() { }
 
-  ngOnInit() {
-
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    const chartContainer = document.getElementById(this.id)!;
+    const width = chartContainer.offsetWidth;
+    if(this.lastSize?.width !== width) {
+      this.lastSize.width = width;
+      this.chart.applyOptions({width});
+    }
   }
 
+  ngOnInit() {}
+
   ngAfterViewInit(): void {
-    const width = document.getElementById(this.id)?.offsetWidth;
-    this.chart = createChart(this.id, {width, height: 400});
-    const lines = this.chart.addLineSeries();
+    const chartContainer = document.getElementById(this.id)!;
+    const width = chartContainer.offsetWidth;
+    const height = chartContainer.offsetHeight;
+    this.chart = createChart(this.id, {width, height});
+    this.chart.timeScale().fitContent();
+    this.chart.applyOptions(themes.light.chart);
+    const lines = this.chart.addAreaSeries();
+    lines.applyOptions(themes.light.series);
     lines.setData([
       { time: '2019-04-11', value: 80.01 },
       { time: '2019-04-12', value: 96.63 },
-      { time: '2019-04-13', value: 76.64 },
-      { time: '2019-04-14', value: 81.89 },
-      { time: '2019-04-15', value: 74.43 },
-      { time: '2019-04-16', value: 80.01 },
-      { time: '2019-04-17', value: 96.63 },
-      { time: '2019-04-18', value: 76.64 },
-      { time: '2019-04-19', value: 81.89 },
-      { time: '2019-04-20', value: 74.43 },
+      { time: '2019-04-13', value: 100 },
+      { time: '2019-04-14', value: 150 },
+      { time: '2019-04-15', value: 300 },
+      { time: '2019-04-16', value: 200 },
+      { time: '2019-04-17', value: 350 },
+      { time: '2019-04-18', value: 400 },
+      { time: '2019-04-19', value: 350 },
+      { time: '2019-04-20', value: 500 },
     ]);
   }
 

@@ -4,22 +4,23 @@ import { NgIconsModule } from '@ng-icons/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {MatTelegram} from '@ng-icons/material-icons';
-import {JamArrowCircleLeftF} from '@ng-icons/jam-icons';
+import {JamArrowCircleLeftF, JamUserCircle} from '@ng-icons/jam-icons';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
 @NgModule({
     declarations: [
-        AppComponent
+      AppComponent
     ],
     imports: [
       BrowserModule,
-      NgIconsModule.withIcons({MatTelegram, JamArrowCircleLeftF}),
+      HttpClientModule,
+      NgIconsModule.withIcons({MatTelegram, JamArrowCircleLeftF, JamUserCircle}),
       AppRoutingModule
     ],
     providers: [],
-    exports: [
-    ],
+    exports: [],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

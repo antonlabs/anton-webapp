@@ -1,0 +1,12 @@
+<form class='form mt-20px' [formGroup]="form" (submit)="onSubmit(form.value)">
+  <label i18n>Email</label>
+  <input type="email" formControlName="email" class="anton-input mt-10px" />
+  <div class="error">
+    {{errorString}}
+  </div>
+  <button class="anton-button primary mt-10px" i18n>
+    <app-spinner *ngIf="loading"></app-spinner>
+    {{buttonString}}
+  </button>
+  <a class="primary mt-10px" [routerLink]="['..', 'recover']" [queryParams]="{user: form.value.email}" i18n>Forgot password?</a>
+</form>
