@@ -8,6 +8,8 @@ import {
 import {RegisterComponent} from "./register/register.component";
 import {EmailLoginComponent} from "./email-login/email-login.component";
 import {VerifyFallbackComponent} from "./verify-fallback/verify-fallback.component";
+import {EmailPasswordLoginComponent} from "./email-password-login/email-password-login.component";
+import {SendRecoveryMailComponent} from "./send-recovery-mail/send-recovery-mail.component";
 
 const routes: Routes = [
   {
@@ -17,6 +19,10 @@ const routes: Routes = [
       {
         path: 'recover-fallback',
         component: RecoveryPasswordFallbackComponent
+      },
+      {
+        path: 'recover',
+        component: SendRecoveryMailComponent
       },
       {
         path: 'verify-fallback',
@@ -58,7 +64,7 @@ const routes: Routes = [
             data: {
               buttonString: 'Login'
             },
-            component: EmailLoginComponent
+            component: EmailPasswordLoginComponent
           }
         ]
       }

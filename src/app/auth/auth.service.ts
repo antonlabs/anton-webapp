@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {firstValueFrom} from "rxjs";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {firstValueFrom, Observable} from "rxjs";
 import {
   ChallengeNameType,
   ChangePasswordCommandOutput,
-  CognitoIdentityProviderClient,
+  CognitoIdentityProviderClient, ForgotPasswordCommand, ForgotPasswordResponse,
   InitiateAuthCommand,
   InitiateAuthCommandOutput,
   RespondToAuthChallengeCommand
@@ -44,6 +44,25 @@ export class AuthService {
     return response;
   }
 
+  getUserToken(code: string): Observable<any> {
+    const body: HttpParams = new HttpParams()
+      .set('client_id', environment.cognitoAppClientId)
+      .set('code', code)
+      .set('redirect_uri', location.origin + '/verify-fallback/')
+      .set('grant_type', 'authorization_code');
+    return this.http.post(environment.cognitoUrl + '/oauth2/token', body, {
+      headers: new HttpHeaders().set(
+        'Content-Type',
+        'application/x-www-form-urlencoded'
+      )
+    });
+  }
+
+  public async loginWithIdpCode(code: string) {
+    const response = await firstValueFrom(this.getUserToken(code));
+    console.log(response);
+  }
+
   public signup(email: string, captcha: string): Promise<any> {
     return firstValueFrom(this.http.post(environment.beUrl + '/user/signup', {
       email
@@ -51,6 +70,13 @@ export class AuthService {
       headers: {
         'X-Google-Code': captcha
       }
+    }))
+  }
+
+  public recoveryPassword(email: string): Promise<ForgotPasswordResponse> {
+    return this.cognito.send(new ForgotPasswordCommand({
+      ClientId: environment.cognitoAppClientId,
+      Username: email
     }))
   }
 

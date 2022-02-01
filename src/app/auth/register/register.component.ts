@@ -12,6 +12,7 @@ import {firstValueFrom} from "rxjs";
 export class RegisterComponent implements OnInit {
   success: boolean = false;
   error: string | undefined;
+  email: string | undefined;
 
   constructor(
     private recaptchaV3Service: ReCaptchaV3Service,
@@ -21,6 +22,9 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   onMountChild(component: Form) {
+    component.form.valueChanges.subscribe(value => {
+      this.email = value.email;
+    })
     component?.submit.subscribe((val) => {
       this.register(val, component)
     });
@@ -35,7 +39,7 @@ export class RegisterComponent implements OnInit {
       this.success = true;
     }catch(e: any) {
       console.error(e);
-      this.error = e.mesage;
+      this.error = e.message;
     }finally {
       component.loading = false;
     }

@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   region: 'eu-west-1',
   beUrl: 'https://dev.api.anton.finance/v1',
-  cognitoAppClientId: '56n6651d1um28rb3vbimmdsu31'
+  cognitoAppClientId: '56n6651d1um28rb3vbimmdsu31',
+  cognitoUrl: 'https://dev-anton-app.auth.eu-west-1.amazoncognito.com'
 };
 
 /*

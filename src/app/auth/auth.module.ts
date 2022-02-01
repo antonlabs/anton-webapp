@@ -12,6 +12,7 @@ import {RegisterComponent} from './register/register.component';
 import {EmailLoginComponent} from './email-login/email-login.component';
 import {VerifyFallbackComponent} from './verify-fallback/verify-fallback.component';
 import {SendRecoveryMailComponent} from "./send-recovery-mail/send-recovery-mail.component";
+import { EmailPasswordLoginComponent } from './email-password-login/email-password-login.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {SendRecoveryMailComponent} from "./send-recovery-mail/send-recovery-mail
     EmailLoginComponent,
     SendRecoveryMailComponent,
     RegisterComponent,
-    VerifyFallbackComponent
+    VerifyFallbackComponent,
+    EmailPasswordLoginComponent
   ],
   imports: [
     SharedModule,

@@ -16,6 +16,9 @@ export class VerifyFallbackComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(queryParams => {
+      if(queryParams['code']) {
+        this.authService.loginWithIdpCode(queryParams['code']);
+      }
       if(queryParams['user'] && queryParams['key']) {
         this.authService.login(queryParams['user'], queryParams['key']).then(
           (res) => console.log(res)

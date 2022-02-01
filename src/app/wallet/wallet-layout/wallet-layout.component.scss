@@ -44,11 +44,10 @@
 
     .menu-bar {
       height: 33px;
-      padding: 15px;
-      padding-right: 25px;
+      padding: 15px 25px 15px 15px;
       display: flex;
       flex: 1;
-      justify-content: end;
+      justify-content: flex-end;
       .wallets {
         margin-right: 15px;
         img {
@@ -58,10 +57,10 @@
       }
       a {
         font-size: 25px;
-
+        text-align: right;
         .dropdown {
           background: #fff;
-          transform: translateX(-50%);
+          transform: translateX(0);
           li {
             color: $primary-color-dark;
 

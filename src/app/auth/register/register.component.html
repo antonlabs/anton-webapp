@@ -6,7 +6,8 @@
     <div class="forms">
       <router-outlet (activate)="onMountChild($event)"></router-outlet>
     </div>
-    <a class="primary" i18n>Have you already have an account?</a>
+    <a class="primary mt-10px" [routerLink]="['..', 'recover']" [queryParams]="{user: email}" i18n>Forgot password?</a>
+    <a class="primary" i18n [routerLink]="['/auth']">Have you already have an account?</a>
   </div>
 
   <div class="success-message" *ngIf="success">

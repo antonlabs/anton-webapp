@@ -5,10 +5,14 @@
   <h1 i18n>Send recovery mail</h1>
   <h5 i18n>If you have forgotten your password and you want to recover it, write up your mail / phone</h5>
 
-  <form class='form mt-20px' [formGroup]="form">
-    <label i18n>Email or Phone</label>
-    <input type="text" class="anton-input mt-10px" />
-    <button class="anton-button primary mt-10px" i18n>Recover</button>
+  <form class='form mt-20px' [formGroup]="form" (submit)="submit()">
+    <label i18n>Email</label>
+    <input type="text" formControlName="user" class="anton-input mt-10px" />
+    <div *ngIf="error" class="alert mt-10px">{{error}}</div>
+    <button class="anton-button primary mt-10px" i18n>
+      <app-spinner *ngIf="loading"></app-spinner>
+      <span>Recover</span>
+    </button>
   </form>
 </div>
 

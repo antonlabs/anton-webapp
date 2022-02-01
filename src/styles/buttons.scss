@@ -7,6 +7,16 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
+  display: flex;
+  justify-content: space-evenly;
+
+  .spinner {
+    flex: 1;
+  }
+
+  span {
+    flex: 4;
+  }
 
   &.icon {
     background: transparent!important;
@@ -35,6 +45,10 @@
   &.primary {
     background-color: $primary-color;
     color: $primary-color-text;
+
+    .spinner > div {
+        background-color: #fff!important;
+    }
   }
   &.danger {
     background-color: $primary-danger;

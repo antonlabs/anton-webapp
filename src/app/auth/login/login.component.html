@@ -3,7 +3,9 @@
   <h5 i18n>Welcome back colleague! Login with to check your journey’s status</h5>
   <div class="forms">
     <!--app-auth-methods [currentMethod]="currentMethod"></app-auth-methods-->
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="onMountChild($event)"></router-outlet>
   </div>
-  <a class="primary" i18n>Signup here!</a>
+  <a [href]="cognitoUrl + '/oauth2/authorize?identity_provider=Google&redirect_uri=' + location.origin  + '/auth/verify-fallback&response_type=CODE&client_id=56n6651d1um28rb3vbimmdsu31&scope=email openid profile'">Go to google</a>
+  <a class="primary mt-10px" [routerLink]="['/auth', 'recover']" [queryParams]="{user: email}" i18n>Forgot password?</a>
+  <a class="primary" i18n [routerLink]="['/auth', 'register']">Signup here!</a>
 </div>
