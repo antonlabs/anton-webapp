@@ -2,15 +2,21 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {firstValueFrom, Observable} from "rxjs";
 import {
+  AuthFlowType,
   ChallengeNameType,
   ChangePasswordCommandOutput,
-  CognitoIdentityProviderClient, ForgotPasswordCommand, ForgotPasswordResponse,
+  CognitoIdentityProviderClient,
+  ForgotPasswordCommand,
+  ForgotPasswordResponse,
   InitiateAuthCommand,
   InitiateAuthCommandOutput,
   RespondToAuthChallengeCommand
 } from "@aws-sdk/client-cognito-identity-provider";
 import {environment} from 'src/environments/environment';
 import {Router} from '@angular/router';
+import {AppState} from "../app-state";
+import {fromCognitoIdentityPool} from "@aws-sdk/credential-provider-cognito-identity";
+import {CognitoIdentityClient} from "@aws-sdk/client-cognito-identity";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +24,7 @@ import {Router} from '@angular/router';
 export class AuthService {
 
   cognito = new CognitoIdentityProviderClient({region: environment.region});
+  cognitoIdentity = new CognitoIdentityClient({region: environment.region});
 
   constructor(
     private http: HttpClient,
@@ -26,19 +33,31 @@ export class AuthService {
 
   public async login(email: string, password: string): Promise<InitiateAuthCommandOutput> {
     const response = await this.cognito.send(new InitiateAuthCommand({
-      AuthFlow: 'USER_PASSWORD_AUTH',
+      AuthFlow: AuthFlowType.USER_PASSWORD_AUTH,
       ClientId: environment.cognitoAppClientId,
       AuthParameters: {
         USERNAME: email,
         PASSWORD: password
       }
     }));
-    console.log(response.AuthenticationResult);
+
+    AppState.set({
+      refreshToken: response.AuthenticationResult?.RefreshToken,
+      idToken: response.AuthenticationResult?.IdToken,
+      accessToken: response.AuthenticationResult?.AccessToken,
+      deviceKey: response.AuthenticationResult?.NewDeviceMetadata?.DeviceKey
+    });
+
     if(response.ChallengeName) {
       this.router.navigate(['/auth', 'challenges', response.ChallengeName.toLowerCase()], {queryParams: {
         username: email,
         session: response.Session
       }});
+    }else {
+      console.log(response.AuthenticationResult);
+      await this.useRefreshToken(
+        response.AuthenticationResult?.RefreshToken!
+      );
     }
 
     return response;
@@ -78,6 +97,26 @@ export class AuthService {
       ClientId: environment.cognitoAppClientId,
       Username: email
     }))
+  }
+
+  public async useRefreshToken(refreshToken: string): Promise<InitiateAuthCommandOutput> {
+    const response = await this.cognito.send(new InitiateAuthCommand({
+      AuthFlow: AuthFlowType.REFRESH_TOKEN_AUTH,
+      ClientId: environment.cognitoAppClientId,
+      AuthParameters: {
+        REFRESH_TOKEN: refreshToken
+      }
+    }));
+    const logins: {[key: string]: string} = {};
+    logins[`cognito-idp.${environment.region}.amazonaws.com/${environment.cognitoUserPoolId}`] = AppState.val.idToken!;
+    const identityId = fromCognitoIdentityPool({
+      accountId: environment.accountId,
+      logins,
+      client: this.cognitoIdentity as any,
+      identityPoolId: environment.identityPoolId
+    });
+    console.log(identityId);
+    return response;
   }
 
   public async confirmNewPassword(username: string, newPassword: string, session: string): Promise<ChangePasswordCommandOutput> {
