@@ -14,6 +14,10 @@ const routes: Routes = [
         redirectTo: 'overview'
       },
       {
+        path: 'first-access',
+        loadChildren: () => import('./first-wallet-creation/first-wallet-creation.module').then(m => m.FirstWalletCreationModule)
+      },
+      {
         path: 'overview',
         component: WalletOverviewComponent
       }

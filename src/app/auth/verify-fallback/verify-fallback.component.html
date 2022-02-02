@@ -1,1 +1,5 @@
-<h1>Connecting...</h1>
+<div class="container">
+  <div class="alert error" *ngIf="error" i18n>Error during authentication</div>
+  <app-button [routerLink]="['/auth']" *ngIf="error" i18n>Back to login</app-button>
+  <h1 *ngIf="!error" i18n>Connecting...</h1>
+</div>

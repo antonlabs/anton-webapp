@@ -1,0 +1,6 @@
+<button class="anton-button primary">
+  <app-spinner *ngIf="loading"></app-spinner>
+  <ng-container *ngIf="!loading">
+    <ng-content></ng-content>
+  </ng-container>
+</button>

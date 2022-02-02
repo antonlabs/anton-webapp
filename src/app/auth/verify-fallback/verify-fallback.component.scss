@@ -1,0 +1,11 @@
+
+.container {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  h1, .alert, app-button {
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
+  }
+}

@@ -16,12 +16,15 @@ export class LoginComponent extends AntiMemLeak implements OnInit {
   email: string | undefined;
   location = location;
   cognitoUrl = environment.cognitoUrl;
+  environment = environment;
 
   constructor(
     private recaptchaV3Service: ReCaptchaV3Service,
     private authService: AuthService,
     private router: Router
-  ) {super();}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {}
 
@@ -29,13 +32,20 @@ export class LoginComponent extends AntiMemLeak implements OnInit {
     component.form.valueChanges.subscribe(value => {
       this.email = value.email;
     })
-    component?.submit.subscribe((val) => this.login(val));
+    component?.submit.subscribe((val) => this.login(val, component));
   }
 
-  public async login(data: any): Promise<void> {
-    console.log(data);
-    const result = await this.authService.login(data.email, data.password);
-    this.router.navigate(['/']);
+  public async login(data: any, component: Form): Promise<void> {
+    component.loading = true;
+    try {
+      await this.authService.login(data.email, data.password);
+
+      this.router.navigate(['/']);
+    }catch(e: any) {
+      component.error.emit(e);
+    }finally {
+      component.loading = false;
+    }
   }
 
 

@@ -1,7 +1,18 @@
+
 .send-recovery-mail {
   a {
     font-size: 30px;
   }
+
+
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 5px;
+  padding: 35px;
+  background: #fff;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 form {

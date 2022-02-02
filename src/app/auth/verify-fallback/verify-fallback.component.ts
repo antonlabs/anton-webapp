@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../auth.service";
 
 @Component({
@@ -9,22 +9,33 @@ import {AuthService} from "../auth.service";
 })
 export class VerifyFallbackComponent implements OnInit {
 
+  error: string | undefined;
+
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(queryParams => {
-      if(queryParams['code']) {
-        this.authService.loginWithIdpCode(queryParams['code']);
-      }
-      if(queryParams['user'] && queryParams['key']) {
-        this.authService.login(queryParams['user'], queryParams['key']).then(
-          (res) => console.log(res)
-        );
-      }
+      this.authenticate(queryParams);
     });
+  }
+
+  async authenticate(queryParams: any) {
+    try{
+      if(queryParams['code']) {
+        await this.authService.loginWithIdpCode(queryParams['code']);
+      }else if(queryParams['user'] && queryParams['key']) {
+        await this.authService.login(queryParams['user'], queryParams['key']);
+      }else {
+        this.router.navigate(['/auth']);
+      }
+    }catch(e: any) {
+      console.log(e);
+      this.error = e.error.error;
+    }
   }
 
 }

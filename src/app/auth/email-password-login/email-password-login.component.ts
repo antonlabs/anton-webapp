@@ -10,6 +10,7 @@ import {Form} from "../form";
 })
 export class EmailPasswordLoginComponent extends Form implements OnInit {
 
+
   form: FormGroup = new FormGroup({
     email: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
