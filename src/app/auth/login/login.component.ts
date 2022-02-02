@@ -4,6 +4,7 @@ import {ReCaptchaV3Service} from "ng-recaptcha";
 import {AuthService} from "../auth.service";
 import {Form} from "../form";
 import {environment} from "../../../environments/environment";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent extends AntiMemLeak implements OnInit {
 
   constructor(
     private recaptchaV3Service: ReCaptchaV3Service,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {super();}
 
   ngOnInit(): void {}
@@ -30,9 +32,10 @@ export class LoginComponent extends AntiMemLeak implements OnInit {
     component?.submit.subscribe((val) => this.login(val));
   }
 
-  public login(data: any): void {
+  public async login(data: any): Promise<void> {
     console.log(data);
-    this.authService.login(data.email, data.password);
+    const result = await this.authService.login(data.email, data.password);
+    this.router.navigate(['/']);
   }
 
 

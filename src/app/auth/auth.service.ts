@@ -54,10 +54,10 @@ export class AuthService {
         session: response.Session
       }});
     }else {
-      console.log(response.AuthenticationResult);
       await this.useRefreshToken(
         response.AuthenticationResult?.RefreshToken!
       );
+      AppState.store();
     }
 
     return response;
@@ -109,13 +109,19 @@ export class AuthService {
     }));
     const logins: {[key: string]: string} = {};
     logins[`cognito-idp.${environment.region}.amazonaws.com/${environment.cognitoUserPoolId}`] = AppState.val.idToken!;
-    const identityId = fromCognitoIdentityPool({
+    const credentials = await fromCognitoIdentityPool({
       accountId: environment.accountId,
       logins,
       client: this.cognitoIdentity as any,
       identityPoolId: environment.identityPoolId
-    });
-    console.log(identityId);
+    })();
+    AppState.set({
+      accessKeyId: credentials.accessKeyId,
+      secretAccessKeyId: credentials.secretAccessKey,
+      accessToken: response.AuthenticationResult?.AccessToken,
+      idToken: response.AuthenticationResult?.IdToken,
+      identityId: credentials.identityId
+    })
     return response;
   }
 
@@ -129,6 +135,24 @@ export class AuthService {
         USERNAME: username
       }
     }));
+  }
+
+  async checkIfAuthenticated(): Promise<boolean> {
+    const refreshT = AppState.val.refreshToken;
+    if(refreshT) {
+      try {
+        await this.useRefreshToken(refreshT);
+        AppState.store();
+        return true;
+      } catch(e) {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  logout() {
+    localStorage.clear();
   }
 
 }

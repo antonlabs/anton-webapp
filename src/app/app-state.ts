@@ -28,7 +28,8 @@ export class AppState {
   }
 
   static set(value: Partial<AppStateProps>) {
-    const actualValue = AppState.val;
+    const actualValue = JSON.parse(JSON.stringify(AppState.val));
+    console.log(actualValue, value);
     appState.next(new AppState({...actualValue, ...value}))
   }
 
