@@ -17,11 +17,11 @@ import { ButtonComponent } from './button/button.component';
   imports: [
     CommonModule
   ],
-    exports: [
-        LogoComponent,
-        AntonChartComponent,
-        SpinnerComponent,
-        ButtonComponent
-    ]
+  exports: [
+    LogoComponent,
+    AntonChartComponent,
+    SpinnerComponent,
+    ButtonComponent
+  ]
 })
 export class SharedModule { }

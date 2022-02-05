@@ -24,7 +24,7 @@ export class VerifyFallbackComponent implements OnInit {
   }
 
   async authenticate(queryParams: any) {
-    try{
+    try {
       if(queryParams['code']) {
         await this.authService.loginWithIdpCode(queryParams['code']);
       }else if(queryParams['user'] && queryParams['key']) {
@@ -34,7 +34,7 @@ export class VerifyFallbackComponent implements OnInit {
       }
     }catch(e: any) {
       console.log(e);
-      this.error = e.error.error;
+      this.error = e?.error?.error;
     }
   }
 

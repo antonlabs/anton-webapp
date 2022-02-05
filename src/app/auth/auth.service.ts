@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {firstValueFrom, Observable} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {firstValueFrom} from "rxjs";
 import {
   AuthFlowType,
   ChallengeNameType,
@@ -17,6 +17,25 @@ import {Router} from '@angular/router';
 import {AppState} from "../app-state";
 import {fromCognitoIdentityPool} from "@aws-sdk/credential-provider-cognito-identity";
 import {CognitoIdentityClient} from "@aws-sdk/client-cognito-identity";
+import {UserDto} from "../shared/dto/user.dto";
+import jwtDecode from "jwt-decode";
+import {apiG} from "../shared/helpers";
+
+
+export interface OAuthCredentials {
+  access_token: string;
+  expires_in: number;
+  id_token: string;
+  refresh_token: string;
+  token_type: string;
+}
+
+export interface IAMCredentials {
+  accessKeyId: string,
+  secretAccessKey: string,
+  sessionToken: string
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -42,10 +61,12 @@ export class AuthService {
     }));
 
     AppState.set({
-      refreshToken: response.AuthenticationResult?.RefreshToken,
-      idToken: response.AuthenticationResult?.IdToken,
-      accessToken: response.AuthenticationResult?.AccessToken,
-      deviceKey: response.AuthenticationResult?.NewDeviceMetadata?.DeviceKey
+      oauthCredentials: {
+        refresh_token: response.AuthenticationResult?.RefreshToken,
+        id_token: response.AuthenticationResult?.IdToken,
+        expires_in: response.AuthenticationResult?.ExpiresIn,
+        access_token: response.AuthenticationResult?.AccessToken
+      }
     });
 
     if(response.ChallengeName) {
@@ -57,29 +78,59 @@ export class AuthService {
       await this.useRefreshToken(
         response.AuthenticationResult?.RefreshToken!
       );
-      AppState.store();
     }
+    const userPayload: UserDto = {
+      email: email
+    }
+
+    await this.loginSignal(userPayload);
 
     return response;
   }
 
-  getUserToken(code: string): Observable<any> {
-    const body: HttpParams = new HttpParams()
-      .set('client_id', environment.cognitoAppClientId)
-      .set('code', code)
-      .set('redirect_uri', location.origin + '/verify-fallback/')
-      .set('grant_type', 'authorization_code');
-    return this.http.post(environment.cognitoUrl + '/oauth2/token', body, {
+  getOAuthCredentials(code: string): Promise<OAuthCredentials> {
+    const body: URLSearchParams = new URLSearchParams({
+      client_id: environment.cognitoAppClientId,
+      code,
+      redirect_uri: location.origin + '/auth/verify-fallback',
+      grant_type: 'authorization_code',
+      token_endpoint: environment.cognitoUrl + '/oauth2/token',
+      scope: 'openid email profile'
+    })
+    return firstValueFrom(this.http.post<OAuthCredentials>(environment.cognitoUrl + '/oauth2/token', body, {
       headers: new HttpHeaders().set(
         'Content-Type',
-        'application/x-www-form-urlencoded'
+        'application/x-www-form-urlencoded; charset=UTF-8'
       )
-    });
+    }));
+  }
+
+  public async loginSignal(userPayload: UserDto) {
+    const message: 'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME' = await (await apiG().fetch(
+      environment.beUrl + '/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userPayload)
+      })).text() as 'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME';
+    console.log(message);
   }
 
   public async loginWithIdpCode(code: string) {
-    const response = await firstValueFrom(this.getUserToken(code));
-    console.log(response);
+    const response = await this.getOAuthCredentials(code);
+    AppState.set({
+      oauthCredentials: response
+    });
+    await this.useRefreshToken(response.refresh_token);
+
+    const userPayload: UserDto = {
+      email: (jwtDecode(response.id_token) as any).email
+    };
+
+    await this.loginSignal(userPayload);
+
+    this.router.navigate(['/']);
   }
 
   public signup(email: string, captcha: string): Promise<any> {
@@ -108,7 +159,7 @@ export class AuthService {
       }
     }));
     const logins: {[key: string]: string} = {};
-    logins[`cognito-idp.${environment.region}.amazonaws.com/${environment.cognitoUserPoolId}`] = AppState.val.idToken!;
+    logins[`cognito-idp.${environment.region}.amazonaws.com/${environment.cognitoUserPoolId}`] = AppState.val.oauthCredentials.id_token!;
     const credentials = await fromCognitoIdentityPool({
       accountId: environment.accountId,
       logins,
@@ -116,12 +167,14 @@ export class AuthService {
       identityPoolId: environment.identityPoolId
     })();
     AppState.set({
-      accessKeyId: credentials.accessKeyId,
-      secretAccessKeyId: credentials.secretAccessKey,
-      accessToken: response.AuthenticationResult?.AccessToken,
-      idToken: response.AuthenticationResult?.IdToken,
+      iamCredentials: {
+        accessKeyId: credentials.accessKeyId,
+        secretAccessKey: credentials.secretAccessKey,
+        sessionToken: credentials.sessionToken
+      },
       identityId: credentials.identityId
     })
+    AppState.store();
     return response;
   }
 
@@ -138,11 +191,10 @@ export class AuthService {
   }
 
   async checkIfAuthenticated(): Promise<boolean> {
-    const refreshT = AppState.val.refreshToken;
+    const refreshT = AppState.val.oauthCredentials.refresh_token;
     if(refreshT) {
       try {
         await this.useRefreshToken(refreshT);
-        AppState.store();
         return true;
       } catch(e) {
         return false;

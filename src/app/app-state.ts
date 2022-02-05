@@ -1,15 +1,16 @@
 import {BehaviorSubject} from "rxjs";
+import {IAMCredentials, OAuthCredentials} from "./auth/auth.service";
+import {WalletState} from "./shared/wallet.service";
+import {UserState} from "./shared/user.service";
 
 const storageKey = 'state';
 
 export interface AppStateProps {
-  refreshToken: string | undefined;
-  accessKeyId: string | undefined;
-  secretAccessKeyId: string | undefined;
-  accessToken: string | undefined;
-  idToken: string | undefined;
+  oauthCredentials: Partial<OAuthCredentials>;
+  iamCredentials: Partial<IAMCredentials>;
   identityId: string | undefined;
-  deviceKey: string | undefined;
+  wallet: Partial<WalletState>;
+  user: Partial<UserState>;
 }
 
 export class AppState {
@@ -17,19 +18,16 @@ export class AppState {
 
   static empty(): AppState {
     return new AppState({
-      refreshToken: undefined,
-      accessKeyId: undefined,
-      secretAccessKeyId: undefined,
-      accessToken: undefined,
-      idToken: undefined,
+      oauthCredentials: {},
+      iamCredentials: {},
       identityId: undefined,
-      deviceKey: undefined
+      wallet: {},
+      user: {}
     });
   }
 
   static set(value: Partial<AppStateProps>) {
     const actualValue = JSON.parse(JSON.stringify(AppState.val));
-    console.log(actualValue, value);
     appState.next(new AppState({...actualValue, ...value}))
   }
 
@@ -38,8 +36,7 @@ export class AppState {
   }
 
   static store() {
-    const actualState = AppState.val;
-    localStorage.setItem(storageKey, JSON.stringify(actualState));
+    localStorage.setItem(storageKey, JSON.stringify(AppState.val));
   }
 
   static fromStore(): AppState {
