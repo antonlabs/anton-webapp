@@ -39,8 +39,6 @@ export class LoginComponent extends AntiMemLeak implements OnInit {
     component.loading = true;
     try {
       await this.authService.login(data.email, data.password);
-
-      this.router.navigate(['/']);
     }catch(e: any) {
       component.error.emit(e);
     }finally {

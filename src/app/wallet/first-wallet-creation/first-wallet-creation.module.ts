@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { FirstWalletCreationRoutingModule } from './first-wallet-creation-routing.module';
 import { WalletNameComponent } from './wallet-name/wallet-name.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { WalletNameComponent } from './wallet-name/wallet-name.component';
   ],
   imports: [
     CommonModule,
-    FirstWalletCreationRoutingModule
+    FirstWalletCreationRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class FirstWalletCreationModule { }

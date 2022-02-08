@@ -19,7 +19,7 @@ import {fromCognitoIdentityPool} from "@aws-sdk/credential-provider-cognito-iden
 import {CognitoIdentityClient} from "@aws-sdk/client-cognito-identity";
 import {UserDto} from "../shared/dto/user.dto";
 import jwtDecode from "jwt-decode";
-import {apiG} from "../shared/helpers";
+import {apiG, getUserItem, getUserListItem} from "../shared/helpers";
 
 
 export interface OAuthCredentials {
@@ -85,6 +85,8 @@ export class AuthService {
 
     await this.loginSignal(userPayload);
 
+    this.router.navigateByUrl(await this.firstDestination());
+
     return response;
   }
 
@@ -105,16 +107,24 @@ export class AuthService {
     }));
   }
 
-  public async loginSignal(userPayload: UserDto) {
-    const message: 'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME' = await (await apiG().fetch(
-      environment.beUrl + '/user/login', {
+  public async loginSignal(userPayload: UserDto): Promise<'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME'> {
+    console.log('get user', AppState.val);
+    // const user = await getUserItem('USER');
+    const user = undefined;
+    const message: 'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME' = user ? 'USER_LOGGED' : await (await apiG(
+      'user/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
         body: JSON.stringify(userPayload)
       })).text() as 'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME';
-    console.log(message);
+    return message;
+  }
+
+  public async firstDestination(): Promise<string> {
+    const wallets = await getUserListItem('WALLET');
+    if(wallets?.length === 0) {
+      return '/first-access'
+    }
+    return '/';
   }
 
   public async loginWithIdpCode(code: string) {
@@ -130,7 +140,7 @@ export class AuthService {
 
     await this.loginSignal(userPayload);
 
-    this.router.navigate(['/']);
+    this.router.navigateByUrl(await this.firstDestination());
   }
 
   public signup(email: string, captcha: string): Promise<any> {

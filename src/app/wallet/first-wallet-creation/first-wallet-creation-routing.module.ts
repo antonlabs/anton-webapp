@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {WalletNameComponent} from "./wallet-name/wallet-name.component";
+import {ConnectWalletComponent} from "../connect-wallet/connect-wallet.component";
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'wallet-name',
     component: WalletNameComponent
+  },
+  {
+    path: 'connect',
+    component: ConnectWalletComponent
   }
 ];
 

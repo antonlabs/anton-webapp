@@ -7,12 +7,14 @@ import { WalletOverviewComponent } from './wallet-overview/wallet-overview.compo
 import {SharedModule} from "../shared/shared.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgIconsModule} from "@ng-icons/core";
+import { ConnectWalletComponent } from './connect-wallet/connect-wallet.component';
 
 
 @NgModule({
   declarations: [
     WalletLayoutComponent,
-    WalletOverviewComponent
+    WalletOverviewComponent,
+    ConnectWalletComponent
   ],
     imports: [
         CommonModule,

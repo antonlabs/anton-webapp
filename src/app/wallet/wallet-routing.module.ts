@@ -5,6 +5,10 @@ import {WalletOverviewComponent} from "./wallet-overview/wallet-overview.compone
 
 const routes: Routes = [
   {
+    path: 'first-access',
+    loadChildren: () => import('./first-wallet-creation/first-wallet-creation.module').then(m => m.FirstWalletCreationModule)
+  },
+  {
     path: '',
     component: WalletLayoutComponent,
     children: [
@@ -12,10 +16,6 @@ const routes: Routes = [
         path: '',
         pathMatch: 'full',
         redirectTo: 'overview'
-      },
-      {
-        path: 'first-access',
-        loadChildren: () => import('./first-wallet-creation/first-wallet-creation.module').then(m => m.FirstWalletCreationModule)
       },
       {
         path: 'overview',
