@@ -2,20 +2,42 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {WalletNameComponent} from "./wallet-name/wallet-name.component";
 import {ConnectWalletComponent} from "../connect-wallet/connect-wallet.component";
+import { ConfigureWalletComponent } from './configure-wallet/configure-wallet.component';
+import { WalletPlatformComponent } from './wallet-platform/wallet-platform.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'wallet-name'
+    redirectTo: 'wallet-platform'
+  },
+  {
+    path: 'wallet-platform',
+    component: WalletPlatformComponent,
+    data: {
+      stepper: 'wallet-platform'
+    }
   },
   {
     path: 'wallet-name',
-    component: WalletNameComponent
+    component: WalletNameComponent,
+    data: {
+      stepper: 'create-wallet-name'
+    }
   },
   {
     path: 'connect',
-    component: ConnectWalletComponent
+    component: ConnectWalletComponent,
+    data: {
+      stepper: 'create-wallet-keys'
+    }
+  },
+  {
+    path: 'wallet-configuration',
+    component: ConfigureWalletComponent,
+    data: {
+      stepper: 'wallet-configuration'
+    }
   }
 ];
 

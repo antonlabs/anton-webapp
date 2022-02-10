@@ -18,11 +18,11 @@ export class WalletService {
     return getUserListItem('WALLET');
   }
 
-  async updateWallet(wallet: WalletModel): Promise<any> {
+  async updateWallet(wallet: WalletModel): Promise<string> {
     return (await apiG('wallet', {
       method: 'PUT',
       body: JSON.stringify(WalletConverter.toDto(wallet))
-    })).json();
+    })).text();
   }
 
 }

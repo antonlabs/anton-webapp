@@ -1,0 +1,20 @@
+<h2 i18n>What platform do you use?</h2>
+
+<div class="platforms mt-50px">
+  <div class="platform {{currentSelection === walletType.BINANCE ? 'active' : ''}}" (click)="currentSelection = walletType.BINANCE">
+    <img src="/assets/binance-logo.png" />
+  </div>
+  <div class="platform {{currentSelection === walletType.COINBASE ? 'active' : ''}}" (click)="currentSelection = walletType.COINBASE">
+    <img src="/assets/coinbase.png" />
+  </div>
+</div>
+
+<div class="flex-row center mt-50px">
+  <button class="anton-button primary {{currentSelection !== undefined ? '' : 'disabled'}}" i18n [routerLink]="currentSelection !== undefined ? ['/create-wallet', 'connect'] : undefined">
+    Next
+  </button>
+  <button class="anton-button" i18n [routerLink]="['/create-wallet', 'wallet-configuration']">
+    Skip
+  </button>
+</div>
+

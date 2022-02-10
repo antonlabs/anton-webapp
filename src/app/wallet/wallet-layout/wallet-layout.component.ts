@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {AuthService} from "../../auth/auth.service";
 import {UserService} from "../../shared/user.service";
+import {appState, AppState} from "../../app-state";
 
 @Component({
   selector: 'app-wallet-layout',
@@ -10,6 +11,7 @@ import {UserService} from "../../shared/user.service";
   styleUrls: ['./wallet-layout.component.scss']
 })
 export class WalletLayoutComponent extends AntiMemLeak implements OnInit {
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
@@ -20,7 +22,15 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit {
   }
 
   ngOnInit(): void {
+    appState.subscribe((state) => this.checkIntegrityState(state));
     this.userService.getUserInfo().then(console.log);
+  }
+
+  checkIntegrityState(state: AppState) {
+    console.log(state.props);
+    if(state.props.wallets.length === 0) {
+      this.router.navigate(['/create-wallet', 'wallet-name'])
+    }
   }
 
   liClass(liId: string) {

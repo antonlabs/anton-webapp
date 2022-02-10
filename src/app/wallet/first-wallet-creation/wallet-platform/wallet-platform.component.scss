@@ -1,0 +1,42 @@
+@import "../../../../styles/palette";
+
+.platforms {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .platform {
+    border-radius: 5px;
+    overflow: hidden;
+    flex: 1;
+    max-width: 300px;
+    padding: 15px;
+    background: #fff;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .25);
+    transition: .3s ease all;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+      outline: 3px solid $primary-color;
+    }
+
+    &.active {
+      outline: 3px solid $primary-color;
+      &:after {
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        background: $primary-color;
+        border-bottom-right-radius: 10px;
+      }
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+}

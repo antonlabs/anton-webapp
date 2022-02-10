@@ -13,6 +13,8 @@ export class WalletNameComponent implements OnInit {
   form = new FormGroup({
     name: new FormControl('', Validators.required)
   });
+  error: string | undefined;
+  loading = false;
 
   constructor(
     private router: Router,
@@ -23,8 +25,16 @@ export class WalletNameComponent implements OnInit {
   }
 
   async createWallet() {
-    await this.walletService.updateWallet(this.form.value);
-    this.router.navigate(['/first-access', 'connect'])
+    this.loading = true;
+    try {
+      //await this.walletService.updateWallet(this.form.value);
+      this.router.navigate(['/create-wallet', 'wallet-platform'])
+    }catch(e: any) {
+      console.error(e);
+      this.error = e?.body.getReader();
+    }finally {
+      this.loading = false;
+    }
   }
 
 }

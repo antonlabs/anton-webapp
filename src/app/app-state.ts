@@ -9,7 +9,8 @@ export interface AppStateProps {
   oauthCredentials: Partial<OAuthCredentials>;
   iamCredentials: Partial<IAMCredentials>;
   identityId: string | undefined;
-  wallet: Partial<WalletState>;
+  currentWalletName: string | undefined;
+  wallets: Partial<WalletState>[];
   user: Partial<UserState>;
 }
 
@@ -21,8 +22,9 @@ export class AppState {
       oauthCredentials: {},
       iamCredentials: {},
       identityId: undefined,
-      wallet: {},
-      user: {}
+      currentWalletName: undefined,
+      user: {},
+      wallets: []
     });
   }
 

@@ -1,0 +1,6 @@
+<div class="wizard-progress">
+  <div *ngFor="let step of steps" class="step {{step.state ?? ''}}">
+    {{step.label}}
+    <div class="node"></div>
+  </div>
+</div>

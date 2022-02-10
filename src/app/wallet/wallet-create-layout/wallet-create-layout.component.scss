@@ -1,0 +1,19 @@
+.container {
+  height: 100%;
+  text-align: center;
+
+  .topbar {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .content {
+    position: relative;
+    top: 40%;
+    transform: translateY(-50%);
+    max-width: 900px;
+    display: block;
+    margin: 0 auto;
+  }
+}

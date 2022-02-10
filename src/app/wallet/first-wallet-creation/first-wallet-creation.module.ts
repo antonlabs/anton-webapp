@@ -4,16 +4,22 @@ import { CommonModule } from '@angular/common';
 import { FirstWalletCreationRoutingModule } from './first-wallet-creation-routing.module';
 import { WalletNameComponent } from './wallet-name/wallet-name.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {SharedModule} from "../../shared/shared.module";
+import { ConfigureWalletComponent } from './configure-wallet/configure-wallet.component';
+import { WalletPlatformComponent } from './wallet-platform/wallet-platform.component';
 
 
 @NgModule({
   declarations: [
-    WalletNameComponent
+    WalletNameComponent,
+    ConfigureWalletComponent,
+    WalletPlatformComponent
   ],
   imports: [
     CommonModule,
     FirstWalletCreationRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class FirstWalletCreationModule { }

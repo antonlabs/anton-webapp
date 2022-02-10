@@ -2,6 +2,7 @@ import {DynamoDBClient, GetItemCommand, QueryCommand} from "@aws-sdk/client-dyna
 import {AwsClient} from "aws4fetch";
 import {AppState} from "../app-state";
 import {environment} from "../../environments/environment";
+import {WalletModel} from "../wallet/models/wallet.model";
 
 const getLiteral = (str: string, obj: any): any => {
   return str.split('.').reduce((o, i) => (o ?? {[str]: undefined})[i], obj);
@@ -37,7 +38,10 @@ export const apiG = (
 
   (init.headers as Headers).set('Content-Type', 'application/json');
 
-  return new AwsClient({...{service: 'execute-api', region: 'eu-west-1'}, ...AppState.val.iamCredentials as any}).fetch(environment.beUrl + '/' + input, init);
+  return new AwsClient({
+    ...{service: 'execute-api', region: 'eu-west-1'},
+    ...AppState.val.iamCredentials as any}
+  ).fetch(environment.beUrl + '/' + input, init).then((r) => r.status > 400 ? Promise.reject(r) : Promise.resolve(r));
 }
 
 export const getUserItem = async <T>(sk: string): Promise<T | undefined> => {
@@ -54,6 +58,13 @@ export const getUserItem = async <T>(sk: string): Promise<T | undefined> => {
       }
     }
   }))).Item as any;
+}
+
+export const refreshWallet = async <T>(): Promise<void> => {
+  const wallets: WalletModel[] | undefined = await getUserListItem<WalletModel>('WALLET');
+  AppState.set({
+    wallets: wallets ?? []
+  });
 }
 
 export const getUserListItem = async <T>(param: string): Promise<T[] | undefined> => {

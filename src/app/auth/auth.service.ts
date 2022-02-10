@@ -122,7 +122,7 @@ export class AuthService {
   public async firstDestination(): Promise<string> {
     const wallets = await getUserListItem('WALLET');
     if(wallets?.length === 0) {
-      return '/first-access'
+      return '/create-wallet'
     }
     return '/';
   }
