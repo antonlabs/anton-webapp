@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {apiG, getUserListItem} from "./helpers";
+import {apiG, getUserListItem, refreshWallets} from "./helpers";
 import {WalletModel} from "../wallet/models/wallet.model";
 import {WalletConverter} from "../wallet/converters/wallet.converter";
 
@@ -19,10 +19,12 @@ export class WalletService {
   }
 
   async updateWallet(wallet: WalletModel): Promise<string> {
-    return (await apiG('wallet', {
+    const result = await (await apiG('wallet', {
       method: 'PUT',
       body: JSON.stringify(WalletConverter.toDto(wallet))
     })).text();
+    await refreshWallets();
+    return result;
   }
 
 }

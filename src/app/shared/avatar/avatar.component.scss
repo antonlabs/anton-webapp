@@ -1,0 +1,24 @@
+@import "../../../styles/palette";
+
+.avatar {
+  overflow: hidden;
+  border-radius: 100%;
+  display: block;
+  margin: 0 auto;
+  img {
+    width: 100%;
+  }
+  .error-avatar {
+    background: $primary-color;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    h5 {
+      color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

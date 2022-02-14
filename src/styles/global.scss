@@ -1,5 +1,6 @@
 @import "palette";
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
+@import url('https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
 
 html, body {
   height: 100%;
@@ -34,9 +35,10 @@ a {
       padding: 10px;
       border-radius: 10px;
       box-shadow: rgba(0, 0, 0, 0.04) 0 3px 5px;
-      position: relative;
-      top:0;
-      left:0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateY(30px) translateX(-50%);
       z-index: 9999;
       min-height: 10px;
     }

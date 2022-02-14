@@ -17,6 +17,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2017",
+    "skipLibCheck": true,
     "module": "es2020",
     "lib": [
       "es2020",

@@ -7,6 +7,11 @@ import { ButtonComponent } from './button/button.component';
 import { StepperComponent } from './stepper/stepper.component';
 import { SliderComponent } from './slider/slider.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { CashInputComponent } from './cash-input/cash-input.component';
+import { AvatarComponent } from './avatar/avatar.component';
+import { CounterComponent } from './counter/counter.component';
+import {NgIconsModule} from "@ng-icons/core";
+import { SwitchComponent } from './switch/switch.component';
 
 
 
@@ -17,19 +22,28 @@ import {ReactiveFormsModule} from "@angular/forms";
     SpinnerComponent,
     ButtonComponent,
     StepperComponent,
-    SliderComponent
+    SliderComponent,
+    CashInputComponent,
+    AvatarComponent,
+    CounterComponent,
+    SwitchComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
-    exports: [
-        LogoComponent,
-        AntonChartComponent,
-        SpinnerComponent,
-        ButtonComponent,
-        StepperComponent,
-        SliderComponent
-    ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        NgIconsModule
+    ],
+  exports: [
+    LogoComponent,
+    AntonChartComponent,
+    SpinnerComponent,
+    ButtonComponent,
+    StepperComponent,
+    SliderComponent,
+    CashInputComponent,
+    AvatarComponent,
+    CounterComponent,
+    SwitchComponent
+  ]
 })
 export class SharedModule { }

@@ -1,16 +1,9 @@
 <h1 i18n>How much you wanna invest?</h1>
 
-<form [formGroup]="form">
-  <div>
-    <app-slider (onChange)="form.controls['investment'].setValue($event)" [min]="50" [max]="50000"></app-slider>
-    <div class="flex-row control-row">
-      <input class="anton-input" formControlName="investment" />
-      <select class="anton-select">
-        <option *ngFor="let item of symbols" [value]="item">
-          {{item}}
-        </option>
-      </select>
-    </div>
+<form [formGroup]="form" (submit)="submit()">
+  <app-cash-input [symbols]="symbols" [control]="control"></app-cash-input>
+  <div class="alert error" *ngIf="error">
+    {{error}}
   </div>
   <div class="flex-row center">
     <app-button [loading]="loading" i18n>Start</app-button>

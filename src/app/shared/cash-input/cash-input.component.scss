@@ -1,0 +1,22 @@
+.control-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  input {
+    max-width: 100px;
+    background: #fff;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .anton-select {
+    height: 45px;
+    border: 1px solid #C4C4C4;
+    border-left: none;
+    border-radius: 3px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    text-align: center;
+  }
+}
+

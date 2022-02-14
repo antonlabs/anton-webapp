@@ -4,6 +4,7 @@ import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {AuthService} from "../../auth/auth.service";
 import {UserService} from "../../shared/user.service";
 import {appState, AppState} from "../../app-state";
+import {refreshWallets} from "../../shared/helpers";
 
 @Component({
   selector: 'app-wallet-layout',
@@ -21,13 +22,16 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit {
     super();
   }
 
-  ngOnInit(): void {
-    appState.subscribe((state) => this.checkIntegrityState(state));
+  async ngOnInit(): Promise<void> {
+    await refreshWallets();
+    this.sub.add(
+      appState.subscribe((state) => this.checkIntegrityState(state))
+    );
     this.userService.getUserInfo().then(console.log);
   }
 
+
   checkIntegrityState(state: AppState) {
-    console.log(state.props);
     if(state.props.wallets.length === 0) {
       this.router.navigate(['/create-wallet', 'wallet-name'])
     }

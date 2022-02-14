@@ -1,10 +1,11 @@
-import {DynamoDBClient, GetItemCommand, QueryCommand} from "@aws-sdk/client-dynamodb";
+import {DynamoDBClient} from "@aws-sdk/client-dynamodb";
 import {AwsClient} from "aws4fetch";
 import {AppState} from "../app-state";
 import {environment} from "../../environments/environment";
 import {WalletModel} from "../wallet/models/wallet.model";
+import {DynamoDBDocument} from "@aws-sdk/lib-dynamodb";
 
-const getLiteral = (str: string, obj: any): any => {
+export const getLiteral = (str: string, obj: any): any => {
   return str.split('.').reduce((o, i) => (o ?? {[str]: undefined})[i], obj);
 };
 
@@ -14,6 +15,8 @@ export const dynamoDbClient = () => new DynamoDBClient({
   region: 'eu-west-1',
   credentials: AppState.val.iamCredentials as any
 });
+
+export const documentClient = (): DynamoDBDocument => DynamoDBDocument.from(dynamoDbClient())
 
 export const apiG = (
   input: string, init?: (RequestInit & {
@@ -41,27 +44,30 @@ export const apiG = (
   return new AwsClient({
     ...{service: 'execute-api', region: 'eu-west-1'},
     ...AppState.val.iamCredentials as any}
-  ).fetch(environment.beUrl + '/' + input, init).then((r) => r.status > 400 ? Promise.reject(r) : Promise.resolve(r));
+  ).fetch(environment.beUrl + '/' + input, init)
+    .then((r) => r.status > 400 ? Promise.reject(r) : Promise.resolve(r))
+    .catch((e) => {
+      return e?.body.getReader().read().then((e2: any) => {
+        return Promise.reject(new TextDecoder().decode(e2.value));
+      });
+    });
 }
 
 export const getUserItem = async <T>(sk: string): Promise<T | undefined> => {
   if(!AppState.val.identityId) return;
 
-  return (await dynamoDbClient().send(new GetItemCommand({
+  return (await documentClient().get({
     TableName: tableName,
     Key: {
-      pk: {
-        S: AppState.val.identityId
-      },
-      sk: {
-        S: sk
-      }
+      pk: AppState.val.identityId,
+      sk
     }
-  }))).Item as any;
+  })).Item as T;
 }
 
-export const refreshWallet = async <T>(): Promise<void> => {
+export const refreshWallets = async <T>(): Promise<void> => {
   const wallets: WalletModel[] | undefined = await getUserListItem<WalletModel>('WALLET');
+
   AppState.set({
     wallets: wallets ?? []
   });
@@ -69,8 +75,7 @@ export const refreshWallet = async <T>(): Promise<void> => {
 
 export const getUserListItem = async <T>(param: string): Promise<T[] | undefined> => {
   if(!AppState.val.identityId) return;
-
-  return (await dynamoDbClient().send(new QueryCommand({
+  return (await documentClient().query({
     TableName: tableName,
     KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
     ExpressionAttributeNames: {
@@ -78,12 +83,8 @@ export const getUserListItem = async <T>(param: string): Promise<T[] | undefined
       '#pk': 'pk'
     },
     ExpressionAttributeValues: {
-      ':sk': {
-        'S': param
-      },
-      ':pk': {
-        'S': AppState.val.identityId
-      }
+      ':sk': param,
+      ':pk': AppState.val.identityId
     }
-  }))).Items as any;
+  })).Items as T[];
 }

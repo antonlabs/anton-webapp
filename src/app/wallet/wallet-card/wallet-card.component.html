@@ -1,0 +1,25 @@
+<div class="profile-card card-plain flex-column">
+  <div class="flex-row">
+    <!--div class="flex-column">
+      <h2 i18n>Settings</h2>
+      <img style="width: 50px" alt="wallet" src="/assets/wallet.png" >
+    </div-->
+    <div class="flex-column ml-10px">
+      <form class="flex-column form" [formGroup]="settingsForm" (submit)="submitWallet()">
+        <div>
+          <label i18n>Wallet budget</label>
+          <app-cash-input [symbols]="symbols" [control]="walletBudgetControl"></app-cash-input>
+        </div>
+        <div class="flex-row between mt-20px" style="height: 40px">
+          <label class="mt-10px" i18n>Auto reinvest</label>
+          <app-switch [control]="autoReinvestControl"></app-switch>
+        </div>
+        <app-button class="mt-20px" [loading]="false" i18n>Save</app-button>
+      </form>
+    </div>
+
+
+  </div>
+
+
+</div>

@@ -20,6 +20,7 @@ import {CognitoIdentityClient} from "@aws-sdk/client-cognito-identity";
 import {UserDto} from "../shared/dto/user.dto";
 import jwtDecode from "jwt-decode";
 import {apiG, getUserItem, getUserListItem} from "../shared/helpers";
+import {UserService} from "../shared/user.service";
 
 
 export interface OAuthCredentials {
@@ -47,7 +48,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) { }
 
   public async login(email: string, password: string): Promise<InitiateAuthCommandOutput> {
@@ -66,6 +68,9 @@ export class AuthService {
         id_token: response.AuthenticationResult?.IdToken,
         expires_in: response.AuthenticationResult?.ExpiresIn,
         access_token: response.AuthenticationResult?.AccessToken
+      },
+      user: {
+        email
       }
     });
 
@@ -130,7 +135,10 @@ export class AuthService {
   public async loginWithIdpCode(code: string) {
     const response = await this.getOAuthCredentials(code);
     AppState.set({
-      oauthCredentials: response
+      oauthCredentials: response,
+      user: {
+        email: jwtDecode<any>(response.id_token)?.email ?? ''
+      }
     });
     await this.useRefreshToken(response.refresh_token);
 
@@ -139,7 +147,6 @@ export class AuthService {
     };
 
     await this.loginSignal(userPayload);
-
     this.router.navigateByUrl(await this.firstDestination());
   }
 

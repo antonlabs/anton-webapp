@@ -7,16 +7,19 @@
     <button class="anton-button primary">Clicca qui per andare su Binance</button>
   </a>
 </div>
+<div *ngIf="error" class="alert error mt-20px">
+  {{error}}
+</div>
 <div class="container mt-50px">
   <div class="form">
-    <form>
+    <form [formGroup]="form">
       <div>
         <label i18n>API Key</label>
-        <input type="text" class="anton-input" />
+        <input formControlName="accessKey" type="text" class="anton-input" />
       </div>
       <div>
         <label i18n>Secret Key</label>
-        <input type="text" class="anton-input" />
+        <input formControlName="secretKey" type="text" class="anton-input" />
       </div>
     </form>
   </div>
@@ -29,6 +32,6 @@
 </div>
 
 <div class="flex-row mt-30px center buttons">
-  <button class="anton-button primary" i18n>Start!</button>
-  <button class="anton-button" i18n>Skip</button>
+  <app-button [loading]="loading" i18n (click)="connectWallet()">Start!</app-button>
+  <button class="anton-button" i18n [routerLink]="['/create-wallet', 'wallet-configuration']">Skip</button>
 </div>

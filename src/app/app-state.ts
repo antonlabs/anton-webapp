@@ -2,6 +2,8 @@ import {BehaviorSubject} from "rxjs";
 import {IAMCredentials, OAuthCredentials} from "./auth/auth.service";
 import {WalletState} from "./shared/wallet.service";
 import {UserState} from "./shared/user.service";
+import { WalletModel } from "./wallet/models/wallet.model";
+import { getLiteral } from "./shared/helpers";
 
 const storageKey = 'state';
 
@@ -28,9 +30,13 @@ export class AppState {
     });
   }
 
-  static set(value: Partial<AppStateProps>) {
-    const actualValue = JSON.parse(JSON.stringify(AppState.val));
-    appState.next(new AppState({...actualValue, ...value}))
+  static set(value: Partial<AppStateProps> | any, key?: string | undefined) {
+    const actualValue = JSON.parse(JSON.stringify(key ? getLiteral(key, AppState.val) : AppState.val));
+    if (key) {
+      appState.next(new AppState({...actualValue, ...{[key]: value}}))
+    } else {
+      appState.next(new AppState({...actualValue, ...value}))
+    }
   }
 
   static get val(): AppStateProps {
@@ -48,6 +54,17 @@ export class AppState {
       return new AppState(state);
     }
     return AppState.empty();
+  }
+
+  static getWalletByName(name: string): Partial<WalletModel> | undefined {
+    return appState.value.props.wallets.filter(wallet => wallet?.name === name)[0];
+  }
+
+  static getCurrentWallet(): WalletModel | undefined {
+    if(AppState.val.currentWalletName) {
+      return AppState.getWalletByName(AppState.val.currentWalletName!) as WalletModel;
+    }
+    return undefined;
   }
 }
 

@@ -1,73 +1,41 @@
 <div class="wallet-overview">
-  <div class="reports">
-    <div class="card-plain journey">
-      <h1 i18n>Your journey</h1>
-      <app-anton-chart i18n-title title="Your journey"></app-anton-chart>
+  <div class="flex-row between mt-50px">
+    <div>
+      <h1 i18n>Your wallet</h1>
+      <h5 i18n>Take a look of your journey status in the crypto world</h5>
     </div>
-    <div class="card-plain orders">
-      <h1 i18n>Open orders</h1>
-      <img class="orders-not-found" src="/assets/orders-not-found.png">
-      <h2 i18n>Waiting for new orders...</h2>
+    <button class="anton-button telegram" i18n>
+      <ng-icon name="mat-telegram"></ng-icon>
+      Connect to Telegram
+    </button>
+  </div>
+
+  <div class="profile flex-row mt-30px">
+    <app-wallet-card style="flex: 1; width: 100%"></app-wallet-card>
+    <div class="flex-column profile-counters ml-10px">
+      <div class="flex-row">
+        <app-counter class="mr-10px" style="flex: 1" [value]="22" image="/assets/wallet.png"  i18n-description description="Wallet balance"></app-counter>
+        <app-counter style="flex: 1" [value]="22" image="/assets/binance-icon.png" i18n-description description="Binance balance"></app-counter>
+      </div>
+      <div class="flex-row mt-10px" style="flex: 1">
+        <app-counter class="mr-10px" style="flex: 1" [value]="22" icon="jam-coin" i18n-description description="Revenues"></app-counter>
+        <app-counter style="flex: 1" [value]="22" icon="mat-currency-exchange" i18n-description description="Daily Orders"></app-counter>
+      </div>
     </div>
   </div>
-  <div class="controls">
-    <div class="card-plain settings">
-      <div class="flex-row between">
-        <h1 i18n>Current settings</h1>
-        <button class="anton-button telegram" i18n>
-          <ng-icon name="mat-telegram"></ng-icon>
-          Telegram
-        </button>
-      </div>
-      <div class="flex-row between" style="height: 100%">
-        <form [formGroup]="settingsForm">
-          <div class="mt-10px">
-            <label i18n>Market</label>
-            <input class="anton-input" formControlName="market" />
-          </div>
-          <div class="mt-10px">
-            <label i18n>Budget</label>
-            <input class="anton-input" formControlName="walletBudget" />
-          </div>
-          <div class="flex-row mt-10px">
-            <label i18n>Auto increment budget</label>
-            <input type="checkbox" class="anton-input" formControlName="autoReinvest" />
-          </div>
-          <button class="anton-button primary save" i18n>Save</button>
-        </form>
-      </div>
-    </div>
-    <div class="counters">
-      <div class="card-plain counter">
-        <h1 i18n>Your wallet balance</h1>
-        <div class="flex-column center">
-          <h2>500$</h2>
-          <h5 class="plus">+10%</h5>
-        </div>
-      </div>
-      <div class="card-plain counter">
-        <h1 i18n>Binance wallet</h1>
-        <div class="flex-column center">
-          <h2>1200,00$</h2>
-          <h5 class="plus">+50%</h5>
-        </div>
-      </div>
-    </div>
 
-    <div class="card-plain blacklist-panel">
-      <h1 i18n>Blacklist symbols</h1>
-      <form class="add-blacklist-form" [formGroup]="addBlackListForm">
-        <div class="flex-row mt-30px">
-          <img src="/assets/guard.png">
-          <div style="margin-left: 10px">
-            <h3 i18n>None symbol to get out  has been added yet</h3>
-            <input i18n-placeholder placeholder="Add your symbol" class="anton-input" formControlName="symbol" />
-            <button class="anton-button primary" i18n>Add</button>
-          </div>
-        </div>
-      </form>
-    </div>
+  <div class="card-plain journey mt-10px">
+    <h4 i18n>Revenue chart</h4>
+    <app-anton-chart i18n-title title="Your journey"></app-anton-chart>
+  </div>
 
+  <div class="flex-row between mt-10px">
+    <div class="card-plain flex-column" style="flex: 1">
+      <h2 i18n>My active orders</h2>
+    </div>
+    <div class="card-plain flex-column ml-10px" style="flex: 1">
+      <h2 i18n>My active orders</h2>
+    </div>
   </div>
 
 </div>

@@ -2,7 +2,10 @@
   <form [formGroup]="form" (submit)="createWallet()">
     <h2 i18n>Wallet name</h2>
     <h4 class="mt-10px" i18n>The wallet it's used by Anton to talk with your exchange account and tell him what buy and what sell</h4>
-    <div *ngIf="error" class="alert error">{{error}}</div>
+    <div *ngIf="error" class="alert error">
+      {{error}}
+      <button class="anton-button" i18n [routerLink]="['/']">Go to wallet dashboard</button>
+    </div>
     <div class="flex-row mt-10px">
       <input type="text" class="anton-input" formControlName="name" />
       <app-button [loading]="loading" i18n>Create</app-button>

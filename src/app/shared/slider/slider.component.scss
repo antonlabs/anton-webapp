@@ -5,8 +5,6 @@ $shade-1: #d7dcdf !default;
 $shade-0: #fff !default;
 $teal: $primary-color !default;
 
-
-
 // Reset
 * {
   &,
@@ -18,11 +16,9 @@ $teal: $primary-color !default;
 
 
 .range-slider {
-  margin: 60px 0 0 0%;
 }
 
 
-// Range Slider
 $range-width: 100% !default;
 
 $range-handle-color: $shade-10 !default;
@@ -41,7 +37,7 @@ $range-label-width: 60px !default;
 
 .range-slider__range {
   -webkit-appearance: none;
-  width: calc(100% - (#{$range-label-width + 13px}));
+  width: 100%;
   height: $range-track-height;
   border-radius: 5px;
   background: $range-track-color;
@@ -86,7 +82,6 @@ $range-label-width: 60px !default;
     background: $range-handle-color-hover;
   }
 
-  // Focus state
   &:focus {
 
     &::-webkit-slider-thumb {
@@ -97,7 +92,6 @@ $range-label-width: 60px !default;
 }
 
 
-// Range Label
 .range-slider__value {
   display: inline-block;
   position: relative;
@@ -124,7 +118,6 @@ $range-label-width: 60px !default;
 }
 
 
-// Firefox Overrides
 ::-moz-range-track {
   background: $range-track-color;
   border: 0;

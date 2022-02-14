@@ -22,14 +22,14 @@ export class WalletConverter {
   static toDto(model: WalletModel) {
     return {
       name: model.name,
-      symbolMarket: 'BUSD',
-      units: 200,
+      symbolMarket: model.symbolMarket,
+      units: model.units,
       earnings: model.earnings,
       totalEarnings: model.totalEarnings,
       type: WalletType.BINANCE,
-      accessKey: model.accessKey,
-      secretKey: model.secretKey,
-      valuePerUnits: 10,
+      accessKey: model.accessKey ?? '',
+      secretKey: model.secretKey ?? '',
+      valuePerUnits: model.valuePerUnits,
       blacklist: model.blacklist
     }
   }

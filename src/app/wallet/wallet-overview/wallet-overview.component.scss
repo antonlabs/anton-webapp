@@ -10,17 +10,27 @@
   }
 }
 
-
 .wallet-overview {
   height: calc(100% - 100px);
-  padding: 15px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
 
-  .reports, .controls {
-    display: flex;
-    flex-direction: column;
+  .profile {
+    .profile-counters {
+      flex: 1;
+
+      .flex-row {
+        .card-plain {
+          flex: 1;
+        }
+      }
+    }
+  }
+
+  .journey {
+    flex: 1;
+    height: 400px;
   }
 
   .reports {
@@ -33,15 +43,6 @@
     .orders {
       h2 {
         text-align: center;
-      }
-    }
-
-    .journey {
-      padding: 15px;
-      border-radius: 5px;
-      background: $secondary-color-light;
-      h2 {
-        color: $primary-color;
       }
     }
   }

@@ -1,36 +1,14 @@
 @import "../../../styles/palette";
 
+$max-width-layout: 1000px;
+
 .wallet-layout {
   width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  .sidebar {
-    height: 100%;
-    background: $secondary-color-light;
-    flex: 1;
-    ::ng-deep{
-      .logobar {
-        padding: 15px;
-      }
-    }
-    nav {
-      margin-top: 25px;
-      li {
-        color: $primary-color-light-dark;
-        padding: 15px;
-        transition: .2s ease all;
-        cursor: pointer;
-        &.active {
-          color: $primary-color;
-        }
-        &:hover {
-          color: $primary-color;
-        }
-      }
-    }
-  }
+
   .content-wrapper {
     overflow-y: auto;
     display: flex;
@@ -38,44 +16,83 @@
     white-space: nowrap;
     overflow-x: hidden;
     flex: 9;
+
     div {
       flex: 1;
     }
 
-    .menu-bar {
-      height: 33px;
+    .menu-bar-wrapper {
       padding: 15px 25px 15px 15px;
+      background: #fff;
       display: flex;
+      justify-content: center;
       flex: 1;
-      justify-content: flex-end;
-      .wallets {
-        margin-right: 15px;
-        img {
-          height: 35px;
-          margin-right: 5px;
-        }
-      }
-      a {
-        font-size: 25px;
-        text-align: right;
-        .dropdown {
-          background: #fff;
-          transform: translateX(0);
-          li {
-            color: $primary-color-dark;
+      .menu-bar {
+        display: flex;
+        max-width: $max-width-layout;
+        justify-content: space-between;
 
-            &:hover {
+        .wallets {
+          margin-right: 15px;
+          img {
+            height: 35px;
+            margin-right: 5px;
+          }
+        }
+        nav {
+          width: 150px;
+          margin-top: 5px;
+          height: 100%;
+          h3 {
+            cursor: pointer;
+            &.active {
               color: $primary-color;
+              position: relative;
+              &:after {
+                position: absolute;
+                content: '';
+                bottom: -10px;
+                left: 0;
+                width: 100%;
+                height: 3px;
+                background: $primary-color;
+              }
+            }
+          }
+        }
+        a {
+          font-size: 25px;
+          text-align: right;
+          .dropdown {
+            background: #fff;
+            li {
+              color: $primary-color-dark;
+
+              &:hover {
+                color: $primary-color;
+              }
             }
           }
         }
       }
     }
 
+
     .content {
-      width: 100%;
+      width: $max-width-layout;
       height: 100%;
-      flex: 15;
+      margin: 0 auto;
+      flex: 35;
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) { //mobile
+  .wallet-layout {
+    .content-wrapper {
+      .content {
+        width: 90%;
+      }
     }
   }
 }

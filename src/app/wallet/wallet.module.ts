@@ -9,6 +9,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {NgIconsModule} from "@ng-icons/core";
 import { ConnectWalletComponent } from './connect-wallet/connect-wallet.component';
 import { WalletCreateLayoutComponent } from './wallet-create-layout/wallet-create-layout.component';
+import { WalletCardComponent } from './wallet-card/wallet-card.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { WalletCreateLayoutComponent } from './wallet-create-layout/wallet-creat
     WalletLayoutComponent,
     WalletOverviewComponent,
     ConnectWalletComponent,
-    WalletCreateLayoutComponent
+    WalletCreateLayoutComponent,
+    WalletCardComponent
   ],
     imports: [
         CommonModule,
