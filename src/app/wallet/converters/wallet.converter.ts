@@ -22,7 +22,7 @@ export class WalletConverter {
   static toDto(model: WalletModel) {
     return {
       name: model.name,
-      symbolMarket: model.symbolMarket,
+      symbolMarket: model.symbolMarket ?? 'BUSD',
       units: model.units,
       earnings: model.earnings,
       totalEarnings: model.totalEarnings,

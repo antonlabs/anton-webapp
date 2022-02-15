@@ -83,6 +83,10 @@ $max-width-layout: 1000px;
       height: 100%;
       margin: 0 auto;
       flex: 35;
+
+      &.fullscreen {
+        width: 100%;
+      }
     }
   }
 }

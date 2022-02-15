@@ -12,6 +12,8 @@ import { AvatarComponent } from './avatar/avatar.component';
 import { CounterComponent } from './counter/counter.component';
 import {NgIconsModule} from "@ng-icons/core";
 import { SwitchComponent } from './switch/switch.component';
+import { OrderCardComponent } from './order-card/order-card.component';
+import { SymbolCardComponent } from './symbol-card/symbol-card.component';
 
 
 
@@ -26,7 +28,9 @@ import { SwitchComponent } from './switch/switch.component';
     CashInputComponent,
     AvatarComponent,
     CounterComponent,
-    SwitchComponent
+    SwitchComponent,
+    OrderCardComponent,
+    SymbolCardComponent
   ],
     imports: [
         CommonModule,
@@ -43,7 +47,9 @@ import { SwitchComponent } from './switch/switch.component';
     CashInputComponent,
     AvatarComponent,
     CounterComponent,
-    SwitchComponent
+    SwitchComponent,
+    OrderCardComponent,
+    SymbolCardComponent
   ]
 })
 export class SharedModule { }

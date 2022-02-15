@@ -1,18 +1,33 @@
 <div class="wallet-overview">
-  <div class="flex-row between mt-50px">
+
+  <div class="flex-row between mt-50px mobile-flex-column">
     <div>
       <h1 i18n>Your wallet</h1>
       <h5 i18n>Take a look of your journey status in the crypto world</h5>
     </div>
-    <button class="anton-button telegram" i18n>
-      <ng-icon name="mat-telegram"></ng-icon>
-      Connect to Telegram
-    </button>
+    <div class="mobile-flex-row flex-row">
+      <button *ngIf="linked === false" class="anton-button link-button primary" [routerLink]="['/overview']" [queryParams]="{modal: 'setCredentials'}" i18n>
+        <ng-icon name="mat-link"></ng-icon>
+        Connect to Binance
+      </button>
+      <button *ngIf="linked === true" class="anton-button link-button primary" i18n>
+        <ng-icon name="mat-link"></ng-icon>
+        Change Credentials
+      </button>
+      <h3 *ngIf="linked === undefined" class="icon" i18n>
+        Connessione...
+      </h3>
+      <button class="anton-button telegram mobile-ml-10px ml-10px mobile-ml-0px" i18n>
+        <ng-icon name="mat-telegram"></ng-icon>
+        Connect to Telegram
+      </button>
+    </div>
+
   </div>
 
-  <div class="profile flex-row mt-30px">
+  <div class="profile flex-row mt-30px mobile-flex-column">
     <app-wallet-card style="flex: 1; width: 100%"></app-wallet-card>
-    <div class="flex-column profile-counters ml-10px">
+    <div class="flex-column profile-counters ml-10px mobile-ml-0px mobile-mt-10px" style="margin-top: 5px;">
       <div class="flex-row">
         <app-counter class="mr-10px" style="flex: 1" [value]="22" image="/assets/wallet.png"  i18n-description description="Wallet balance"></app-counter>
         <app-counter style="flex: 1" [value]="22" image="/assets/binance-icon.png" i18n-description description="Binance balance"></app-counter>
@@ -29,12 +44,22 @@
     <app-anton-chart i18n-title title="Your journey"></app-anton-chart>
   </div>
 
-  <div class="flex-row between mt-10px">
+  <div class="flex-row between mt-10px orders">
     <div class="card-plain flex-column" style="flex: 1">
-      <h2 i18n>My active orders</h2>
+      <div class="flex-row between">
+        <h2 i18n>My active orders</h2>
+      </div>
     </div>
     <div class="card-plain flex-column ml-10px" style="flex: 1">
-      <h2 i18n>My active orders</h2>
+      <div class="flex-row between">
+        <h2 i18n>My blacklist</h2>
+        <button class="anton-button icon primary" [routerLink]="['/overview']" [queryParams]="{modal: 'addToBlacklist'}">
+          <ng-icon name="jam-plus-circle-f"></ng-icon>
+        </button>
+      </div>
+      <div class="flex-column">
+        <app-symbol-card symbol="BNB"></app-symbol-card>
+      </div>
     </div>
   </div>
 

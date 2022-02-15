@@ -1,0 +1,27 @@
+@import "../../../styles/palette";
+
+.order-card {
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  &.selected, &:hover {
+    outline: 2px solid $primary-color;
+  }
+  h4 {
+    padding: 0;
+    margin-top: 8px;
+  }
+  .price {
+    border: 2px dashed;
+    border-radius: 5px;
+    padding: 5px;
+    &.buy {
+      border-color: $primary-active;
+    }
+    &.sell {
+      border-color: $primary-danger;
+    }
+  }
+}
+
+

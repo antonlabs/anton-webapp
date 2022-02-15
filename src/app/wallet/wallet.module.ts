@@ -10,6 +10,8 @@ import {NgIconsModule} from "@ng-icons/core";
 import { ConnectWalletComponent } from './connect-wallet/connect-wallet.component';
 import { WalletCreateLayoutComponent } from './wallet-create-layout/wallet-create-layout.component';
 import { WalletCardComponent } from './wallet-card/wallet-card.component';
+import { WalletOrdersComponent } from './wallet-orders/wallet-orders.component';
+import { AddToBlacklistComponent } from './add-to-blacklist/add-to-blacklist.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { WalletCardComponent } from './wallet-card/wallet-card.component';
     WalletOverviewComponent,
     ConnectWalletComponent,
     WalletCreateLayoutComponent,
-    WalletCardComponent
+    WalletCardComponent,
+    WalletOrdersComponent,
+    AddToBlacklistComponent
   ],
     imports: [
         CommonModule,

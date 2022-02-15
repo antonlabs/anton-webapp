@@ -5,16 +5,10 @@
         <div class="flex-row">
           <app-logo></app-logo>
           <nav class="flex-row ml-50px between">
-            <h3 id="overview-menu" [class]="liClass('overview')" i18n>Home</h3>
-            <h3 id="orders-menu" [class]="liClass('orders')" i18n>Orders</h3>
+            <h3 id="overview-menu" [routerLink]="['/']" [class]="liClass('overview')" i18n>Home</h3>
+            <h3 id="orders-menu" [routerLink]="['/orders']" [class]="liClass('orders')" i18n>Orders</h3>
           </nav>
         </div>
-        <a class="mr-10px">
-          <ng-icon name="jam-bell"></ng-icon>
-          <div class="dropdown">
-            <h4 i18n>No notifications</h4>
-          </div>
-        </a>
         <a>
           <app-avatar [size]="{width: '30px', height: '30px'}"></app-avatar>
           <div class="dropdown">
@@ -27,8 +21,27 @@
         </a>
       </div>
     </div>
-    <div class="content">
+    <div class="content {{endpoint === 'orders' ? 'fullscreen' : ''}}">
       <router-outlet></router-outlet>
     </div>
   </div>
 </div>
+
+<div class="anton-modal" *ngIf="currentModal">
+  <div class="dialog">
+    <button class="anton-button icon close" (click)="closeModal()">
+      <ng-icon name="jam-close"></ng-icon>
+    </button>
+    <ng-template [ngTemplateOutlet]="currentModal"></ng-template>
+  </div>
+  <div class="backdrop" (click)="closeModal()"></div>
+</div>
+
+<ng-template #setExchangeKeys>
+  <app-connect-wallet></app-connect-wallet>
+</ng-template>
+
+<ng-template #addToBlacklist>
+  <app-add-to-blacklist></app-add-to-blacklist>
+</ng-template>
+

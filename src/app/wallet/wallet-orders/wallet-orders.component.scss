@@ -1,0 +1,15 @@
+@import "../../../styles/palette";
+
+.wallet-orders {
+  height: 100%;
+  .orders-list {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+    border-right: 1px solid $primary-field-background;
+    padding: 5px;
+  }
+  .order-inspect {
+    flex: 3;
+  }
+}

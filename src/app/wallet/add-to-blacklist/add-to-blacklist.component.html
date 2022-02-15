@@ -1,0 +1,23 @@
+<h1 i18n>Add a new crypto to blacklist</h1>
+<form>
+  <div>
+    <label i18n>Crypto name</label>
+    <input class="anton-input"  formControlName="cryptoName" />
+  </div>
+  <div>
+    <label i18n>Crypto market</label>
+    <select class="anton-select" formControlName="cryptoMarket">
+      <option value="all" i18n>All</option>
+    </select>
+  </div>
+  <div class="alert warn" i18n>
+    All crypto in the blacklist will be skipped by Anton algorithm and if you have some on your spot wallet will be sold immediately
+  </div>
+  <div class="flex-row button">
+    <app-button i18n>Add</app-button>
+    <button class="anton-button" i18n>Cancel</button>
+  </div>
+</form>
+
+
+≠

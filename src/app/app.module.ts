@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgIconsModule } from '@ng-icons/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {MatCurrencyExchange, MatTelegram} from '@ng-icons/material-icons';
-import {JamArrowCircleLeftF, JamBell, JamCoin, JamUserCircle} from '@ng-icons/jam-icons';
+import {MatCurrencyExchange, MatLink, MatLinkOff, MatTelegram} from '@ng-icons/material-icons';
+import {JamArrowCircleLeftF, JamBell, JamClose, JamCoin, JamPlusCircleF, JamUserCircle} from '@ng-icons/jam-icons';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -21,6 +21,10 @@ import { HttpClientModule } from '@angular/common/http';
         JamArrowCircleLeftF,
         JamUserCircle,
         MatCurrencyExchange,
+        MatLinkOff,
+        JamClose,
+        MatLink,
+        JamPlusCircleF,
         JamBell,
         JamCoin
       }),

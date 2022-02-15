@@ -1,0 +1,4 @@
+<div class="order-card card-plain flex-row between" *ngIf="order">
+  <h4>{{order.symbol}}</h4>
+  <span class="price {{order.side.toLowerCase()}}">{{order.price}}</span>
+</div>

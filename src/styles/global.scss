@@ -99,8 +99,61 @@ li {
   }
 }
 
-$margins: 1em, 2em, 3em, 4em, 5em;
-$marginsPixels: 10px, 20px, 30px, 40px, 50px;
+
+$margins: 0em, 1em, 2em, 3em, 4em, 5em;
+$marginsPixels: 0px, 10px, 20px, 30px, 40px, 50px;
+
+@media only screen and (max-width: 768px) { //mobile
+  .mobile-flex-column {
+    display: flex;
+    flex-direction: column;
+  }
+  .mobile-flex-row {
+    display: flex;
+    flex-direction: row;
+  }
+  .mobile-w-100 {
+    width: 100%;
+  }
+
+  .mobile-w-25 {
+    width: 25%;
+  }
+  .mobile-w-50 {
+    width: 50%;
+  }
+  @each $size in $margins {
+    .mobile-mt-#{$size} {
+      margin-top: $size!important;
+    }
+    .mobile-ml-#{$size} {
+      margin-left: $size!important;
+    }
+    .mobile-mr-#{$size} {
+      margin-right: $size!important;
+    }
+    .mobile-mb-#{$size} {
+      margin-bottom: $size!important;
+    }
+  }
+
+  @each $size in $marginsPixels {
+    .mobile-mt-#{$size} {
+      margin-top: $size!important;
+    }
+    .mobile-ml-#{$size} {
+      margin-left: $size!important;
+    }
+    .mobile-mr-#{$size} {
+      margin-right: $size!important;
+    }
+    .mobile-mb-#{$size} {
+      margin-bottom: $size!important;
+    }
+  }
+
+}
+
 
 @each $size in $margins {
   .mt-#{$size} {
@@ -135,6 +188,10 @@ $marginsPixels: 10px, 20px, 30px, 40px, 50px;
 
 .w-100 {
   width: 100%;
+}
+
+.w-25 {
+  width: 25%;
 }
 
 @media(min-width: 768px){

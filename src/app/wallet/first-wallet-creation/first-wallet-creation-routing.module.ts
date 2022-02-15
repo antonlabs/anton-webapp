@@ -9,20 +9,20 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'wallet-platform'
-  },
-  {
-    path: 'wallet-platform',
-    component: WalletPlatformComponent,
-    data: {
-      stepper: 'wallet-platform'
-    }
+    redirectTo: 'wallet-name'
   },
   {
     path: 'wallet-name',
     component: WalletNameComponent,
     data: {
       stepper: 'create-wallet-name'
+    }
+  },
+  {
+    path: 'wallet-platform',
+    component: WalletPlatformComponent,
+    data: {
+      stepper: 'wallet-platform'
     }
   },
   {

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {refreshWallets} from "../../shared/helpers";
+import {AppState} from "../../app-state";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wallet-create-layout',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WalletCreateLayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+    refreshWallets();
+  }
+
+  async refreshWallets() {
   }
 
 }

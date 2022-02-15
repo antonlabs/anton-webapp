@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {apiG, getUserListItem, refreshWallets} from "./helpers";
+import {apiG, documentClient, dynamoDbClient, getUserListItem, refreshWallets} from "./helpers";
 import {WalletModel} from "../wallet/models/wallet.model";
 import {WalletConverter} from "../wallet/converters/wallet.converter";
+import {OrderModel} from "../wallet/models/order.model";
 
 export interface WalletState {
   name: string;
@@ -25,6 +26,10 @@ export class WalletService {
     })).text();
     await refreshWallets();
     return result;
+  }
+
+  async getOrders(): Promise<OrderModel[]> {
+    return (await getUserListItem<OrderModel>('WALLET')) ?? [];
   }
 
 }

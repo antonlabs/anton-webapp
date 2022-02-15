@@ -16,7 +16,15 @@
   flex-direction: column;
   justify-content: space-between;
 
+
+  .link-button, .telegram {
+    height: 40px;
+    max-width: 300px;
+    flex: 1;
+  }
+
   .profile {
+    flex: 1;
     .profile-counters {
       flex: 1;
 
@@ -28,84 +36,14 @@
     }
   }
 
+  .orders {
+    flex: 2;
+  }
+
   .journey {
     flex: 1;
-    height: 400px;
   }
 
-  .reports {
-    flex: 3;
-    .journey, .orders {
-      margin: 10px;
-      flex: 1;
-    }
-
-    .orders {
-      h2 {
-        text-align: center;
-      }
-    }
-  }
-
-  .controls {
-    flex: 1;
-    .blacklist-panel {
-      margin: 10px;
-      flex: 5;
-      overflow: hidden;
-      white-space: normal;
-    }
-    .counters {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      flex: 1;
-
-      .counter {
-        margin: 10px;
-        flex: 1;
-        text-align: center;
-        max-height: 200px;
-        h2, h5 {
-          margin: 0;
-        }
-        h2 {
-          font-size: 30px;
-        }
-        h5 {
-          font-size: 28px;
-          font-weight: bold;
-          color: $primary-active;
-        }
-      }
-    }
-
-    .settings {
-      margin: 10px;
-      flex: 5;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      form {
-        margin-right: 10px;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        flex: 2;
-        div {
-          label {
-            display: block;
-          }
-        }
-        .save {
-          position: relative;
-          bottom: 0;
-        }
-      }
-
-    }
-  }
 }
 
 @media only screen and (max-width: 768px) { //mobile

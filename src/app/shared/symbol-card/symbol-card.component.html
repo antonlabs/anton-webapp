@@ -1,0 +1,12 @@
+<div class="symbol-card card-plain flex-row between" *ngIf="_symbol">
+  <div>
+    <span>
+      <img alt="symbol-logo" [src]="imgSrc">
+      {{_symbol}}
+    </span>
+  </div>
+  <button class="anton-button icon danger">
+    <ng-icon name="jam-close"></ng-icon>
+  </button>
+
+</div>

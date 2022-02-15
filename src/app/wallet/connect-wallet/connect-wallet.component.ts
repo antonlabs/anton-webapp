@@ -1,35 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {WalletService} from "../../shared/wallet.service";
 import {AppState} from "../../app-state";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { WalletModel } from '../models/wallet.model';
+import { AntiMemLeak } from 'src/app/shared/anti-mem-leak';
+import {ModalService} from "../../modal.service";
 
 @Component({
   selector: 'app-connect-wallet',
   templateUrl: './connect-wallet.component.html',
   styleUrls: ['./connect-wallet.component.scss']
 })
-export class ConnectWalletComponent implements OnInit {
+export class ConnectWalletComponent extends AntiMemLeak implements OnInit {
 
   error: string | undefined;
   loading = false;
+  mode: 'modal' | 'page' | undefined;
 
   form = new FormGroup({
     accessKey: new FormControl('', Validators.required),
     secretKey: new FormControl('', Validators.required)
-  })
+  });
 
   constructor(
     private router: Router,
-    private walletService: WalletService
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    private walletService: WalletService,
+    public modalService: ModalService
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
+    this.sub.add(
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.mode = !!params['modal'] ? 'modal' : 'page';
+      })
+    )
   }
 
   async connectWallet() {
     this.loading = true;
     let wallet = AppState.getCurrentWallet();
+    console.log(wallet);
     if(!this.form.valid) {
       this.error = $localize`You must insert API Key and Secret key, you can click on 'Skip' if you want do it after`;
       this.loading = false;

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {WalletLayoutComponent} from "./wallet-layout/wallet-layout.component";
 import {WalletOverviewComponent} from "./wallet-overview/wallet-overview.component";
 import {WalletCreateLayoutComponent} from "./wallet-create-layout/wallet-create-layout.component";
+import { WalletOrdersComponent } from './wallet-orders/wallet-orders.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,10 @@ const routes: Routes = [
       {
         path: 'overview',
         component: WalletOverviewComponent
+      },
+      {
+        path: 'orders',
+        component: WalletOrdersComponent
       }
     ]
   }

@@ -71,6 +71,12 @@ export const refreshWallets = async <T>(): Promise<void> => {
   AppState.set({
     wallets: wallets ?? []
   });
+
+  if(!AppState.val.currentWalletName && (wallets ?? []).length > 0) {
+    AppState.set({
+      currentWalletName: wallets![0].name
+    })
+  }
 }
 
 export const getUserListItem = async <T>(param: string): Promise<T[] | undefined> => {

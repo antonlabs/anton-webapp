@@ -31,7 +31,12 @@
   </div>
 </div>
 
-<div class="flex-row mt-30px center buttons">
+<div class="flex-row mt-30px center buttons" *ngIf="mode === 'page'">
   <app-button [loading]="loading" i18n (click)="connectWallet()">Start!</app-button>
   <button class="anton-button" i18n [routerLink]="['/create-wallet', 'wallet-configuration']">Skip</button>
+</div>
+
+<div class="flex-row mt-30px center buttons" *ngIf="mode === 'modal'">
+  <app-button [loading]="loading" i18n (click)="connectWallet()">Edit</app-button>
+  <button class="anton-button" i18n (click)="modalService.closeModal()">Cancel</button>
 </div>

@@ -2,8 +2,13 @@ import {BehaviorSubject} from "rxjs";
 import {IAMCredentials, OAuthCredentials} from "./auth/auth.service";
 import {WalletState} from "./shared/wallet.service";
 import {UserState} from "./shared/user.service";
-import { WalletModel } from "./wallet/models/wallet.model";
-import { getLiteral } from "./shared/helpers";
+import {WalletModel} from "./wallet/models/wallet.model";
+import {getLiteral} from "./shared/helpers";
+import {BinanceClient} from "./core/clients/binance-client";
+import {environment} from "../environments/environment";
+import {ExchangeClient} from "./core/clients/exchange-client";
+import {WalletType} from "./wallet/enums/wallet-type.enum";
+import { TitleModel } from "./core/clients/models/title.model";
 
 const storageKey = 'state';
 
@@ -13,6 +18,7 @@ export interface AppStateProps {
   identityId: string | undefined;
   currentWalletName: string | undefined;
   wallets: Partial<WalletState>[];
+  symbols: TitleModel;
   user: Partial<UserState>;
 }
 
@@ -26,7 +32,8 @@ export class AppState {
       identityId: undefined,
       currentWalletName: undefined,
       user: {},
-      wallets: []
+      wallets: [],
+      symbols: {}
     });
   }
 
@@ -63,6 +70,17 @@ export class AppState {
   static getCurrentWallet(): WalletModel | undefined {
     if(AppState.val.currentWalletName) {
       return AppState.getWalletByName(AppState.val.currentWalletName!) as WalletModel;
+    }
+    return undefined;
+  }
+
+  static exchangeClient(): ExchangeClient | undefined {
+    if(AppState.getCurrentWallet()?.type === WalletType.BINANCE) {
+      return new BinanceClient(
+        environment.binanceEndpoint,
+        AppState.getCurrentWallet()?.accessKey ?? '',
+        AppState.getCurrentWallet()?.secretKey ?? '',
+      );
     }
     return undefined;
   }

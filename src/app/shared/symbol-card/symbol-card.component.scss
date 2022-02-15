@@ -1,0 +1,20 @@
+@import "../../../styles/palette";
+
+.symbol-card {
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  img {
+    width: 25px;
+  }
+  &.selected, &:hover {
+    outline: 2px solid $primary-color;
+  }
+  span {
+    padding: 0;
+    margin-bottom: 8px;
+    margin-left: 10px;
+    transform: translateY(-50%);
+  }
+}
+
