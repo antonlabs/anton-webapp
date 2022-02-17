@@ -10,8 +10,8 @@
         <ng-icon name="mat-link"></ng-icon>
         Connect to Binance
       </button>
-      <button *ngIf="linked === true" class="anton-button link-button primary" i18n>
-        <ng-icon name="mat-link"></ng-icon>
+      <button *ngIf="linked === true" class="anton-button link-button primary" [routerLink]="['/overview']" [queryParams]="{modal: 'setCredentials'}" i18n>
+        <ng-icon name="jam-pencil"></ng-icon>
         Change Credentials
       </button>
       <h3 *ngIf="linked === undefined" class="icon" i18n>
@@ -45,20 +45,27 @@
   </div>
 
   <div class="flex-row between mt-10px orders">
-    <div class="card-plain flex-column" style="flex: 1">
+    <div class="card-plain flex-column {{orders.length === 0 ? 'between' : ''}}" style="flex: 1">
       <div class="flex-row between">
         <h2 i18n>My active orders</h2>
       </div>
+      <img alt="guard" *ngIf="orders.length === 0" src="/assets/orders-not-found.png">
+      <h2 i18n>No orders right now </h2>
+      <div class="alert warn" i18n>
+        This list contains all those orders that Anton has just catch
+      </div>
     </div>
-    <div class="card-plain flex-column ml-10px" style="flex: 1">
-      <div class="flex-row between">
+    <div class="card-plain flex-column ml-10px blacklist {{wallet?.blacklist?.length === 0 ? 'between' : ''}}" style="flex: 1">
+      <div class="flex-row between ">
         <h2 i18n>My blacklist</h2>
         <button class="anton-button icon primary" [routerLink]="['/overview']" [queryParams]="{modal: 'addToBlacklist'}">
           <ng-icon name="jam-plus-circle-f"></ng-icon>
         </button>
       </div>
-      <div class="flex-column">
-        <app-symbol-card symbol="BNB"></app-symbol-card>
+      <img alt="guard" *ngIf="wallet?.blacklist?.length === 0" src="/assets/guard.png">
+      <h2 i18n>No symbols in blacklist</h2>
+      <div class="alert warn" i18n>
+        This list contains all those symbols that are ignored by Anton algorithm.
       </div>
     </div>
   </div>

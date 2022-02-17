@@ -37,13 +37,9 @@ export class AppState {
     });
   }
 
-  static set(value: Partial<AppStateProps> | any, key?: string | undefined) {
-    const actualValue = JSON.parse(JSON.stringify(key ? getLiteral(key, AppState.val) : AppState.val));
-    if (key) {
-      appState.next(new AppState({...actualValue, ...{[key]: value}}))
-    } else {
-      appState.next(new AppState({...actualValue, ...value}))
-    }
+  static set(value: Partial<AppStateProps> | any) {
+    const actualValue = JSON.parse(JSON.stringify(AppState.val));
+    appState.next(new AppState({...actualValue, ...value}))
   }
 
   static get val(): AppStateProps {

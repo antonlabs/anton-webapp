@@ -4,6 +4,8 @@ import {AppState} from "../app-state";
 import {environment} from "../../environments/environment";
 import {WalletModel} from "../wallet/models/wallet.model";
 import {DynamoDBDocument} from "@aws-sdk/lib-dynamodb";
+import {UserDto} from "./dto/user.dto";
+import jwtDecode from "jwt-decode";
 
 export const getLiteral = (str: string, obj: any): any => {
   return str.split('.').reduce((o, i) => (o ?? {[str]: undefined})[i], obj);
@@ -93,4 +95,16 @@ export const getUserListItem = async <T>(param: string): Promise<T[] | undefined
       ':pk': AppState.val.identityId
     }
   })).Items as T[];
+}
+
+
+export const jwtToUserDto = (jwt: string): UserDto => {
+  const data = (jwtDecode(jwt) as any);
+  return {
+    email: data.email,
+    avatar: data.picture,
+    identityId: data.identities[0].userId,
+    name: data.given_name,
+    surname: data.family_name
+  }
 }

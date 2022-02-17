@@ -4,6 +4,7 @@ import {WalletLayoutComponent} from "./wallet-layout/wallet-layout.component";
 import {WalletOverviewComponent} from "./wallet-overview/wallet-overview.component";
 import {WalletCreateLayoutComponent} from "./wallet-create-layout/wallet-create-layout.component";
 import { WalletOrdersComponent } from './wallet-orders/wallet-orders.component';
+import { ProfileLayoutComponent } from '../profile/profile-layout/profile-layout.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,13 @@ const routes: Routes = [
       {
         path: 'overview',
         component: WalletOverviewComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileLayoutComponent,
+        loadChildren: () => import('../profile/profile.module').then(
+          m => m.ProfileModule
+        )
       },
       {
         path: 'orders',

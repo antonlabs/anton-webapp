@@ -19,7 +19,7 @@ import {fromCognitoIdentityPool} from "@aws-sdk/credential-provider-cognito-iden
 import {CognitoIdentityClient} from "@aws-sdk/client-cognito-identity";
 import {UserDto} from "../shared/dto/user.dto";
 import jwtDecode from "jwt-decode";
-import {apiG, getUserItem, getUserListItem} from "../shared/helpers";
+import {apiG, getUserItem, getUserListItem, jwtToUserDto} from "../shared/helpers";
 import {UserService} from "../shared/user.service";
 
 
@@ -84,9 +84,7 @@ export class AuthService {
         response.AuthenticationResult?.RefreshToken!
       );
     }
-    const userPayload: UserDto = {
-      email: email
-    }
+    const userPayload: UserDto = jwtToUserDto((response.AuthenticationResult?.IdToken) as any);
 
     await this.loginSignal(userPayload);
 
@@ -136,15 +134,11 @@ export class AuthService {
     const response = await this.getOAuthCredentials(code);
     AppState.set({
       oauthCredentials: response,
-      user: {
-        email: jwtDecode<any>(response.id_token)?.email ?? ''
-      }
+      user: jwtToUserDto((response.id_token) as any)
     });
     await this.useRefreshToken(response.refresh_token);
 
-    const userPayload: UserDto = {
-      email: (jwtDecode(response.id_token) as any).email
-    };
+    const userPayload: UserDto = jwtToUserDto((response.id_token) as any);
 
     await this.loginSignal(userPayload);
     this.router.navigateByUrl(await this.firstDestination());

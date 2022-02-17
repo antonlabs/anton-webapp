@@ -1,0 +1,13 @@
+<div class="profile">
+  <h1 i18n>My Profile</h1>
+  <app-avatar size="100px">
+    <div class="overlay">
+      <button class="anton-button icon file-picker" (click)="filepicker.click()">
+        <input type="file" #filepicker (change)="fileChangeEvent($event)" />
+        <ng-icon name="jam-pencil"></ng-icon>
+      </button>
+    </div>
+  </app-avatar>
+
+
+</div>

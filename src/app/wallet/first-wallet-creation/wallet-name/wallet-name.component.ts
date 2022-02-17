@@ -32,7 +32,7 @@ export class WalletNameComponent implements OnInit {
     this.loading = true;
     this.redirectToDashboard = false;
     try {
-      await this.walletService.updateWallet(this.form.value);
+      await this.walletService.createWallet(this.form.value);
       AppState.set({
         currentWalletName: this.form.value.name
       });

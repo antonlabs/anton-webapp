@@ -9,15 +9,18 @@ import {AntiMemLeak} from "../anti-mem-leak";
 })
 export class AvatarComponent extends AntiMemLeak implements OnInit {
 
-  @Input() size: {width: string, height: string} = {width: '50px', height: '50px'};
-
+  @Input() fontSize: string = '40px';
+  @Input() size: string = '50px';
   avatarImage: string | undefined;
+  errorLoadingImage = false;
 
   constructor() {
     super();
   }
 
   ngOnInit(): void {
+    this.avatarImage = appState.value.props.user.avatar;
+    console.log(this.avatarImage);
     this.sub.add(appState.subscribe(state => this.avatarImage = state.props.user.avatar));
   }
 

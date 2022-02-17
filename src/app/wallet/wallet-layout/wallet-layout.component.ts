@@ -36,31 +36,27 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
       setCredentials: this.setCredentials,
       addToBlacklist: this.addToBlacklist
     }
+    this.sub.add(
+      this.router.events.subscribe(() => {
+        this.endpoint = this.router.url.split('/').splice(-1)[0];
+        this.currentModal = this.modalsRoutes[this.activatedRoute.snapshot.queryParams['modal']];
+      })
+    );
   }
 
   async ngOnInit(): Promise<void> {
     await refreshWallets();
     this.sub.add(
-      this.router.events.subscribe(() => {
-        this.endpoint = this.router.url.split('/').splice(-1)[0];
-      })
-    );
-    this.sub.add(
-      this.activatedRoute.queryParams.subscribe(queryParams => {
-        this.currentModal = this.modalsRoutes[queryParams['modal']];
-      })
-    );
-    this.sub.add(
       appState.subscribe((state) => this.checkIntegrityState(state))
     );
     this.userService.getUserInfo().then(user => {
-      AppState.set({user});
+      AppState.set(user);
     });
 
   }
 
   checkIntegrityState(state: AppState) {
-    if(state.props.wallets.length === 0) {
+    if(state.props.wallets?.length === 0) {
       this.router.navigate(['/create-wallet', 'wallet-name'])
     }
   }

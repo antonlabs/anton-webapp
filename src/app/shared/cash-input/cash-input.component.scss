@@ -1,5 +1,4 @@
 .control-row {
-  display: flex;
   justify-content: center;
   margin-top: 25px;
   input {
@@ -13,6 +12,7 @@
     height: 45px;
     border: 1px solid #C4C4C4;
     border-left: none;
+    font-size: 15px;
     border-radius: 3px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;

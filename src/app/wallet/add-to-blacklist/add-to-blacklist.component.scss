@@ -1,0 +1,9 @@
+form {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  label {
+    display: block;
+  }
+}

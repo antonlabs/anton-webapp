@@ -1,6 +1,7 @@
-<div class="avatar" [ngStyle]="size">
-  <img alt="avatar" [src]="avatarImage" onerror="this.onerror=null;this.style.display='none';"/>
-  <div class="error-avatar">
-    <h5>P</h5>
+<div class="avatar" [ngStyle]="{width: size, height: size}">
+  <div class="circle-avatar">
+    <img referrerpolicy="no-referrer" alt="avatar" *ngIf="avatarImage && !errorLoadingImage" (error)="errorLoadingImage = true" [src]="avatarImage" />
+    <ng-content></ng-content>
+    <h5 *ngIf="errorLoadingImage" [ngStyle]="{fontSize}">P</h5>
   </div>
 </div>

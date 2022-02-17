@@ -1,0 +1,33 @@
+<router-outlet></router-outlet>
+
+<div class="anton-modal" *ngIf="currentModal">
+  <div class="dialog">
+    <button class="anton-button icon close" (click)="closeModal()">
+      <ng-icon name="jam-close"></ng-icon>
+    </button>
+    <ng-template [ngTemplateOutlet]="currentModal"></ng-template>
+  </div>
+  <div class="backdrop" (click)="closeModal()"></div>
+</div>
+
+<ng-template #cropImage>
+  <div class="image-cropper-container">
+    <image-cropper
+      [imageBase64]="imageToCropBase64"
+      [maintainAspectRatio]="true"
+      [roundCropper]="true"
+      [imageQuality]="100"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded($event)"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+  </div>
+  <div class="flex-row">
+    <app-button i18n>
+      <ng-icon name="jam-pencil"></ng-icon>
+      Edit
+    </app-button>
+  </div>
+</ng-template>
+

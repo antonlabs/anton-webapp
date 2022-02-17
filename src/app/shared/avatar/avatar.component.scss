@@ -5,14 +5,14 @@
   border-radius: 100%;
   display: block;
   margin: 0 auto;
-  img {
-    width: 100%;
-  }
-  .error-avatar {
+  .circle-avatar {
     background: $primary-color;
     position: relative;
     height: 100%;
     width: 100%;
+    img {
+      width: 100%;
+    }
     h5 {
       color: #fff;
       position: absolute;

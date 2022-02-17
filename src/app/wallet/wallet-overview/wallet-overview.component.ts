@@ -4,6 +4,7 @@ import { Validators } from '@angular/forms';
 import {AppState, appState } from 'src/app/app-state';
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {WalletModel} from "../models/wallet.model";
+import {OrderModel} from "../models/order.model";
 
 @Component({
   selector: 'app-wallet-overview',
@@ -18,6 +19,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   addBlackListForm = new FormGroup({
     symbol: new FormControl('', Validators.required)
   });
+  orders: OrderModel[] = []
 
   constructor() {
     super();

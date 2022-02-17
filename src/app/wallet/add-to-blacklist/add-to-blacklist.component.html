@@ -1,5 +1,5 @@
 <h1 i18n>Add a new crypto to blacklist</h1>
-<form>
+<form [formGroup]="form" (submit)="addToBlacklist()">
   <div>
     <label i18n>Crypto name</label>
     <input class="anton-input"  formControlName="cryptoName" />
@@ -13,11 +13,11 @@
   <div class="alert warn" i18n>
     All crypto in the blacklist will be skipped by Anton algorithm and if you have some on your spot wallet will be sold immediately
   </div>
-  <div class="flex-row button">
-    <app-button i18n>Add</app-button>
-    <button class="anton-button" i18n>Cancel</button>
+  <div class="alert danger" i18n *ngIf="error">
+    {{error}}
+  </div>
+  <div class="flex-row button end">
+    <app-button [loading]="loading" i18n>Add</app-button>
+    <button (click)="modalService.closeModal()" class="anton-button" i18n>Cancel</button>
   </div>
 </form>
-
-
-≠

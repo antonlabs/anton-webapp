@@ -11,6 +11,7 @@
 }
 
 .wallet-overview {
+  min-height: 1000px;
   height: calc(100% - 100px);
   display: flex;
   flex-direction: column;
@@ -42,6 +43,10 @@
 
   .journey {
     flex: 1;
+  }
+
+  .orders {
+    text-align: center;
   }
 
 }

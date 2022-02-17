@@ -10,6 +10,7 @@ export interface UserSignupDto {
 export interface UserDto {
 	identityId?: string;
 	email: string;
+  avatar: string;
 	name?: string;
 	surname?: string;
 	chatId?: string;
