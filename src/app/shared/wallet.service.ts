@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {apiG, documentClient, dynamoDbClient, getUserListItem, refreshWallets} from "./helpers";
+import {apiG, getUserListItem, refreshWallets} from "./helpers";
 import {WalletModel} from "../wallet/models/wallet.model";
 import {WalletConverter} from "../wallet/converters/wallet.converter";
 import {OrderModel} from "../wallet/models/order.model";
-import {AppState} from "../app-state";
+import {states} from "../states/app-state";
 
 export interface WalletState {
   name: string;
@@ -23,7 +23,7 @@ export class WalletService {
   async createWallet(wallet: Partial<WalletModel>): Promise<string> {
     const result = await (await apiG('wallet', {
       method: 'POST',
-      body: JSON.stringify(WalletConverter.toDto({...AppState.getCurrentWallet(), ...wallet} as WalletModel))
+      body: JSON.stringify(WalletConverter.toDto({...states.currentWallet.val, ...wallet} as WalletModel))
     })).text();
     await refreshWallets();
     return result;
@@ -32,7 +32,7 @@ export class WalletService {
   async updateWallet(wallet: Partial<WalletModel>): Promise<string> {
     const result = await (await apiG('wallet/'+wallet.name, {
       method: 'PUT',
-      body: JSON.stringify(WalletConverter.toDto({...AppState.getCurrentWallet(), ...wallet} as WalletModel))
+      body: JSON.stringify(WalletConverter.toDto({...states.currentWallet.val, ...wallet} as WalletModel))
     })).text();
     await refreshWallets();
     return result;

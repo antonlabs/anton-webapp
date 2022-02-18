@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {getUserItem} from "./helpers";
 import {HttpClient} from "@angular/common/http";
-import { AppState } from '../app-state';
 import {firstValueFrom} from "rxjs";
+import { states } from '../states/app-state';
 
 export interface UserState {
   email: string;
@@ -24,7 +24,7 @@ export class UserService {
 
   async getGoogleInfos() {
     return firstValueFrom(
-      this.httpService.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${AppState.val.oauthCredentials.id_token}`)
+      this.httpService.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${states.oAuthCredentials.val.id_token}`)
     );
   }
 

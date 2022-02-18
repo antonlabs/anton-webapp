@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WalletService} from "../../shared/wallet.service";
-import {AppState} from "../../app-state";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import { WalletModel } from '../models/wallet.model';
 import { AntiMemLeak } from 'src/app/shared/anti-mem-leak';
 import {ModalService} from "../../modal.service";
+import { states } from 'src/app/states/app-state';
 
 @Component({
   selector: 'app-connect-wallet',
@@ -42,7 +41,7 @@ export class ConnectWalletComponent extends AntiMemLeak implements OnInit {
 
   async connectWallet() {
     this.loading = true;
-    let wallet = AppState.getCurrentWallet();
+    let wallet = states.currentWallet.val;
     console.log(wallet);
     if(!this.form.valid) {
       this.error = $localize`You must insert API Key and Secret key, you can click on 'Skip' if you want do it after`;

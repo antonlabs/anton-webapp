@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { ModalService } from 'src/app/modal.service';
+import { states } from 'src/app/states/app-state';
 import {WalletService} from "../../shared/wallet.service";
-import {AppState} from "../../app-state";
 
 @Component({
   selector: 'app-add-to-blacklist',
@@ -28,7 +28,7 @@ export class AddToBlacklistComponent implements OnInit {
   async addToBlacklist() {
     if(this.form.valid) {
       const value = this.form.value;
-      const blacklist = AppState.getCurrentWallet()?.blacklist ?? [];
+      const blacklist = states.currentWallet.val.blacklist ?? [];
       blacklist.push(value.cryptoName+value.cryptoMarket);
       this.loading = true;
       try{

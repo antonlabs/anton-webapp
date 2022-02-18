@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AppState } from 'src/app/app-state';
 import {cryptoMap} from "../../crypto-map";
 
 @Component({

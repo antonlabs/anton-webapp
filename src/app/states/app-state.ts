@@ -1,0 +1,17 @@
+import {IamCredentialsState} from './iam-credentials-state';
+import { CredentialsState } from './credentials-state';
+import {WalletState} from "./wallet-state";
+import { UserState } from './user-state';
+import {WalletsState} from "./wallets-state";
+import { ExchangeState } from './exchange-state';
+
+
+export const states = {
+  currentWallet: new WalletState('wallet-state'),
+  oAuthCredentials: new CredentialsState('oAuthCredentials'),
+  iamCredentials: new IamCredentialsState('iam-credentials-state'),
+  user: new UserState('user'),
+  wallets: new WalletsState('wallets'),
+  exchange: new ExchangeState('exchange-state')
+}
+

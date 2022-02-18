@@ -14,13 +14,12 @@ import {
 } from "@aws-sdk/client-cognito-identity-provider";
 import {environment} from 'src/environments/environment';
 import {Router} from '@angular/router';
-import {AppState} from "../app-state";
 import {fromCognitoIdentityPool} from "@aws-sdk/credential-provider-cognito-identity";
 import {CognitoIdentityClient} from "@aws-sdk/client-cognito-identity";
 import {UserDto} from "../shared/dto/user.dto";
-import jwtDecode from "jwt-decode";
 import {apiG, getUserItem, getUserListItem, jwtToUserDto} from "../shared/helpers";
 import {UserService} from "../shared/user.service";
+import { states } from '../states/app-state';
 
 
 export interface OAuthCredentials {
@@ -62,17 +61,17 @@ export class AuthService {
       }
     }));
 
-    AppState.set({
-      oauthCredentials: {
+    states.oAuthCredentials.set({
         refresh_token: response.AuthenticationResult?.RefreshToken,
         id_token: response.AuthenticationResult?.IdToken,
         expires_in: response.AuthenticationResult?.ExpiresIn,
         access_token: response.AuthenticationResult?.AccessToken
-      },
-      user: {
-        email
-      }
     });
+    states.user.set({
+      email
+    });
+
+    states.oAuthCredentials.store();
 
     if(response.ChallengeName) {
       this.router.navigate(['/auth', 'challenges', response.ChallengeName.toLowerCase()], {queryParams: {
@@ -111,7 +110,7 @@ export class AuthService {
   }
 
   public async loginSignal(userPayload: UserDto): Promise<'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME'> {
-    console.log('get user', AppState.val);
+    console.log('get user', states.user);
     // const user = await getUserItem('USER');
     const user = undefined;
     const message: 'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME' = user ? 'USER_LOGGED' : await (await apiG(
@@ -132,10 +131,9 @@ export class AuthService {
 
   public async loginWithIdpCode(code: string) {
     const response = await this.getOAuthCredentials(code);
-    AppState.set({
-      oauthCredentials: response,
-      user: jwtToUserDto((response.id_token) as any)
-    });
+    states.user.set(jwtToUserDto((response.id_token) as any));
+    states.oAuthCredentials.set(response);
+    states.oAuthCredentials.store();
     await this.useRefreshToken(response.refresh_token);
 
     const userPayload: UserDto = jwtToUserDto((response.id_token) as any);
@@ -170,22 +168,22 @@ export class AuthService {
       }
     }));
     const logins: {[key: string]: string} = {};
-    logins[`cognito-idp.${environment.region}.amazonaws.com/${environment.cognitoUserPoolId}`] = AppState.val.oauthCredentials.id_token!;
+    logins[`cognito-idp.${environment.region}.amazonaws.com/${environment.cognitoUserPoolId}`] = states.oAuthCredentials.val.id_token!;
     const credentials = await fromCognitoIdentityPool({
       accountId: environment.accountId,
       logins,
       client: this.cognitoIdentity as any,
       identityPoolId: environment.identityPoolId
     })();
-    AppState.set({
-      iamCredentials: {
+    states.iamCredentials.set({
         accessKeyId: credentials.accessKeyId,
         secretAccessKey: credentials.secretAccessKey,
         sessionToken: credentials.sessionToken
-      },
+    });
+    states.user.set({
       identityId: credentials.identityId
-    })
-    AppState.store();
+    });
+    states.user.store();
     return response;
   }
 
@@ -202,7 +200,8 @@ export class AuthService {
   }
 
   async checkIfAuthenticated(): Promise<boolean> {
-    const refreshT = AppState.val.oauthCredentials.refresh_token;
+    const refreshT = states.oAuthCredentials.val.refresh_token;
+    console.log(refreshT, states.oAuthCredentials.val);
     if(refreshT) {
       try {
         await this.useRefreshToken(refreshT);

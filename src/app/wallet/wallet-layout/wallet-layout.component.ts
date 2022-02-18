@@ -3,9 +3,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {AuthService} from "../../auth/auth.service";
 import {UserService} from "../../shared/user.service";
-import {appState, AppState} from "../../app-state";
 import {refreshWallets} from "../../shared/helpers";
 import { ModalService } from 'src/app/modal.service';
+import { states } from 'src/app/states/app-state';
+import {WalletStateProps} from "../../states/wallets-state";
 
 
 @Component({
@@ -47,22 +48,21 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
   async ngOnInit(): Promise<void> {
     await refreshWallets();
     this.sub.add(
-      appState.subscribe((state) => this.checkIntegrityState(state))
+      states.wallets.obs.subscribe((state) => this.checkIntegrityState(state))
     );
     this.userService.getUserInfo().then(user => {
-      AppState.set(user);
+      states.user.set(user);
     });
-
   }
 
-  checkIntegrityState(state: AppState) {
-    if(state.props.wallets?.length === 0) {
+  checkIntegrityState(state: WalletStateProps) {
+    if(state?.wallets?.length === 0) {
       this.router.navigate(['/create-wallet', 'wallet-name'])
     }
   }
 
   async refreshSymbols(): Promise<void> {
-    AppState.exchangeClient()?.getExchangeInfo()
+    states.exchange.getClient()?.getExchangeInfo()
   }
 
   liClass(liId: string) {

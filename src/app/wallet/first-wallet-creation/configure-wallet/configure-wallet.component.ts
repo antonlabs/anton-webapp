@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import { AppState } from 'src/app/app-state';
+import { states } from 'src/app/states/app-state';
 import {WalletService} from "../../../shared/wallet.service";
 
 export const marketsAvailable = [
@@ -32,7 +32,7 @@ export class ConfigureWalletComponent implements OnInit {
 
   async submit() {
     const formValue = this.form.value;
-    const wallet = AppState.getCurrentWallet();
+    const wallet = states.currentWallet.val;
     if (this.form.valid) {
       wallet!.units = Math.floor(formValue.investment / 50);
       wallet!.valuePerUnits = 50;
