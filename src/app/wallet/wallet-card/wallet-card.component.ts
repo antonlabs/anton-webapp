@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {marketsAvailable} from "../first-wallet-creation/configure-wallet/configure-wallet.component";
+import {WalletModel} from "../models/wallet.model";
+import {WalletService} from "../../shared/wallet.service";
 
 @Component({
   selector: 'app-wallet-card',
@@ -9,9 +11,21 @@ import {marketsAvailable} from "../first-wallet-creation/configure-wallet/config
 })
 export class WalletCardComponent implements OnInit {
   loading = false;
+  private _wallet: WalletModel | undefined;
 
-  constructor() {
+  @Input()
+  set wallet(val: WalletModel | undefined) {
+    if(val) {
+      this._wallet = val;
+      this.settingsForm = new FormGroup({
+        walletBudget: new FormControl((val.valuePerUnits ?? 0) * (val.units ?? 0), Validators.required),
+        symbolMarket: new FormControl(val.symbolMarket, Validators.required),
+        autoReinvest: new FormControl(val.autoReinvest)
+      })
+    }
   }
+
+  constructor(private walletService: WalletService) {}
 
   ngOnInit(): void {
   }
@@ -32,8 +46,21 @@ export class WalletCardComponent implements OnInit {
     return this.settingsForm.controls['autoReinvest'] as FormControl;
   }
 
-  submitWallet() {
-    console.log(this.settingsForm.value);
+  async submitWallet() {
+    this.loading = true;
+    try{
+      await this.walletService.updateWallet({
+        autoReinvest: this.settingsForm.value.autoReinvest,
+        symbolMarket: this.settingsForm.value.symbolMarket,
+        units: this.settingsForm.value.walletBudget / 50,
+        valuePerUnits: 50
+      });
+    }catch(e) {
+      console.error(e);
+    }finally {
+      this.loading = false;
+    }
+
   }
 
 }

@@ -6,6 +6,7 @@ import {WalletModel} from "../models/wallet.model";
 import {OrderModel} from "../models/order.model";
 import { state } from '@angular/animations';
 import {states} from "../../states/app-state";
+import {WalletService} from "../../shared/wallet.service";
 
 @Component({
   selector: 'app-wallet-overview',
@@ -22,7 +23,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   });
   orders: OrderModel[] = []
 
-  constructor() {
+  constructor(private walletService: WalletService) {
     super();
   }
 
@@ -30,15 +31,19 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     this.sub.add(
       states.user.obs.subscribe(state => {
         this.name = state.name;
-        this.wallet = states.currentWallet.val;
       })
     );
-    this.refreshExchangeLink();
+    this.sub.add(
+      states.currentWallet.obs.subscribe(wallet => {
+        this.wallet = wallet;
+        this.refreshExchangeLink();
+      })
+    );
   }
 
   async refreshExchangeLink() {
     try {
-      this.actualBalance = await states.exchange.getClient()?.getActualBalance('BUSD');
+      this.actualBalance = await this.walletService.getActualBalance(this.wallet!);
       this.linked = true;
     } catch(e) {
       this.linked = false;

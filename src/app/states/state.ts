@@ -28,7 +28,7 @@ export abstract class State<T> {
   }
 
   set(value: Partial<T> | any) {
-    const actualValue = JSON.parse(JSON.stringify(this.sub.value));
+    const actualValue = JSON.parse(JSON.stringify(this.sub.value ?? {}));
     this.sub.next({...actualValue, ...value});
   }
 

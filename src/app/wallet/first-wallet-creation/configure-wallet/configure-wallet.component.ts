@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { Router } from '@angular/router';
 import { states } from 'src/app/states/app-state';
 import {WalletService} from "../../../shared/wallet.service";
 
@@ -26,7 +27,10 @@ export class ConfigureWalletComponent implements OnInit {
 
   symbols = marketsAvailable;
 
-  constructor(private walletService: WalletService) { }
+  constructor(
+    private walletService: WalletService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {}
 
@@ -39,6 +43,7 @@ export class ConfigureWalletComponent implements OnInit {
       try {
         this.loading = true;
         await this.walletService.updateWallet(wallet!);
+        this.router.navigate(['/overview']);
       }catch(e) {
         this.error = $localize`Ops...you have find out an unexpected error, please retry later`;
       }finally {

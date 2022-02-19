@@ -1,5 +1,5 @@
 <div class="cash-input">
-  <app-slider (onChange)="control.setValue($event)" [min]="50" [max]="50000"></app-slider>
+  <app-slider [value]="control.value" (onChange)="control.setValue($event)" [min]="50" [max]="50000"></app-slider>
   <div class="flex-row control-row">
     <input class="anton-input" [formControl]="control" />
     <select class="anton-select">

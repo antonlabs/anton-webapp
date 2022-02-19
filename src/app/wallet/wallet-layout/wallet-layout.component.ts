@@ -41,6 +41,7 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
       this.router.events.subscribe(() => {
         this.endpoint = this.router.url.split('/').splice(-1)[0];
         this.currentModal = this.modalsRoutes[this.activatedRoute.snapshot.queryParams['modal']];
+        console.log(this.currentModal);
       })
     );
   }
@@ -53,6 +54,9 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
     this.userService.getUserInfo().then(user => {
       states.user.set(user);
     });
+    if(this.activatedRoute.snapshot.queryParams['modal']) {
+      this.currentModal = this.modalsRoutes[this.activatedRoute.snapshot.queryParams['modal']];
+    }
   }
 
   checkIntegrityState(state: WalletStateProps) {

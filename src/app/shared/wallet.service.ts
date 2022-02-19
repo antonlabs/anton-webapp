@@ -30,9 +30,10 @@ export class WalletService {
   }
 
   async updateWallet(wallet: Partial<WalletModel>): Promise<string> {
-    const result = await (await apiG('wallet/'+wallet.name, {
+    const walletPayload = {...states.currentWallet.val, ...wallet};
+    const result = await (await apiG('wallet/'+walletPayload.name, {
       method: 'PUT',
-      body: JSON.stringify(WalletConverter.toDto({...states.currentWallet.val, ...wallet} as WalletModel))
+      body: JSON.stringify(WalletConverter.toDto(walletPayload as WalletModel))
     })).text();
     await refreshWallets();
     return result;
@@ -40,6 +41,12 @@ export class WalletService {
 
   async getOrders(): Promise<OrderModel[]> {
     return (await getUserListItem<OrderModel>('WALLET')) ?? [];
+  }
+
+  async getActualBalance(wallet: WalletModel): Promise<number> {
+    return (await apiG('wallet/balance/'+wallet.name, {
+      method: 'GET'
+    })).text();
   }
 
 }

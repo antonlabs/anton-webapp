@@ -201,7 +201,6 @@ export class AuthService {
 
   async checkIfAuthenticated(): Promise<boolean> {
     const refreshT = states.oAuthCredentials.val.refresh_token;
-    console.log(refreshT, states.oAuthCredentials.val);
     if(refreshT) {
       try {
         await this.useRefreshToken(refreshT);

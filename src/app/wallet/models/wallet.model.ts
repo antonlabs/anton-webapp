@@ -8,6 +8,7 @@ export interface WalletModel {
   totalEarnings?: number;
   type?: WalletType;
   accessKey?: string;
+  autoReinvest?: boolean;
   secretKey?: string;
   valuePerUnits?: number;
   blacklist?: string[];

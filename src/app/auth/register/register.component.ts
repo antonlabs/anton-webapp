@@ -31,8 +31,8 @@ export class RegisterComponent implements OnInit {
   }
 
   public async register(data: any, component: Form): Promise<void> {
-    console.log(data, this.recaptchaV3Service);
     component.loading = true;
+    this.error = undefined;
     try {
       const token = await firstValueFrom(this.recaptchaV3Service.execute('register'));
       await this.authService.signup(data.email, token);

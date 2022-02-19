@@ -14,7 +14,7 @@ export const getLiteral = (str: string, obj: any): any => {
 const tableName = environment.name + '-' + environment.userTable;
 
 export const dynamoDbClient = () => new DynamoDBClient({
-  region: 'eu-west-1',
+  region: environment.region,
   credentials: states.iamCredentials.val
 });
 
@@ -42,7 +42,7 @@ export const apiG = (
     init.headers = new Headers();
 
   (init.headers as Headers).set('Content-Type', 'application/json');
-
+  console.log('init aws client');
   return new AwsClient({
     ...{service: 'execute-api', region: 'eu-west-1'},
     ...states.iamCredentials.val as any}
@@ -73,6 +73,12 @@ export const refreshWallets = async <T>(): Promise<void> => {
   states.wallets.set({
     wallets: wallets ?? []
   });
+
+  for(const wallet of wallets ?? []) {
+    if(wallet.name === states.currentWallet.val.name) {
+      states.currentWallet.set(wallet);
+    }
+  }
 
   if(!states.currentWallet.val.name && (wallets ?? []).length > 0) {
     states.currentWallet.set(wallets![0])

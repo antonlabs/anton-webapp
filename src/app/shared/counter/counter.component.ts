@@ -7,14 +7,16 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CounterComponent implements OnInit {
 
+  floor = Math.floor;
   @Input() icon: string | undefined;
   @Input() image: string | undefined;
-  @Input() value: number = 0;
+  @Input() value: number | undefined = 0;
   @Input() description: string | undefined;
 
   constructor() { }
 
   ngOnInit(): void {
   }
+
 
 }

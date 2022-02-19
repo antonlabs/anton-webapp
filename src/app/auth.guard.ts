@@ -18,9 +18,6 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean | UrlTree> {
-    if(states.wallets.val.wallets.length === 0) {
-      await refreshWallets();
-    }
     if(!(await this.authService.checkIfAuthenticated())) {
       this.router.navigate(['/auth']);
     }

@@ -3,12 +3,9 @@
   This operation is crucial because permits Anton to communicate with your Binance Wallet, so will tell him what to buy and what to sell
 </p>
 <div class="flex-row center">
-  <a class="link-button" href="https://www.binance.com/en/my/settings/api-management" i18n target="_blank">
-    <button class="anton-button primary">Clicca qui per andare su Binance</button>
+  <a class="link-button" href="https://www.binance.com/en/my/settings/api-management" target="_blank">
+    <button class="anton-button primary" i18n>Click here to go on Binance</button>
   </a>
-</div>
-<div *ngIf="error" class="alert error mt-20px">
-  {{error}}
 </div>
 <div class="container mt-50px">
   <div class="form">
@@ -29,6 +26,10 @@
       <iframe src="https://www.youtube.com/embed/gs8qCuZ7Xac" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
+</div>
+
+<div *ngIf="error" class="alert error mt-20px">
+  {{error}}
 </div>
 
 <div class="flex-row mt-30px center buttons" *ngIf="mode === 'page'">
