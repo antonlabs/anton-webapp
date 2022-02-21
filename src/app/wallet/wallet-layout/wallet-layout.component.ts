@@ -18,6 +18,7 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
   endpoint: string | undefined;
   @ViewChild('setExchangeKeys') setCredentials: TemplateRef<any> | undefined;
   @ViewChild('addToBlacklist') addToBlacklist: TemplateRef<any> | undefined;
+  @ViewChild('deleteBlacklistSymbol') deleteBlacklistSymbol: TemplateRef<any> | undefined;
 
   modalsRoutes: {[key: string]: TemplateRef<any> | undefined} = {};
   currentModal: TemplateRef<any> | undefined;
@@ -35,13 +36,15 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
   ngAfterViewInit(): void {
     this.modalsRoutes = {
       setCredentials: this.setCredentials,
-      addToBlacklist: this.addToBlacklist
+      addToBlacklist: this.addToBlacklist,
+      deleteBlacklistSymbol: this.deleteBlacklistSymbol
     }
+    this.endpoint = this.router.url.split('?')[0].split('/').splice(-1)[0];
     this.sub.add(
       this.router.events.subscribe(() => {
         this.endpoint = this.router.url.split('/').splice(-1)[0];
+        console.log(this.endpoint);
         this.currentModal = this.modalsRoutes[this.activatedRoute.snapshot.queryParams['modal']];
-        console.log(this.currentModal);
       })
     );
   }

@@ -1,5 +1,71 @@
+@import "../../../styles/palette";
+
 .profile-card {
   text-align: center;
+  padding: 0;
+
+  .header {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    padding: 15px;
+    color: #fff;
+    h1 {
+      color: #fff;
+      font-size: 40px;
+    }
+    background-image: linear-gradient(-37deg, $primary-active 0%, $primary-active 19%,  40%, $primary-active 66%, $primary-active 100%);
+    &.BRONZE {
+      background-image: linear-gradient(-37deg, #A67F66 0%, #C49A7F 19%, #A2795E 40%, #A47C62 66%, #EBC5A4 100%);
+    }
+    &.SILVER {
+      background-image: linear-gradient(-50deg, #9FA6AC 0%, #868C94 40%, #C4CBD1 79%, #B3BBC0 100%);
+    }
+    &.GOLD {
+      background-image: linear-gradient(-25deg, #EFDA86 0%, #C69637 40%, #FEF2AE 79%, #D3CC72 100%);
+    }
+    &.PLATINUM {
+      background-image: linear-gradient(-50deg, #70BEFF 0%, #6999DA 40%, #BAE2FF 79%, #D3E9F8 100%);
+    }
+    .budget-control {
+      font-size: 30px;
+      color: #fff;
+      text-align: center;
+      border-bottom: 3px dashed #fff;
+      width: 100px;
+      padding: 0;
+    }
+  }
+  .body {
+    padding: 10px;
+    ::ng-deep {
+      .range-slider {
+        margin-top: -20px;
+      }
+    }
+    .controls {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .control {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        .anton-select {
+          font-size: 15px;
+          min-width: 100px;
+        }
+      }
+    }
+    ::ng-deep {
+      .anton-button {
+        width: 100px;
+      }
+    }
+  }
   .flex-column {
     flex: 1;
     text-align: left;
@@ -10,3 +76,4 @@
   }
 
 }
+

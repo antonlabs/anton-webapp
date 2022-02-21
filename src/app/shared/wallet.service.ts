@@ -9,10 +9,34 @@ export interface WalletState {
   name: string;
 }
 
+
+export type WalletPlan = 'BRONZE' | 'GOLD' | 'SILVER' | 'FREE' | 'PLATINUM';
+
 @Injectable({
   providedIn: 'root'
 })
 export class WalletService {
+  markets = [
+    'BUSD',
+    'USDT',
+    'EUR'
+  ];
+
+  planFees: {[key: string]: number} = {
+    FREE: 0,
+    BRONZE: 20,
+    SILVER: 50,
+    GOLD: 75,
+    PLATINUM: 100
+  }
+
+  planBudgetInterval: {[key: string]: number[]} = {
+    FREE: [0, 500],
+    BRONZE: [500, 2000],
+    SILVER: [2000, 5000],
+    GOLD: [5000, 7000],
+    PLATINUM: [7000, 10000]
+  }
 
   constructor() {}
 
@@ -43,10 +67,31 @@ export class WalletService {
     return (await getUserListItem<OrderModel>('WALLET')) ?? [];
   }
 
+  getWalletBudget(wallet: WalletModel): number {
+    return (wallet.units ?? 0) * (wallet.valuePerUnits ?? 0);
+  }
+
+  getWalletPlan(budget: number): WalletPlan {
+    for(const planName of Object.keys(this.planBudgetInterval)) {
+      if(budget > this.planBudgetInterval[planName][0] && budget <= this.planBudgetInterval[planName][1]) {
+        return planName as WalletPlan;
+      }
+    }
+    return 'FREE';
+  }
+
   async getActualBalance(wallet: WalletModel): Promise<number> {
     return (await apiG('wallet/balance/'+wallet.name, {
       method: 'GET'
     })).text();
+  }
+
+  async deleteBlacklistSymbol(symbol: string): Promise<void> {
+    const wallet = states.currentWallet.val;
+    if(wallet) {
+      wallet.blacklist = (wallet.blacklist ?? []).filter(item => item !== symbol);
+      await this.updateWallet(wallet);
+    }
   }
 
 }

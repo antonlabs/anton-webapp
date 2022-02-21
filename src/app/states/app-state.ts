@@ -4,6 +4,7 @@ import {WalletState} from "./wallet-state";
 import { UserState } from './user-state';
 import {WalletsState} from "./wallets-state";
 import { ExchangeState } from './exchange-state';
+import {PreferencesState} from "./preferences-state";
 
 
 export const states = {
@@ -12,6 +13,7 @@ export const states = {
   iamCredentials: new IamCredentialsState('iam-credentials-state'),
   user: new UserState('user'),
   wallets: new WalletsState('wallets'),
+  preferences: new PreferencesState('preferences'),
   exchange: new ExchangeState('exchange-state')
 }
 

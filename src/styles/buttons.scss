@@ -57,6 +57,10 @@
     }
   }
 
+  &.skeleton {
+    color: $primary-color;
+  }
+
   &.danger {
     background-color: $primary-danger;
     color: $primary-danger-text;

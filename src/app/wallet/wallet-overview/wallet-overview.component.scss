@@ -19,9 +19,9 @@
 
 
   .link-button, .telegram {
-    height: 40px;
     max-width: 300px;
     flex: 1;
+    height: 43px;
   }
 
   .profile {
@@ -33,6 +33,11 @@
         .card-plain {
           flex: 1;
         }
+      }
+    }
+    ::ng-deep {
+      .profile-card {
+        height: 100%;
       }
     }
   }

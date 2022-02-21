@@ -1,6 +1,5 @@
-<button class="anton-button {{type}}">
-  <app-spinner *ngIf="loading"></app-spinner>
-  <ng-container *ngIf="!loading">
+<button class="anton-button {{loading ? 'skeleton' : ''}} {{type}}">
+  <ng-container>
     <ng-content></ng-content>
   </ng-container>
 </button>

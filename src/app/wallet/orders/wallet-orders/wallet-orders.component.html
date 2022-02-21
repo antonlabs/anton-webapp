@@ -1,7 +1,7 @@
 <div class="flex-row mobile-flex-column wallet-orders">
   <div class="orders-list">
     <h2 i18n class="mt-10px">Orders</h2>
-    <app-order-card *ngFor="let order of orders" [order]="order"></app-order-card>
+    <app-order-card [routerLink]="['/orders']" [queryParams]="{symbol: order.symbol}" *ngFor="let order of orders" [order]="order"></app-order-card>
   </div>
   <div class="order-inspect">
     <h2 i18n class="mt-10px ml-10px">Order Inspection</h2>

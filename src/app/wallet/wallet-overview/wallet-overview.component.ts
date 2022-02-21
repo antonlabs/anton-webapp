@@ -7,6 +7,8 @@ import {OrderModel} from "../models/order.model";
 import { state } from '@angular/animations';
 import {states} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
+import {refreshWallets} from "../../shared/helpers";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wallet-overview',
@@ -18,12 +20,17 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   wallet: WalletModel | undefined;
   actualBalance: number | undefined;
   linked: boolean | undefined;
+  blacklistLoading = false;
   addBlackListForm = new FormGroup({
     symbol: new FormControl('', Validators.required)
   });
+  blacklistError: string | undefined;
   orders: OrderModel[] = []
 
-  constructor(private walletService: WalletService) {
+  constructor(
+    private router: Router,
+    private walletService: WalletService
+  ) {
     super();
   }
 
@@ -47,6 +54,25 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
       this.linked = true;
     } catch(e) {
       this.linked = false;
+    }
+  }
+
+  get walletBalance(): number {
+    return ((this.wallet?.units ?? 0) * (this.wallet?.valuePerUnits ?? 0)) + (this.wallet?.totalEarnings ?? 0);
+  }
+
+  async deleteBlacklistItem(symbol: string): Promise<void> {
+    if(states.preferences.val.blacklistDeleteConfirmation) {
+      this.router.navigate(['/overview'], {queryParams: {modal: 'deleteBlacklistSymbol', symbol}})
+    }else {
+      this.blacklistLoading = true;
+      try{
+        await this.walletService.deleteBlacklistSymbol(symbol);
+      }catch(e) {
+        this.blacklistError = $localize`Ops...there are some errors during blacklist update, retry later`;
+      }finally {
+        this.blacklistLoading = false;
+      }
     }
   }
 

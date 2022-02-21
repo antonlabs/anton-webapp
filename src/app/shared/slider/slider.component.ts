@@ -10,9 +10,8 @@ import { tap } from 'rxjs';
 export class SliderComponent implements OnInit {
   @Input() min: number = 0;
   @Input() max: number = 0;
-  @Input() value: number = 15;
   @Output() onChange: EventEmitter<string> = new EventEmitter<string>();
-  fc = new FormControl(0);
+  @Input() fc = new FormControl(0);
 
   constructor() { }
 

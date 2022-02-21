@@ -4,7 +4,7 @@ import { NgIconsModule } from '@ng-icons/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {MatCurrencyExchange, MatLink, MatLinkOff, MatTelegram} from '@ng-icons/material-icons';
-import {JamArrowCircleLeftF, JamBell, JamClose, JamCoin, JamPencil, JamPlusCircleF, JamUserCircle} from '@ng-icons/jam-icons';
+import {JamArrowCircleLeftF, JamBell, JamClose, JamCoin, JamPause, JamPencil, JamPlay, JamPlusCircleF, JamUserCircle} from '@ng-icons/jam-icons';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -21,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
         JamArrowCircleLeftF,
         JamUserCircle,
         MatCurrencyExchange,
+        JamPause,
+        JamPlay,
         MatLinkOff,
         JamClose,
         JamPencil,

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {cryptoMap} from "../../crypto-map";
 
 @Component({
@@ -18,8 +18,9 @@ export class SymbolCardComponent implements OnInit {
     }
   }
 
-  @Input() market: string | undefined;
+  @Output() deleteItem = new EventEmitter<boolean>();
 
+  @Input() market: string | undefined;
 
   constructor() { }
 

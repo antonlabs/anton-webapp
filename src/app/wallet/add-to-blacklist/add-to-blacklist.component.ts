@@ -29,14 +29,19 @@ export class AddToBlacklistComponent implements OnInit {
     if(this.form.valid) {
       const value = this.form.value;
       const blacklist = states.currentWallet.val.blacklist ?? [];
-      blacklist.push(value.cryptoName+value.cryptoMarket);
-      this.loading = true;
-      try{
-        await this.walletService.updateWallet({blacklist});
-      }catch(e: any) {
-        this.error = $localize`Ops...it seems that this function is not available right now, please retry later`
-      }finally {
-        this.loading = false;
+      const symbol = value.cryptoName + '-' + value.cryptoMarket;
+      if(blacklist.filter(item => item === symbol).length === 0) {
+        blacklist.push(symbol);
+        this.loading = true;
+        try{
+          await this.walletService.updateWallet({blacklist});
+        }catch(e: any) {
+          this.error = $localize`Ops...it seems that this function is not available right now, please retry later`
+        }finally {
+          this.loading = false;
+        }
+      }else {
+        this.error = $localize`This symbol already exists`;
       }
     }else {
       this.error = $localize`You have to insert crypto name`;

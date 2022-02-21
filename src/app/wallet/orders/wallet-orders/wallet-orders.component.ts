@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {OrderModel} from "../models/order.model";
-import {OrderFills} from "../models/order-response";
+import {OrderModel} from "../../models/order.model";
 
 @Component({
   selector: 'app-wallet-orders',

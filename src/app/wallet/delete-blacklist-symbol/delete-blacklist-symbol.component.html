@@ -1,0 +1,9 @@
+<h1 i18n>Do you want delete {{symbol}} from blacklist?</h1>
+<p>This will include {{symbol}} in Anton selection algorithm</p>
+<label i18n>Don't show this popup</label>
+<app-switch [control]="neverShowThisPopup"></app-switch>
+<div class="flex-row end">
+  <app-button type="danger" [loading]="loading" (click)="delete()" i18n>Delete</app-button>
+  <button class="anton-button" (click)="modalService.closeModal()" i18n>Cancel</button>
+</div>
+

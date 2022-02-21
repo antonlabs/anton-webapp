@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import {WalletLayoutComponent} from "./wallet-layout/wallet-layout.component";
 import {WalletOverviewComponent} from "./wallet-overview/wallet-overview.component";
 import {WalletCreateLayoutComponent} from "./wallet-create-layout/wallet-create-layout.component";
-import { WalletOrdersComponent } from './wallet-orders/wallet-orders.component';
 import { ProfileLayoutComponent } from '../profile/profile-layout/profile-layout.component';
 
 const routes: Routes = [
@@ -60,7 +59,7 @@ const routes: Routes = [
       },
       {
         path: 'orders',
-        component: WalletOrdersComponent
+        loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule)
       }
     ]
   }

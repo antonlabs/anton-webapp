@@ -6,6 +6,20 @@
       <h5 i18n>Take a look of your journey status in the crypto world</h5>
     </div>
     <div class="mobile-flex-row flex-row">
+      <app-button class="mr-10px" [loading]="wallet === undefined" [type]="wallet?.running ? '' : 'active'">
+          <ng-container *ngIf="!wallet?.running">
+            <ng-icon name="jam-play"></ng-icon>
+            <span i18n>
+              Play
+            </span>
+          </ng-container>
+          <ng-container *ngIf="wallet?.running">
+            <ng-icon name="jam-pause"></ng-icon>
+            <span i18n>
+              Pause
+            </span>
+          </ng-container>
+      </app-button>
       <button *ngIf="linked === false" class="anton-button link-button primary" [routerLink]="['/overview']" [queryParams]="{modal: 'setCredentials'}" i18n>
         <ng-icon name="mat-link"></ng-icon>
         Connect to Binance
@@ -17,23 +31,24 @@
       <h3 *ngIf="linked === undefined" class="icon" i18n>
         Connessione...
       </h3>
-      <button class="anton-button telegram mobile-ml-10px ml-10px mobile-ml-0px" i18n>
+      <!--button class="anton-button telegram mobile-ml-10px ml-10px mobile-ml-0px" i18n>
         <ng-icon name="mat-telegram"></ng-icon>
         Connect to Telegram
-      </button>
+      </button-->
+
     </div>
 
   </div>
 
   <div class="profile flex-row mt-30px mobile-flex-column">
     <app-wallet-card [wallet]="wallet" style="flex: 1; width: 100%"></app-wallet-card>
-    <div class="flex-column profile-counters ml-10px mobile-ml-0px mobile-mt-10px" style="margin-top: 5px;">
+    <div class="flex-column profile-counters ml-10px mobile-ml-0px mobile-mt-10px">
       <div class="flex-row">
-        <app-counter class="mr-10px" style="flex: 1" [value]="22" image="/assets/wallet.png"  i18n-description description="Wallet balance"></app-counter>
+        <app-counter class="mr-10px" style="flex: 1" [value]="walletBalance" image="/assets/wallet.png"  i18n-description description="Wallet balance"></app-counter>
         <app-counter style="flex: 1" [value]="actualBalance" image="/assets/binance-icon.png" i18n-description description="Binance balance"></app-counter>
       </div>
       <div class="flex-row mt-10px" style="flex: 1">
-        <app-counter class="mr-10px" style="flex: 1" [value]="22" icon="jam-coin" i18n-description description="Revenues"></app-counter>
+        <app-counter class="mr-10px" style="flex: 1" [value]="wallet?.totalEarnings ?? 0" icon="jam-coin" i18n-description description="Revenues"></app-counter>
         <app-counter style="flex: 1" [value]="22" icon="mat-currency-exchange" i18n-description description="Daily Orders"></app-counter>
       </div>
     </div>
@@ -62,12 +77,15 @@
           <ng-icon name="jam-plus-circle-f"></ng-icon>
         </button>
       </div>
-      <img alt="guard" *ngIf="wallet?.blacklist?.length === 0" src="/assets/guard.png">
+      <app-symbol-card *ngFor="let symbol of (wallet?.blacklist ?? [])" [symbol]="symbol" (deleteItem)="deleteBlacklistItem(symbol)"></app-symbol-card>
+      <ng-container *ngIf="wallet?.blacklist?.length === 0">
+        <img alt="guard" src="/assets/guard.png">
+        <h2 i18n>No symbols in blacklist</h2>
+        <div class="alert warn" i18n>
+          This list contains all those symbols that are ignored by Anton algorithm.
+        </div>
+      </ng-container>
 
-      <h2 i18n>No symbols in blacklist</h2>
-      <div class="alert warn" i18n>
-        This list contains all those symbols that are ignored by Anton algorithm.
-      </div>
     </div>
   </div>
 
