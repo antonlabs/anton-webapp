@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
-import {WalletModel} from "../models/wallet.model";
+import {StrategyStateType, WalletModel} from "../models/wallet.model";
 import {OrderModel} from "../models/order.model";
 import { state } from '@angular/animations';
-import {states} from "../../states/app-state";
+import {rack} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
 import {refreshWallets} from "../../shared/helpers";
 import { Router } from '@angular/router';
+import {NotificationService} from "../../shared/notification.service";
 
 @Component({
   selector: 'app-wallet-overview',
@@ -25,25 +26,31 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     symbol: new FormControl('', Validators.required)
   });
   blacklistError: string | undefined;
+  playLoading = false;
   orders: OrderModel[] = []
+
+  strategyState = StrategyStateType;
 
   constructor(
     private router: Router,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private notificationService: NotificationService
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.sub.add(
-      states.user.obs.subscribe(state => {
+      rack.states.user.obs.subscribe(state => {
         this.name = state.name;
       })
     );
     this.sub.add(
-      states.currentWallet.obs.subscribe(wallet => {
+      rack.states.currentWallet.obs.subscribe(wallet => {
         this.wallet = wallet;
-        this.refreshExchangeLink();
+        if(this.wallet.name) {
+          this.refreshExchangeLink();
+        }
       })
     );
   }
@@ -61,8 +68,21 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     return ((this.wallet?.units ?? 0) * (this.wallet?.valuePerUnits ?? 0)) + (this.wallet?.totalEarnings ?? 0);
   }
 
+  async playStrategy() {
+    this.playLoading = true;
+    try {
+      await this.walletService.playStrategy(rack.states.currentWallet.val.name);
+      this.notificationService.success($localize`You have successful play your wallet strategy`);
+    }catch(e) {
+      this.notificationService.error($localize`Ops...you have found an error, contact us or retry later`)
+    }finally {
+      this.playLoading = false;
+    }
+
+  }
+
   async deleteBlacklistItem(symbol: string): Promise<void> {
-    if(states.preferences.val.blacklistDeleteConfirmation) {
+    if(rack.states.preferences.val.blacklistDeleteConfirmation) {
       this.router.navigate(['/overview'], {queryParams: {modal: 'deleteBlacklistSymbol', symbol}})
     }else {
       this.blacklistLoading = true;

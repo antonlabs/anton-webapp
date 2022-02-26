@@ -7,7 +7,7 @@ export class PricesConverter {
         const result: TitleModel = {};
         val.forEach(item => {
             if(item.symbol.endsWith(symbolMarket)) {
-                result[item.symbol] = Number(item.price);
+                result[item.symbol.replace(symbolMarket, '')] = Number(item.price);
             }
         });
         return result;

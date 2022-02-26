@@ -3,6 +3,8 @@
 .profile-card {
   text-align: center;
   padding: 0;
+  max-width: 500px;
+  min-width: 400px;
 
   .header {
     display: flex;
@@ -12,9 +14,19 @@
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     padding: 15px;
-    color: #fff;
-    h1 {
+    position: relative;
+
+    .settings {
+      position: absolute;
+      right: 15px;
+      top: 10px;
       color: #fff;
+    }
+
+    h1, h4 {
+      color: #fff;
+    }
+    h1 {
       font-size: 40px;
     }
     background-image: linear-gradient(-37deg, $primary-active 0%, $primary-active 19%,  40%, $primary-active 66%, $primary-active 100%);
@@ -40,10 +52,13 @@
     }
   }
   .body {
+    position: relative;
     padding: 10px;
     ::ng-deep {
       .range-slider {
         margin-top: -20px;
+        position: absolute;
+        width: 95%;
       }
     }
     .controls {

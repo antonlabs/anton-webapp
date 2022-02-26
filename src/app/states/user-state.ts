@@ -1,12 +1,11 @@
 import { UserDto } from "../shared/dto/user.dto";
-import { State } from "./state";
-import {BehaviorSubject} from "rxjs";
+import {State} from "@antonlabs/rack";
 
 export interface UserStateProperties extends UserDto {}
 
 export class UserState extends State<UserStateProperties> {
 
-  empty(): UserStateProperties {
+  onCreate(): UserStateProperties {
     return {
       identityId: undefined,
       email: '',
@@ -16,6 +15,8 @@ export class UserState extends State<UserStateProperties> {
       chatId: undefined
     };
   }
+
+  async refreshState(): Promise<void> {}
 
 
 }

@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {WalletService} from "../../../shared/wallet.service";
 import { refreshWallets } from 'src/app/shared/helpers';
-import { states } from 'src/app/states/app-state';
+import {rack} from 'src/app/states/app-state';
 
 @Component({
   selector: 'app-wallet-name',
@@ -33,13 +33,13 @@ export class WalletNameComponent implements OnInit {
     this.redirectToDashboard = false;
     try {
       await this.walletService.createWallet(this.form.value);
-      states.currentWallet.set(this.form.value);
-      states.currentWallet.store();
-      this.router.navigate(['/create-wallet', 'wallet-platform'])
+      rack.states.currentWallet.set(this.form.value);
+      rack.states.currentWallet.store();
+      this.router.navigate(['/create-wallet'])
     }catch(e: any) {
       if(JSON.parse(e).reason === 'WALLET_NUMBER_EXCEED') {
-        states.currentWallet.set(this.form.value);
-        this.error = $localize`You have another wallet already, its name is ${states.currentWallet?.val.name}`;
+        rack.states.currentWallet.set(this.form.value);
+        this.error = $localize`You have another wallet already, its name is ${rack.states.currentWallet?.val.name}`;
         this.redirectToDashboard = true;
       }else {
         this.error = $localize`Ops...you find an unexpected error, retry later`;

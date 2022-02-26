@@ -18,6 +18,7 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "@antonlabs/rack": "0.0.7",
     "@aws-sdk/client-cognito-identity": "^3.50.0",
     "@aws-sdk/client-cognito-identity-provider": "^3.50.0",
     "@aws-sdk/client-dynamodb": "^3.50.0",

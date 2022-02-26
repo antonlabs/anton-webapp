@@ -5,7 +5,7 @@
       <img *ngIf="image" alt="counter-image" [src]="image" />
     </div>
     <div class="data-col flex-column">
-      <h1>{{floor(value ?? 0)}}</h1>
+      <h1>{{sign}}{{floor(value ?? 0)}}</h1>
       <p>{{description}}</p>
     </div>
   </div>

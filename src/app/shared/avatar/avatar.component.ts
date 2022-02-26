@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { states } from 'src/app/states/app-state';
+import {rack} from 'src/app/states/app-state';
 import {AntiMemLeak} from "../anti-mem-leak";
 
 @Component({
@@ -19,8 +19,8 @@ export class AvatarComponent extends AntiMemLeak implements OnInit {
   }
 
   ngOnInit(): void {
-    this.avatarImage = states.user.val.avatar;
-    this.sub.add(states.user.obs.subscribe(state => this.avatarImage = state?.avatar));
+    this.avatarImage = rack.states.user.val.avatar;
+    this.sub.add(rack.states.user.obs.subscribe(state => this.avatarImage = state?.avatar));
   }
 
 }

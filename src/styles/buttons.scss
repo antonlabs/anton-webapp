@@ -33,6 +33,20 @@
     }
   }
 
+  &.image {
+    overflow: hidden;
+    width: 100px;
+    background: #fff;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    &:hover {
+      outline: 2px solid $primary-color;
+    }
+  }
+
   &.no-back {
     background: transparent!important;
     box-shadow: none;

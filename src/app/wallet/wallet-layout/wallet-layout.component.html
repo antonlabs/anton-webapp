@@ -15,7 +15,6 @@
           <div class="dropdown">
             <nav>
               <li [routerLink]="['/profile']" i18n>My Profile</li>
-              <li i18n>Subscriptions</li>
               <li (click)="logout()" i18n>Logout</li>
             </nav>
           </div>
@@ -25,6 +24,7 @@
     <div class="content {{endpoint === 'orders' ? 'fullscreen' : ''}}">
       <router-outlet></router-outlet>
     </div>
+    <app-footer class="mt-50px"></app-footer>
   </div>
 </div>
 
@@ -49,3 +49,15 @@
 <ng-template #deleteBlacklistSymbol>
   <app-delete-blacklist-symbol></app-delete-blacklist-symbol>
 </ng-template>
+
+
+<ng-template #walletSettings>
+  <app-wallet-settings></app-wallet-settings>
+</ng-template>
+
+<div class="notification {{currentDialog ? 'active' : ''}}">
+  <div class="speech-bubble">
+    {{currentDialog}}
+  </div>
+  <img src="/assets/notification.png">
+</div>

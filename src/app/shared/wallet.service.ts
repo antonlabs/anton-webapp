@@ -3,7 +3,7 @@ import {apiG, getUserListItem, refreshWallets} from "./helpers";
 import {WalletModel} from "../wallet/models/wallet.model";
 import {WalletConverter} from "../wallet/converters/wallet.converter";
 import {OrderModel} from "../wallet/models/order.model";
-import {states} from "../states/app-state";
+import {rack} from "../states/app-state";
 
 export interface WalletState {
   name: string;
@@ -47,18 +47,18 @@ export class WalletService {
   async createWallet(wallet: Partial<WalletModel>): Promise<string> {
     const result = await (await apiG('wallet', {
       method: 'POST',
-      body: JSON.stringify(WalletConverter.toDto({...states.currentWallet.val, ...wallet} as WalletModel))
-    })).text();
+      body: JSON.stringify(WalletConverter.toDto({...rack.states.currentWallet.val, ...wallet} as WalletModel))
+    }));
     await refreshWallets();
     return result;
   }
 
   async updateWallet(wallet: Partial<WalletModel>): Promise<string> {
-    const walletPayload = {...states.currentWallet.val, ...wallet};
-    const result = await (await apiG('wallet/'+walletPayload.name, {
+    const walletPayload = {...rack.states.currentWallet.val, ...wallet};
+    const result = await (await apiG('wallet/'+walletPayload['name'], {
       method: 'PUT',
       body: JSON.stringify(WalletConverter.toDto(walletPayload as WalletModel))
-    })).text();
+    }));
     await refreshWallets();
     return result;
   }
@@ -69,6 +69,18 @@ export class WalletService {
 
   getWalletBudget(wallet: WalletModel): number {
     return (wallet.units ?? 0) * (wallet.valuePerUnits ?? 0);
+  }
+
+  async playStrategy(walletName: string): Promise<void> {
+    return (await apiG('wallet/'+walletName+'/start' , {
+      method: 'PUT'
+    }));
+  }
+
+  async stopStrategy(walletName: string): Promise<void> {
+    return (await apiG('wallet/'+walletName+'/stop' , {
+      method: 'PUT'
+    }));
   }
 
   getWalletPlan(budget: number): WalletPlan {
@@ -83,11 +95,11 @@ export class WalletService {
   async getActualBalance(wallet: WalletModel): Promise<number> {
     return (await apiG('wallet/balance/'+wallet.name, {
       method: 'GET'
-    })).text();
+    }));
   }
 
   async deleteBlacklistSymbol(symbol: string): Promise<void> {
-    const wallet = states.currentWallet.val;
+    const wallet = rack.states.currentWallet.val;
     if(wallet) {
       wallet.blacklist = (wallet.blacklist ?? []).filter(item => item !== symbol);
       await this.updateWallet(wallet);

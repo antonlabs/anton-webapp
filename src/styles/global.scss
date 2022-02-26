@@ -10,15 +10,16 @@ html, body {
   background: $background-color;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: $primary-color-dark;
 }
 
 h1, h2, h3, h4, h5 {
   margin: 0;
+  color: $primary-color-strong-dark;
 }
 
 a {
   text-decoration: none;
-  color: $primary-color-dark;
   font-size: 15px;
   cursor: pointer;
   position: relative;

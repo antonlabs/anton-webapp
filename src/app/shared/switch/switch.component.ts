@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl} from "@angular/forms";
 
 @Component({
@@ -8,11 +8,16 @@ import {FormControl} from "@angular/forms";
 })
 export class SwitchComponent implements OnInit {
 
-  @Input() control: FormControl | undefined;
+  @Input() control: FormControl = new FormControl(true);
+  @Output() toggle = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onToggle(event: any) {
+    this.toggle.emit(event.target.checked!);
   }
 
 }

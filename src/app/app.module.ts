@@ -4,7 +4,18 @@ import { NgIconsModule } from '@ng-icons/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {MatCurrencyExchange, MatLink, MatLinkOff, MatTelegram} from '@ng-icons/material-icons';
-import {JamArrowCircleLeftF, JamBell, JamClose, JamCoin, JamPause, JamPencil, JamPlay, JamPlusCircleF, JamUserCircle} from '@ng-icons/jam-icons';
+import {
+  JamArrowCircleLeftF,
+  JamArrowCircleRightF,
+  JamBell,
+  JamClose, JamCogs,
+  JamCoin, JamFacebookCircle, JamGithubCircle, JamInstagram,
+  JamPause,
+  JamPencil,
+  JamPlay,
+  JamPlusCircleF, JamTwitterCircle,
+  JamUserCircle
+} from '@ng-icons/jam-icons';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -19,12 +30,18 @@ import { HttpClientModule } from '@angular/common/http';
       NgIconsModule.withIcons({
         MatTelegram,
         JamArrowCircleLeftF,
+        JamArrowCircleRightF,
         JamUserCircle,
         MatCurrencyExchange,
         JamPause,
         JamPlay,
         MatLinkOff,
         JamClose,
+        JamInstagram,
+        JamTwitterCircle,
+        JamGithubCircle,
+        JamCogs,
+        JamFacebookCircle,
         JamPencil,
         MatLink,
         JamPlusCircleF,

@@ -6,7 +6,7 @@
       <h5 i18n>Take a look of your journey status in the crypto world</h5>
     </div>
     <div class="mobile-flex-row flex-row">
-      <app-button class="mr-10px" [loading]="wallet === undefined" [type]="wallet?.running ? '' : 'active'">
+      <app-button *ngIf="wallet?.strategy?.state === strategyState.DEPLOYED" (click)="playStrategy()" [loading]="playLoading" class="mr-10px" [type]="wallet?.running ? '' : 'active'">
           <ng-container *ngIf="!wallet?.running">
             <ng-icon name="jam-play"></ng-icon>
             <span i18n>
@@ -26,11 +26,11 @@
       </button>
       <button *ngIf="linked === true" class="anton-button link-button primary" [routerLink]="['/overview']" [queryParams]="{modal: 'setCredentials'}" i18n>
         <ng-icon name="jam-pencil"></ng-icon>
-        Change Credentials
+        Change Keys
       </button>
-      <h3 *ngIf="linked === undefined" class="icon" i18n>
+      <app-button *ngIf="linked === undefined" [loading]="true" i18n>
         Connessione...
-      </h3>
+      </app-button>
       <!--button class="anton-button telegram mobile-ml-10px ml-10px mobile-ml-0px" i18n>
         <ng-icon name="mat-telegram"></ng-icon>
         Connect to Telegram
@@ -44,11 +44,11 @@
     <app-wallet-card [wallet]="wallet" style="flex: 1; width: 100%"></app-wallet-card>
     <div class="flex-column profile-counters ml-10px mobile-ml-0px mobile-mt-10px">
       <div class="flex-row">
-        <app-counter class="mr-10px" style="flex: 1" [value]="walletBalance" image="/assets/wallet.png"  i18n-description description="Wallet balance"></app-counter>
-        <app-counter style="flex: 1" [value]="actualBalance" image="/assets/binance-icon.png" i18n-description description="Binance balance"></app-counter>
+        <app-counter class="mr-10px" sign="$" style="flex: 1" [value]="walletBalance" image="/assets/wallet.png"  i18n-description description="Wallet balance"></app-counter>
+        <app-counter style="flex: 1" sign="$" [value]="actualBalance" image="/assets/binance-icon.png" i18n-description description="Binance balance"></app-counter>
       </div>
       <div class="flex-row mt-10px" style="flex: 1">
-        <app-counter class="mr-10px" style="flex: 1" [value]="wallet?.totalEarnings ?? 0" icon="jam-coin" i18n-description description="Revenues"></app-counter>
+        <app-counter class="mr-10px" sign="$" style="flex: 1" [value]="wallet?.totalEarnings ?? 0" icon="jam-coin" i18n-description description="Revenues"></app-counter>
         <app-counter style="flex: 1" [value]="22" icon="mat-currency-exchange" i18n-description description="Daily Orders"></app-counter>
       </div>
     </div>

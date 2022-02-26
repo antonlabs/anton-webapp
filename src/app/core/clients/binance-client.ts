@@ -8,6 +8,8 @@ import {OcoOrderModel, OrderModel} from "./models/order.model";
 import {KlineModel} from "./models/kline.model";
 import {AccountInformationConverter} from "./converters/account-information.converter";
 import {AccountInformationModel} from "./models/account-information.model";
+import { ChartPoint } from 'src/app/shared/anton-chart/anton-chart.component';
+import { UTCTimestamp } from 'lightweight-charts';
 
 export let globalExchangeInfo: any | undefined;
 
@@ -281,8 +283,8 @@ export class BinanceClient extends ExchangeClient {
         return symbols.sort((a, b) => parseFloat(b.volume) - parseFloat(a.volume)).slice(0, 20);
     }
 
-    async getHistoricalData(symbol: string, startTime?: number, endTime?: number, interval = '5m', limit = 1000): Promise<number[]> {
-        const result: number[] = [];
+    async getHistoricalData(symbol: string, startTime?: number, endTime?: number, interval = '5m', limit = 1000): Promise<ChartPoint[]> {
+        const result: ChartPoint[] = [];
         const matrix: string[][] = (await this.prepareRequest('/api/v3/klines', 'GET', false, {
             symbol,
             limit,
@@ -290,7 +292,16 @@ export class BinanceClient extends ExchangeClient {
             endTime,
             interval
         }));
-        matrix.forEach((item: string[]) => result.push(parseFloat(item[1])))
+
+        matrix.forEach((item: any[]) => {
+          const timestamp = (item[0] / 1000) as UTCTimestamp;
+          return result.push({
+            time: timestamp,
+            value: parseFloat(item[1])
+          })
+        })
+
+        console.log(result);
         return result;
     }
 

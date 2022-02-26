@@ -5,6 +5,7 @@ import {OrderResponse} from "./models/order-response";
 import {OrderModel} from "./models/order.model";
 import * as crypto from 'crypto-js';
 import * as querystring from 'querystring';
+import { ChartPoint } from "src/app/shared/anton-chart/anton-chart.component";
 
 
 export abstract class ExchangeClient {
@@ -23,8 +24,13 @@ export abstract class ExchangeClient {
         return crypto.HmacSHA256(msg, this.apiSecret).toString(crypto.enc.Hex);
     }
 
-    async prepareRequest(endpoint: string, method: string, signed: boolean, params = {}) {
+    async prepareRequest(endpoint: string, method: string, signed: boolean, params: {[key: string]: any} = {}) {
         console.log('Calling url', this.url + endpoint, signed);
+        for(const key of Object.keys(params)) {
+          if(params[key] === undefined) {
+            delete params[key];
+          }
+        }
         if (signed) {
             params = {...params, ...{timestamp: Date.now()}};
             params = {...params, ...{signature: this.signBytes(querystring.encode(params))}};
@@ -73,7 +79,7 @@ export abstract class ExchangeClient {
 
     abstract getSymbols(market: string): Promise<string[]>;
 
-    abstract getHistoricalData(symbol: string, startTime?: number, endTime?: number): Promise<number[]>;
+    abstract getHistoricalData(symbol: string, startTime?: number, endTime?: number): Promise<ChartPoint[]>;
 
     abstract getActualBalance(symbolMarket: string): Promise<number>;
 

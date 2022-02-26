@@ -11,11 +11,11 @@ const routes: Routes = [
     component: WalletCreateLayoutComponent,
     data: {
       stepper: [
-        {
+        /*{
           id: 'create-wallet-name',
           label: $localize`Choose name`,
           state: 'in-progress'
-        },
+        },*/
         {
           id: 'wallet-platform',
           label: $localize`Choose platform`,

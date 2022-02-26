@@ -1,0 +1,13 @@
+<div class="container">
+  <h2 i18n>
+    <ng-icon name="jam-cogs"></ng-icon>
+    Wallet Settings
+  </h2>
+  <form class="flex-row" [formGroup]="form" (submit)="setAlias()">
+    <input type="text" formControlName="alias" i18n-placeholder placeholder="Wallet Alias" class="anton-input" />
+    <app-button [loading]="loading" i18n>Edit</app-button>
+  </form>
+
+  <button i18n class="anton-button danger">Delete wallet</button>
+
+</div>

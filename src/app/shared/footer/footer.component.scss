@@ -1,0 +1,64 @@
+@import "../../../styles/palette";
+
+.footer {
+  background: $primary-color-dark;
+  padding: 50px;
+  padding-bottom: 10px;
+
+
+  h3 {
+    color: $primary-color;
+  }
+
+  a {
+    color: $primary-color-text;
+    margin-top: 10px;
+  }
+
+  .credits {
+    padding-top: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    span {
+      color: $primary-color;
+    }
+    a {
+      position: relative;
+      right: 0;
+    }
+  }
+
+  .socials {
+    svg {
+      font-size: 25px;
+      margin-right: 10px;
+      transition: .2s ease all;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+
+@media only screen and (max-width: 768px) { //mobile
+  .footer {
+    padding: 10px;
+    h3 {
+      font-size: 15px;
+      height: 40px;
+    }
+    .socials {
+      svg {
+        font-size: 18px;
+      }
+    }
+
+    .credits {
+      a {
+        font-size: 9px;
+      }
+    }
+  }
+}

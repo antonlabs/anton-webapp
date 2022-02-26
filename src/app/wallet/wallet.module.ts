@@ -15,15 +15,18 @@ import { DeleteBlacklistSymbolComponent } from './delete-blacklist-symbol/delete
 
 
 @NgModule({
-  declarations: [
-    WalletLayoutComponent,
-    WalletOverviewComponent,
-    ConnectWalletComponent,
-    WalletCreateLayoutComponent,
-    WalletCardComponent,
-    AddToBlacklistComponent,
-    DeleteBlacklistSymbolComponent
-  ],
+    declarations: [
+        WalletLayoutComponent,
+        WalletOverviewComponent,
+        ConnectWalletComponent,
+        WalletCreateLayoutComponent,
+        WalletCardComponent,
+        AddToBlacklistComponent,
+        DeleteBlacklistSymbolComponent
+    ],
+    exports: [
+        WalletCardComponent
+    ],
     imports: [
         CommonModule,
         WalletRoutingModule,

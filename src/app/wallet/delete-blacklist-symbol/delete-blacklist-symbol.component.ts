@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {ModalService} from "../../modal.service";
-import { states } from 'src/app/states/app-state';
 import { FormControl } from '@angular/forms';
 import {WalletService} from "../../shared/wallet.service";
+import {rack} from "../../states/app-state";
 
 @Component({
   selector: 'app-delete-blacklist-symbol',
@@ -32,8 +32,8 @@ export class DeleteBlacklistSymbolComponent extends AntiMemLeak implements OnIni
         if(!this.symbol) this.modalService.closeModal();
       })
     );
-    this.neverShowThisPopup.valueChanges.subscribe(() => states.preferences.set({
-      blacklistDeleteConfirmation: !states.preferences.val.blacklistDeleteConfirmation
+    this.neverShowThisPopup.valueChanges.subscribe(() => rack.states.preferences.set({
+      blacklistDeleteConfirmation: !rack.states.preferences.val.blacklistDeleteConfirmation
     }));
   }
 

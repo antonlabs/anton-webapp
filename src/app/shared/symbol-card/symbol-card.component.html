@@ -1,12 +1,8 @@
 <div class="symbol-card card-plain flex-row between" *ngIf="_symbol">
-  <div>
-    <span>
-      <img alt="symbol-logo" [src]="imgSrc">
-      {{_symbol}}
-    </span>
-  </div>
-  <button (click)="deleteItem.emit(true)" class="anton-button icon danger">
+  <img alt="symbol-logo" [src]="imgSrc" onerror="this.src='/assets/unknown-coin.png'">
+  <span>{{_symbol | uppercase}}</span>
+  <button *ngIf="remove" (click)="deleteItem.emit(true)" class="anton-button icon danger">
     <ng-icon name="jam-close"></ng-icon>
   </button>
-
+  <app-switch (toggle)="select.emit(_symbol)" *ngIf="selectable"></app-switch>
 </div>

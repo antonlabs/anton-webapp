@@ -4,7 +4,7 @@ import {WalletService} from "../../shared/wallet.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { AntiMemLeak } from 'src/app/shared/anti-mem-leak';
 import {ModalService} from "../../modal.service";
-import { states } from 'src/app/states/app-state';
+import {rack} from 'src/app/states/app-state';
 import { BinanceClient } from 'src/app/core/clients/binance-client';
 import { environment } from 'src/environments/environment';
 import {refreshWallets} from "../../shared/helpers";

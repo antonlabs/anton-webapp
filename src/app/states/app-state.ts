@@ -5,9 +5,10 @@ import { UserState } from './user-state';
 import {WalletsState} from "./wallets-state";
 import { ExchangeState } from './exchange-state';
 import {PreferencesState} from "./preferences-state";
+import {Rack} from "@antonlabs/rack";
 
 
-export const states = {
+export const rack = new Rack({
   currentWallet: new WalletState('wallet-state'),
   oAuthCredentials: new CredentialsState('oAuthCredentials'),
   iamCredentials: new IamCredentialsState('iam-credentials-state'),
@@ -15,5 +16,4 @@ export const states = {
   wallets: new WalletsState('wallets'),
   preferences: new PreferencesState('preferences'),
   exchange: new ExchangeState('exchange-state')
-}
-
+});

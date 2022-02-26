@@ -1,0 +1,12 @@
+
+.order-inspection {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  .chart-container {
+    min-height: 400px;
+    width: 80%;
+    max-width: 800px;
+  }
+
+}

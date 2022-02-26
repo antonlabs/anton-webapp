@@ -1,12 +1,12 @@
-import {State} from "./state";
 import {OAuthCredentials} from "../auth/auth.service";
+import {State} from "@antonlabs/rack";
 
 interface CredentialsStateProps extends OAuthCredentials {}
 
 
 export class CredentialsState extends State<CredentialsStateProps> {
 
-  empty(): CredentialsStateProps {
+  onCreate(): CredentialsStateProps {
     return {
       access_token: '',
       expires_in: 0,
@@ -15,5 +15,7 @@ export class CredentialsState extends State<CredentialsStateProps> {
       token_type: ''
     };
   }
+
+  async refreshState(): Promise<void> {}
 
 }

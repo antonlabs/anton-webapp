@@ -5,7 +5,7 @@ import {AuthService} from "../../auth/auth.service";
 import {UserService} from "../../shared/user.service";
 import {refreshWallets} from "../../shared/helpers";
 import { ModalService } from 'src/app/modal.service';
-import { states } from 'src/app/states/app-state';
+import {rack} from 'src/app/states/app-state';
 import {WalletStateProps} from "../../states/wallets-state";
 
 
@@ -18,10 +18,12 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
   endpoint: string | undefined;
   @ViewChild('setExchangeKeys') setCredentials: TemplateRef<any> | undefined;
   @ViewChild('addToBlacklist') addToBlacklist: TemplateRef<any> | undefined;
+  @ViewChild('walletSettings') walletSettings: TemplateRef<any> | undefined;
   @ViewChild('deleteBlacklistSymbol') deleteBlacklistSymbol: TemplateRef<any> | undefined;
 
   modalsRoutes: {[key: string]: TemplateRef<any> | undefined} = {};
   currentModal: TemplateRef<any> | undefined;
+  currentDialog: string | undefined;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,14 +39,16 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
     this.modalsRoutes = {
       setCredentials: this.setCredentials,
       addToBlacklist: this.addToBlacklist,
+      walletSettings: this.walletSettings,
       deleteBlacklistSymbol: this.deleteBlacklistSymbol
     }
     this.endpoint = this.router.url.split('?')[0].split('/').splice(-1)[0];
     this.sub.add(
       this.router.events.subscribe(() => {
-        this.endpoint = this.router.url.split('/').splice(-1)[0];
+        this.endpoint = this.router.url.split('?')[0].split('/').splice(-1)[0];
         console.log(this.endpoint);
         this.currentModal = this.modalsRoutes[this.activatedRoute.snapshot.queryParams['modal']];
+        this.currentDialog = this.activatedRoute.snapshot.queryParams['dialog'];
       })
     );
   }
@@ -52,24 +56,27 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
   async ngOnInit(): Promise<void> {
     await refreshWallets();
     this.sub.add(
-      states.wallets.obs.subscribe((state) => this.checkIntegrityState(state))
+      rack.states.wallets.obs.subscribe((state) => this.checkIntegrityState(state))
     );
     this.userService.getUserInfo().then(user => {
-      states.user.set(user);
+      rack.states.user.set(user);
     });
     if(this.activatedRoute.snapshot.queryParams['modal']) {
       this.currentModal = this.modalsRoutes[this.activatedRoute.snapshot.queryParams['modal']];
+    }
+    if(this.activatedRoute.snapshot.queryParams['dialog']) {
+      this.currentDialog = this.activatedRoute.snapshot.queryParams['dialog'];
     }
   }
 
   checkIntegrityState(state: WalletStateProps) {
     if(state?.wallets?.length === 0) {
-      this.router.navigate(['/create-wallet', 'wallet-name'])
+      this.router.navigate(['/create-wallet'])
     }
   }
 
   async refreshSymbols(): Promise<void> {
-    states.exchange.getClient()?.getExchangeInfo()
+    rack.states.exchange.getClient()?.getExchangeInfo()
   }
 
   liClass(liId: string) {

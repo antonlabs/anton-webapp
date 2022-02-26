@@ -11,6 +11,7 @@ export class CounterComponent implements OnInit {
   @Input() icon: string | undefined;
   @Input() image: string | undefined;
   @Input() value: number | undefined = 0;
+  @Input() sign: string | undefined;
   @Input() description: string | undefined;
 
   constructor() { }

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { Router } from '@angular/router';
-import { states } from 'src/app/states/app-state';
+import {rack} from 'src/app/states/app-state';
 import {WalletService} from "../../../shared/wallet.service";
+import {WalletModel} from "../../models/wallet.model";
+import {AntiMemLeak} from "../../../shared/anti-mem-leak";
 
 export const marketsAvailable = [
   'EUR',
@@ -16,48 +18,29 @@ export const marketsAvailable = [
   templateUrl: './configure-wallet.component.html',
   styleUrls: ['./configure-wallet.component.scss']
 })
-export class ConfigureWalletComponent implements OnInit {
+export class ConfigureWalletComponent extends AntiMemLeak implements OnInit {
   loading = false;
   error: string | undefined;
 
-  form = new FormGroup({
-    investment: new FormControl(50, [Validators.min(50), Validators.max(50000)]),
-    symbolMarket: new FormControl('EUR')
-  });
+  wallet: WalletModel | undefined;
 
   symbols = marketsAvailable;
 
   constructor(
     private walletService: WalletService,
     private router: Router
-  ) { }
+  ) {
+    super();
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sub.add(
+      rack.states.currentWallet.obs.subscribe(wallet => this.wallet = wallet)
+    );
+  }
 
   async submit() {
-    const formValue = this.form.value;
-    const wallet = states.currentWallet.val;
-    if (this.form.valid) {
-      wallet!.units = Math.floor(formValue.investment / 50);
-      wallet!.valuePerUnits = 50;
-      try {
-        this.loading = true;
-        await this.walletService.updateWallet(wallet!);
-        this.router.navigate(['/overview']);
-      }catch(e) {
-        this.error = $localize`Ops...you have find out an unexpected error, please retry later`;
-      }finally {
-        this.loading = false;
-      }
-    }else {
-      this.error = $localize`You have to insert a valid value of money`;
-    }
+    this.router.navigate(['/overview']);
   }
-
-  get control(): FormControl {
-    return this.form.controls['investment'] as FormControl;
-  }
-
-
 
 }

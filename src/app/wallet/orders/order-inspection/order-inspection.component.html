@@ -1,1 +1,17 @@
-<p>order-inspection works!</p>
+<div class="flex-column order-inspection">
+  <div class="flex-column ml-10px">
+    <div class="flex-row mt-20px">
+      <button class="anton-button image">
+        <img src="/assets/binance-logo.png" />
+      </button>
+      <button class="anton-button image ml-10px">
+        <img src="/assets/coinmarketcap.png" />
+      </button>
+    </div>
+    <div *ngIf="symbol" class="card-plain chart-container {{currentKlines ? '' : 'skeleton'}} mt-20px">
+      <app-anton-chart [line]="currentKlines"></app-anton-chart>
+    </div>
+  </div>
+
+</div>
+

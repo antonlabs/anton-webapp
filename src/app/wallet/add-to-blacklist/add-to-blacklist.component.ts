@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { ModalService } from 'src/app/modal.service';
-import { states } from 'src/app/states/app-state';
+import {rack} from 'src/app/states/app-state';
 import {WalletService} from "../../shared/wallet.service";
 
 @Component({
@@ -13,8 +13,7 @@ export class AddToBlacklistComponent implements OnInit {
   loading = false;
   error: string | undefined;
   form = new FormGroup({
-    cryptoName: new FormControl('', Validators.required),
-    cryptoMarket: new FormControl('all', Validators.required)
+    symbols: new FormControl([], Validators.required)
   });
 
   constructor(
@@ -23,12 +22,17 @@ export class AddToBlacklistComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.symbolsFormControl.valueChanges.subscribe(console.log);
+  }
+
+  get symbolsFormControl(): FormControl {
+    return this.form.controls['symbols'] as FormControl;
   }
 
   async addToBlacklist() {
     if(this.form.valid) {
       const value = this.form.value;
-      const blacklist = states.currentWallet.val.blacklist ?? [];
+      const blacklist = rack.states.currentWallet.val.blacklist ?? [];
       const symbol = value.cryptoName + '-' + value.cryptoMarket;
       if(blacklist.filter(item => item === symbol).length === 0) {
         blacklist.push(symbol);

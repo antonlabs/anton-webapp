@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../../shared/shared.module";
 import { ConfigureWalletComponent } from './configure-wallet/configure-wallet.component';
 import { WalletPlatformComponent } from './wallet-platform/wallet-platform.component';
+import {WalletModule} from "../wallet.module";
 
 
 @NgModule({
@@ -15,11 +16,12 @@ import { WalletPlatformComponent } from './wallet-platform/wallet-platform.compo
     ConfigureWalletComponent,
     WalletPlatformComponent
   ],
-  imports: [
-    CommonModule,
-    FirstWalletCreationRoutingModule,
-    ReactiveFormsModule,
-    SharedModule
-  ]
+    imports: [
+        CommonModule,
+        FirstWalletCreationRoutingModule,
+        ReactiveFormsModule,
+        SharedModule,
+        WalletModule
+    ]
 })
 export class FirstWalletCreationModule { }

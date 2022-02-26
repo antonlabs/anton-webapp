@@ -14,6 +14,9 @@ import {NgIconsModule} from "@ng-icons/core";
 import { SwitchComponent } from './switch/switch.component';
 import { OrderCardComponent } from './order-card/order-card.component';
 import { SymbolCardComponent } from './symbol-card/symbol-card.component';
+import { SymbolsListComponent } from './symbols-list/symbols-list.component';
+import { FooterComponent } from './footer/footer.component';
+import { WalletSettingsComponent } from './wallet-settings/wallet-settings.component';
 
 
 
@@ -30,26 +33,32 @@ import { SymbolCardComponent } from './symbol-card/symbol-card.component';
     CounterComponent,
     SwitchComponent,
     OrderCardComponent,
-    SymbolCardComponent
+    SymbolCardComponent,
+    SymbolsListComponent,
+    FooterComponent,
+    WalletSettingsComponent
   ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
         NgIconsModule
     ],
-  exports: [
-    LogoComponent,
-    AntonChartComponent,
-    SpinnerComponent,
-    ButtonComponent,
-    StepperComponent,
-    SliderComponent,
-    CashInputComponent,
-    AvatarComponent,
-    CounterComponent,
-    SwitchComponent,
-    OrderCardComponent,
-    SymbolCardComponent
-  ]
+    exports: [
+        LogoComponent,
+        AntonChartComponent,
+        SpinnerComponent,
+        ButtonComponent,
+        StepperComponent,
+        SliderComponent,
+        CashInputComponent,
+        AvatarComponent,
+        CounterComponent,
+        SwitchComponent,
+        OrderCardComponent,
+        SymbolCardComponent,
+        SymbolsListComponent,
+        FooterComponent,
+        WalletSettingsComponent
+    ]
 })
 export class SharedModule { }

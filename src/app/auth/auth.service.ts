@@ -5,7 +5,6 @@ import {
   AuthFlowType,
   ChallengeNameType,
   ChangePasswordCommandOutput,
-  CognitoIdentityProviderClient,
   ForgotPasswordCommand,
   ForgotPasswordResponse,
   InitiateAuthCommand,
@@ -15,11 +14,10 @@ import {
 import {environment} from 'src/environments/environment';
 import {Router} from '@angular/router';
 import {fromCognitoIdentityPool} from "@aws-sdk/credential-provider-cognito-identity";
-import {CognitoIdentityClient} from "@aws-sdk/client-cognito-identity";
 import {UserDto} from "../shared/dto/user.dto";
-import {apiG, getUserItem, getUserListItem, jwtToUserDto} from "../shared/helpers";
+import {apiG, cognito, cognitoIdentity, getUserListItem, jwtToUserDto} from "../shared/helpers";
 import {UserService} from "../shared/user.service";
-import { states } from '../states/app-state';
+import {rack} from '../states/app-state';
 
 
 export interface OAuthCredentials {
@@ -42,9 +40,6 @@ export interface IAMCredentials {
 })
 export class AuthService {
 
-  cognito = new CognitoIdentityProviderClient({region: environment.region});
-  cognitoIdentity = new CognitoIdentityClient({region: environment.region});
-
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -52,7 +47,7 @@ export class AuthService {
   ) { }
 
   public async login(email: string, password: string): Promise<InitiateAuthCommandOutput> {
-    const response = await this.cognito.send(new InitiateAuthCommand({
+    const response = await cognito.send(new InitiateAuthCommand({
       AuthFlow: AuthFlowType.USER_PASSWORD_AUTH,
       ClientId: environment.cognitoAppClientId,
       AuthParameters: {
@@ -61,17 +56,17 @@ export class AuthService {
       }
     }));
 
-    states.oAuthCredentials.set({
+    rack.states.oAuthCredentials.set({
         refresh_token: response.AuthenticationResult?.RefreshToken,
         id_token: response.AuthenticationResult?.IdToken,
         expires_in: response.AuthenticationResult?.ExpiresIn,
         access_token: response.AuthenticationResult?.AccessToken
     });
-    states.user.set({
+    rack.states.user.set({
       email
     });
 
-    states.oAuthCredentials.store();
+    rack.states.oAuthCredentials.store();
 
     if(response.ChallengeName) {
       this.router.navigate(['/auth', 'challenges', response.ChallengeName.toLowerCase()], {queryParams: {
@@ -110,14 +105,14 @@ export class AuthService {
   }
 
   public async loginSignal(userPayload: UserDto): Promise<'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME'> {
-    console.log('get user', states.user);
+    console.log('get user', rack.states.user);
     // const user = await getUserItem('USER');
     const user = undefined;
     const message: 'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME' = user ? 'USER_LOGGED' : await (await apiG(
       'user/login', {
         method: 'POST',
         body: JSON.stringify(userPayload)
-      })).text() as 'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME';
+      })) as 'USER_LOGGED' | 'USER_LOGGED_FIRST_TIME';
     return message;
   }
 
@@ -131,9 +126,9 @@ export class AuthService {
 
   public async loginWithIdpCode(code: string) {
     const response = await this.getOAuthCredentials(code);
-    states.user.set(jwtToUserDto((response.id_token) as any));
-    states.oAuthCredentials.set(response);
-    states.oAuthCredentials.store();
+    rack.states.user.set(jwtToUserDto((response.id_token) as any));
+    rack.states.oAuthCredentials.set(response);
+    rack.states.oAuthCredentials.store();
     await this.useRefreshToken(response.refresh_token);
 
     const userPayload: UserDto = jwtToUserDto((response.id_token) as any);
@@ -153,14 +148,14 @@ export class AuthService {
   }
 
   public recoveryPassword(email: string): Promise<ForgotPasswordResponse> {
-    return this.cognito.send(new ForgotPasswordCommand({
+    return cognito.send(new ForgotPasswordCommand({
       ClientId: environment.cognitoAppClientId,
       Username: email
     }))
   }
 
   public async useRefreshToken(refreshToken: string): Promise<InitiateAuthCommandOutput> {
-    const response = await this.cognito.send(new InitiateAuthCommand({
+    const response = await cognito.send(new InitiateAuthCommand({
       AuthFlow: AuthFlowType.REFRESH_TOKEN_AUTH,
       ClientId: environment.cognitoAppClientId,
       AuthParameters: {
@@ -168,27 +163,27 @@ export class AuthService {
       }
     }));
     const logins: {[key: string]: string} = {};
-    logins[`cognito-idp.${environment.region}.amazonaws.com/${environment.cognitoUserPoolId}`] = states.oAuthCredentials.val.id_token!;
+    logins[`cognito-idp.${environment.region}.amazonaws.com/${environment.cognitoUserPoolId}`] = rack.states.oAuthCredentials.val.id_token!;
     const credentials = await fromCognitoIdentityPool({
       accountId: environment.accountId,
       logins,
-      client: this.cognitoIdentity as any,
+      client: cognitoIdentity as any,
       identityPoolId: environment.identityPoolId
     })();
-    states.iamCredentials.set({
+    rack.states.iamCredentials.set({
         accessKeyId: credentials.accessKeyId,
         secretAccessKey: credentials.secretAccessKey,
         sessionToken: credentials.sessionToken
     });
-    states.user.set({
+    rack.states.user.set({
       identityId: credentials.identityId
     });
-    states.user.store();
+    rack.states.user.store();
     return response;
   }
 
   public async confirmNewPassword(username: string, newPassword: string, session: string): Promise<ChangePasswordCommandOutput> {
-    return this.cognito.send(new RespondToAuthChallengeCommand({
+    return cognito.send(new RespondToAuthChallengeCommand({
       ChallengeName: ChallengeNameType.NEW_PASSWORD_REQUIRED,
       ClientId: environment.cognitoAppClientId,
       Session: session,
@@ -200,7 +195,7 @@ export class AuthService {
   }
 
   async checkIfAuthenticated(): Promise<boolean> {
-    const refreshT = states.oAuthCredentials.val.refresh_token;
+    const refreshT = rack.states.oAuthCredentials.val.refresh_token;
     if(refreshT) {
       try {
         await this.useRefreshToken(refreshT);

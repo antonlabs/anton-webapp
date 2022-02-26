@@ -1,3 +1,10 @@
+@import "../../../styles/palette";
+
 .anton-button {
   width: 100%;
+
+  &.disabled {
+    background: $primary-field-background;
+    cursor: not-allowed;
+  }
 }

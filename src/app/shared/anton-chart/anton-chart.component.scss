@@ -2,5 +2,13 @@
 
 .chart {
   height: 100%;
+  max-height: 100%;
   width: 100%;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+  margin-top: 15px;
 }

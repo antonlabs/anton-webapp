@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {marketsAvailable} from "../first-wallet-creation/configure-wallet/configure-wallet.component";
 import {WalletModel} from "../models/wallet.model";
 import {WalletPlan, WalletService} from "../../shared/wallet.service";
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import { Subscription } from 'rxjs';
+import {NotificationService} from "../../shared/notification.service";
 
 
 @Component({
@@ -31,7 +32,13 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
     }
   }
 
-  constructor(public walletService: WalletService) {
+  @Output() submit = new EventEmitter<string>();
+  @Output() error = new EventEmitter<string>();
+
+  constructor(
+    public walletService: WalletService,
+    private notificationService: NotificationService
+  ) {
     super();
   }
 
@@ -67,14 +74,16 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
 
   async submitWallet() {
     this.loading = true;
-    try{
-      await this.walletService.updateWallet({
+    try {
+      this.submit.emit(await this.walletService.updateWallet({
         autoReinvest: this.settingsForm.value.autoReinvest,
         symbolMarket: this.settingsForm.value.symbolMarket,
         units: this.settingsForm.value.walletBudget / 50,
         valuePerUnits: 50
-      });
-    }catch(e) {
+      }));
+      this.notificationService.success($localize`You successfully updated this wallet!`);
+    }catch(e: any) {
+      this.error.emit($localize`Ops there are some errors, retry later`);
       console.error(e);
     }finally {
       this.loading = false;

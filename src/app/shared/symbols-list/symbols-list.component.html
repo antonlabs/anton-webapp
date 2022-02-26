@@ -1,0 +1,27 @@
+<div class="symbols-list">
+  <form class="mt-10px" [formGroup]="searchForm">
+    <input formControlName="symbol" placeholder="Search crypto..." class="anton-input" type="text" />
+  </form>
+  <div class="body">
+    <app-symbol-card
+      *ngFor="let symbol of pages[currentPageIndex]"
+      (select)="pushSymbol($event)"
+      [remove]="false"
+      [selectable]="true"
+      [symbol]="symbol"></app-symbol-card>
+  </div>
+  <ul class="paginator">
+    <button type="button" class="anton-button icon" (click)="currentPageIndex = (currentPageIndex - 1 < 0 ? 0 : currentPageIndex - 1)">
+      <ng-icon name="jam-arrow-circle-left-f"></ng-icon>
+    </button>
+    <li
+      (click)="currentPageIndex = currentPageIndex + i"
+      class="page__numbers {{i === 0 ? 'active' : ''}}"
+      *ngFor="let page of pages.slice(currentPageIndex, currentPageIndex + 3); let i=index;">
+      {{currentPageIndex + i + 1}}
+    </li>
+    <button type="button" class="anton-button icon" (click)="currentPageIndex = (currentPageIndex + 1 > pages.length ? pages.length : currentPageIndex + 1)">
+      <ng-icon name="jam-arrow-circle-right-f"></ng-icon>
+    </button>
+  </ul>
+</div>

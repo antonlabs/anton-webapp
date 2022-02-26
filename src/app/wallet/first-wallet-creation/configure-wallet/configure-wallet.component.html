@@ -1,12 +1,11 @@
 <h1 i18n>How much you wanna invest?</h1>
 
-<form [formGroup]="form" (submit)="submit()">
-  <app-cash-input [symbols]="symbols" [control]="control"></app-cash-input>
-  <div class="alert error" *ngIf="error">
-    {{error}}
-  </div>
+<div class="w-100 flex-column mt-40px">
   <div class="flex-row center">
-    <app-button [loading]="loading" i18n>Start</app-button>
+    <app-wallet-card (submit)="submit()" (error)="error=$event" [wallet]="wallet"></app-wallet-card>
   </div>
-</form>
+  <div class="alert error" *ngIf="error">{{error}}</div>
+</div>
+<button class="anton-button" style="display: block; margin: 0 auto; margin-top: 10px" i18n [routerLink]="['/']">Skip</button>
+
 

@@ -1,8 +1,10 @@
 <div class="profile-card card-plain flex-column">
   <div class="header {{walletPlan}}">
-    <h4 i18n>Wallet's budget</h4>
-
+    <h4 i18n>How much you wanna invest?</h4>
     <h1>$<input type="text" class="anton-input dashed budget-control" [formControl]="walletBudgetControl" [value]="walletBudgetControl.value"></h1>
+    <button class="anton-button icon settings" [routerLink]="['/overview']" [queryParams]="{modal: 'walletSettings'}">
+      <ng-icon name="jam-cogs"></ng-icon>
+    </button>
   </div>
   <div class="body">
     <app-slider class="slider" [fc]="walletBudgetControl" (onChange)="walletBudgetControl.setValue($event)" [min]="50" [max]="walletService.planBudgetInterval['PLATINUM'][1]"></app-slider>
@@ -22,8 +24,12 @@
         </select>
       </div>
     </div>
-    <div class="flex-row center mt-20px">
-      <app-button (click)="submitWallet()" [loading]="loading" i18n>Save</app-button>
+
+    <div *ngIf="walletBudgetControl.value > 500" class="alert warn mt-20px" i18n>
+      This is the beta version, you can invest up to 500$
+    </div>
+    <div *ngIf="walletBudgetControl.value <= 500" class="flex-row center mt-20px">
+      <app-button (click)="walletBudgetControl.value <= 500 ? submitWallet() : null" [disabled]="walletBudgetControl.value > 500" [loading]="loading" i18n>Save</app-button>
     </div>
   </div>
 

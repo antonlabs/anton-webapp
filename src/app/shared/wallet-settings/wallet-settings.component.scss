@@ -1,0 +1,9 @@
+.container {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  h2 {
+    width: 200px;
+  }
+}
