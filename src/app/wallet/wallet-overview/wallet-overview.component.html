@@ -1,6 +1,11 @@
 <div class="wallet-overview">
-
-  <div class="flex-row between mt-50px mobile-flex-column">
+  <div class="flex-row center mt-50px">
+    <div *ngIf="wallet?.strategy?.state === strategyState.DEPLOYING" class="creating-wallet alert warn enable-dropdown text-center">
+      <img src="/assets/creating-wallet.svg" width="50" style="margin-top: -10px" />
+      <h2 i18n>Anton is creating your wallet...</h2>
+    </div>
+  </div>
+  <div class="flex-row between mobile-flex-column">
     <div>
       <h1 i18n>Your wallet</h1>
       <h5 i18n>Take a look of your journey status in the crypto world</h5>
@@ -55,11 +60,11 @@
   </div>
 
   <div class="card-plain journey mt-10px">
-    <h4 i18n>Revenue chart</h4>
+    <h2 i18n>Revenue chart</h2>
     <app-anton-chart i18n-title title="Your journey"></app-anton-chart>
   </div>
 
-  <div class="flex-row between mt-10px orders">
+  <div class="flex-row between mt-10px orders mobile-flex-column">
     <div class="card-plain flex-column {{orders.length === 0 ? 'between' : ''}}" style="flex: 1">
       <div class="flex-row between">
         <h2 i18n>My active orders</h2>
@@ -70,7 +75,7 @@
         This list contains all those orders that Anton has just catch
       </div>
     </div>
-    <div class="card-plain flex-column ml-10px blacklist {{wallet?.blacklist?.length === 0 ? 'between' : ''}}" style="flex: 1">
+    <div class="card-plain flex-column ml-10px blacklist mobile-ml-0px mobile-mt-10px {{wallet?.blacklist?.length === 0 ? 'between' : ''}}" style="flex: 1">
       <div class="flex-row between ">
         <h2 i18n>My blacklist</h2>
         <button class="anton-button icon primary" [routerLink]="['/overview']" [queryParams]="{modal: 'addToBlacklist'}">

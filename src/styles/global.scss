@@ -23,7 +23,13 @@ a {
   font-size: 15px;
   cursor: pointer;
   position: relative;
+}
 
+.text-center {
+  text-align: center;
+}
+
+.enable-dropdown {
   .dropdown {
     display: none;
   }
@@ -226,4 +232,5 @@ $marginsPixels: 0px, 10px, 20px, 30px, 40px, 50px;
     background-position: right -40px top 0;
   }
 }
+
 

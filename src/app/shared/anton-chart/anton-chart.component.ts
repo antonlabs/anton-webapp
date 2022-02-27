@@ -48,9 +48,9 @@ export class AntonChartComponent implements OnInit, AfterViewInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     const chartContainer = document.getElementById(this.id)!;
-    const width = chartContainer.offsetWidth;
+    const width = chartContainer?.offsetWidth;
     console.log(width);
-    if(this.lastSize?.width !== width) {
+    if(width && this.lastSize?.width !== width) {
       this.lastSize.width = width;
       this.chart.applyOptions({width});
     }
@@ -60,28 +60,29 @@ export class AntonChartComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const chartContainer = document.getElementById(this.id)!;
-    const width = chartContainer.offsetWidth;
-    let height = chartContainer.offsetHeight;
+    const width = chartContainer?.offsetWidth ?? 0;
+    let height = chartContainer?.offsetHeight ?? 0;
     if(height < 400) height = 400;
-    this.chart = createChart(this.id, {
-      width,
-      height,
-      timeScale: {
-        timeVisible: true,
-        secondsVisible: true
-      }
-    });
-    this.chart.timeScale().fitContent();
-    this.chart.applyOptions(themes.light.chart);
-    this.chartLines = this.chart.addAreaSeries({
-      priceFormat: {
-        type: 'price',
-        precision: 9,
-        minMove: 0.0000001
-      }
-    });
-    this.chartLines.applyOptions(themes.light.series);
-    this.chartLines.setData(this.line);
+    if(width && height) {
+      this.chart = createChart(this.id, {
+        width,
+        height,
+        timeScale: {
+          timeVisible: true,
+          secondsVisible: true
+        }
+      });
+      this.chart.timeScale().fitContent();
+      this.chart.applyOptions(themes.light.chart);
+      this.chartLines = this.chart.addAreaSeries({
+        priceFormat: {
+          type: 'price',
+          precision: 9,
+          minMove: 0.0000001
+        }
+      });
+      this.chartLines.applyOptions(themes.light.series);
+    }
   }
 
 }
