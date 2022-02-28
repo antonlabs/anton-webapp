@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {ModalService} from "../../modal.service";
 import { FormControl } from '@angular/forms';
@@ -20,6 +20,7 @@ export class DeleteBlacklistSymbolComponent extends AntiMemLeak implements OnIni
   constructor(
     private walletService: WalletService,
     private activateRouter: ActivatedRoute,
+    private router: Router,
     public modalService: ModalService
   ) {
     super();
@@ -39,8 +40,10 @@ export class DeleteBlacklistSymbolComponent extends AntiMemLeak implements OnIni
 
   async delete(): Promise<void> {
     this.loading = true;
-    try{
+    try {
       await this.walletService.deleteBlacklistSymbol(this.symbol!);
+      this.modalService.closeModal();
+      this.router.navigate(['/overview'], {queryParams: {dialog: $localize`Symbol ${this.symbol} removed from blacklist!`}})
     }catch(e) {
       this.error = $localize`Ops...there are some error during delete item deletion`;
     }finally {

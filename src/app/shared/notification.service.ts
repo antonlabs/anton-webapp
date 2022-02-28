@@ -19,21 +19,12 @@ export class NotificationService {
       this.currentTimeout = undefined;
     }
     this.router.navigate([this.router.url], {queryParams: {dialog: message, type: 'success'}});
-    this.currentTimeout = setTimeout(() => {
-      this.closeNotification();
-    }, 5000);
   }
 
   error(message: string) {
-    if(this.currentTimeout) {
-      clearTimeout(this.currentTimeout);
-      this.currentTimeout = undefined;
-    }
     this.router.navigate([this.router.url], {queryParams: {dialog: message, type: 'error'}});
-    this.currentTimeout = setTimeout(() => {
-      this.closeNotification();
-    }, 5000);
   }
+
 
   closeNotification(): void {
     const queryParams = JSON.parse(JSON.stringify(this.activatedRoute.snapshot.queryParams));

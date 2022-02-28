@@ -31,6 +31,5 @@ export interface WalletModel {
   autoReinvest?: boolean;
   secretKey?: string;
   valuePerUnits?: number;
-  running?: boolean;
   blacklist?: string[];
 }

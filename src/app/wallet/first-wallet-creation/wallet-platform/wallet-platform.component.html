@@ -1,6 +1,6 @@
 <h2 i18n>What platform do you use?</h2>
 
-<div class="platforms mt-50px">
+<div class="flex-row platforms mt-50px mobile-flex-column between">
   <div class="platform {{currentSelection === walletType.BINANCE ? 'active' : ''}}" (click)="currentSelection = walletType.BINANCE">
     <img src="/assets/binance-logo.png" />
   </div>
@@ -9,17 +9,14 @@
   </div>
 </div>
 
-<div *ngIf="error" class="alert error">
+<div *ngIf="error" class="alert error mt-20px text-center">
   {{error}}
   <button class="anton-button" i18n [routerLink]="['/']">Go to wallet dashboard</button>
 </div>
 
-<div class="flex-row center mt-50px">
+<div class="flex-row center mt-50px" *ngIf="currentSelection !== undefined">
   <app-button (click)="next()" [loading]="loading" i18n>
     Next
   </app-button>
-  <button class="anton-button" i18n [routerLink]="['/create-wallet', 'wallet-configuration']">
-    Skip
-  </button>
 </div>
 

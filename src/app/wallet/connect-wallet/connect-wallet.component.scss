@@ -1,10 +1,6 @@
 @import "../../../styles/palette";
 
 .container {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-
 
   .form {
     padding: 10px;
@@ -58,3 +54,5 @@
     }
   }
 }
+
+

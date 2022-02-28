@@ -32,7 +32,16 @@
     padding: 10px;
     background: #fff;
     max-height: 90vh;
+    max-width: 100%;
     overflow-y: auto;
     border-radius: 5px;
   }
+
+  @media only screen and (max-width: 768px) { //mobile
+    .dialog {
+      width: 95%;
+    }
+  }
+
+
 }

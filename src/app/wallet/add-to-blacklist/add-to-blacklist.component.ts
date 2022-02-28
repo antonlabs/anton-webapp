@@ -3,26 +3,35 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { ModalService } from 'src/app/modal.service';
 import {rack} from 'src/app/states/app-state';
 import {WalletService} from "../../shared/wallet.service";
+import {AntiMemLeak} from "../../shared/anti-mem-leak";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-to-blacklist',
   templateUrl: './add-to-blacklist.component.html',
   styleUrls: ['./add-to-blacklist.component.scss']
 })
-export class AddToBlacklistComponent implements OnInit {
+export class AddToBlacklistComponent extends AntiMemLeak implements OnInit {
   loading = false;
   error: string | undefined;
   form = new FormGroup({
-    symbols: new FormControl([], Validators.required)
+    symbols: new FormControl(rack.states.currentWallet.val.blacklist ?? [], Validators.required)
   });
 
   constructor(
     public modalService: ModalService,
+    public router: Router,
     public walletService: WalletService
-  ) { }
+  ) { super(); }
 
   ngOnInit(): void {
-    this.symbolsFormControl.valueChanges.subscribe(console.log);
+    this.sub.add(
+      this.symbolsFormControl.valueChanges.subscribe((values) => {
+        rack.states.currentWallet.set({
+          blacklist: values
+        });
+      })
+    );
   }
 
   get symbolsFormControl(): FormControl {
@@ -30,28 +39,16 @@ export class AddToBlacklistComponent implements OnInit {
   }
 
   async addToBlacklist() {
-    if(this.form.valid) {
-      const value = this.form.value;
+    this.loading = true;
+    try{
       const blacklist = rack.states.currentWallet.val.blacklist ?? [];
-      const symbol = value.cryptoName + '-' + value.cryptoMarket;
-      if(blacklist.filter(item => item === symbol).length === 0) {
-        blacklist.push(symbol);
-        this.loading = true;
-        try{
-          await this.walletService.updateWallet({blacklist});
-        }catch(e: any) {
-          this.error = $localize`Ops...it seems that this function is not available right now, please retry later`
-        }finally {
-          this.loading = false;
-        }
-      }else {
-        this.error = $localize`This symbol already exists`;
-      }
-    }else {
-      this.error = $localize`You have to insert crypto name`;
+      await this.walletService.updateWallet({blacklist});
+      this.modalService.closeModal();
+      this.router.navigate(['/overview'], {queryParams: {dialog: $localize`You have update your blacklist!`}})
+    }catch(e: any) {
+      this.error = $localize`Ops...it seems that this function is not available right now, please retry later`
+    }finally {
+      this.loading = false;
     }
   }
-
-
-
 }

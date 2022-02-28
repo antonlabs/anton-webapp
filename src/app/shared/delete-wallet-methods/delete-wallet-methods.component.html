@@ -1,0 +1,20 @@
+<div class="delete-wallet-methods">
+  <h2 i18n>What Anton should do after delete?</h2>
+
+  <div class="alert danger mobile-mt-10px" *ngIf="error">
+    {{error}}
+  </div>
+
+  <div class="flex-row mobile-flex-column between mobile-mt-30px">
+    <app-button [loading]="loading" i18n (click)="deleteWallet('SELL_ORDERS')">
+      Sell orders to market
+    </app-button>
+    <app-button [loading]="loading" i18n (click)="deleteWallet('KEEP_ORDERS')">
+      Keep orders
+    </app-button>
+  </div>
+  <div class="flex-row center">
+    <button (click)="goBack()" class="anton-button" i18n>Nevermind, go back</button>
+  </div>
+
+</div>

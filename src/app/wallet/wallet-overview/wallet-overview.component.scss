@@ -19,7 +19,7 @@
 
 
   .link-button, .telegram {
-    max-width: 300px;
+    max-width: 200px;
     flex: 1;
     height: 43px;
   }
@@ -52,6 +52,13 @@
 
   .orders {
     text-align: center;
+  }
+
+  .blacklist {
+    .body {
+      max-height: 300px;
+      overflow: auto;
+    }
   }
 
 }

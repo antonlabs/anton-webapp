@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {WalletService} from "../wallet.service";
 import {FormControl, FormGroup} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-wallet-settings',
@@ -16,7 +17,10 @@ export class WalletSettingsComponent implements OnInit {
     alias: new FormControl('')
   });
 
-  constructor(private walletService: WalletService) { }
+  constructor(
+    private router: Router,
+    private walletService: WalletService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -34,4 +38,12 @@ export class WalletSettingsComponent implements OnInit {
     }
   }
 
+  async deleteWallet() {
+    this.router.navigate(['/overview'], {
+      queryParams: {
+        modal: 'deleteWalletMethods',
+        wallet: 'prva'
+      }
+    })
+  }
 }

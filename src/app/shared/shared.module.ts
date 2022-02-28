@@ -17,6 +17,7 @@ import { SymbolCardComponent } from './symbol-card/symbol-card.component';
 import { SymbolsListComponent } from './symbols-list/symbols-list.component';
 import { FooterComponent } from './footer/footer.component';
 import { WalletSettingsComponent } from './wallet-settings/wallet-settings.component';
+import { DeleteWalletMethodsComponent } from './delete-wallet-methods/delete-wallet-methods.component';
 
 
 
@@ -36,29 +37,31 @@ import { WalletSettingsComponent } from './wallet-settings/wallet-settings.compo
     SymbolCardComponent,
     SymbolsListComponent,
     FooterComponent,
-    WalletSettingsComponent
+    WalletSettingsComponent,
+    DeleteWalletMethodsComponent
   ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        NgIconsModule
-    ],
-    exports: [
-        LogoComponent,
-        AntonChartComponent,
-        SpinnerComponent,
-        ButtonComponent,
-        StepperComponent,
-        SliderComponent,
-        CashInputComponent,
-        AvatarComponent,
-        CounterComponent,
-        SwitchComponent,
-        OrderCardComponent,
-        SymbolCardComponent,
-        SymbolsListComponent,
-        FooterComponent,
-        WalletSettingsComponent
-    ]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NgIconsModule
+  ],
+  exports: [
+    LogoComponent,
+    AntonChartComponent,
+    SpinnerComponent,
+    ButtonComponent,
+    StepperComponent,
+    SliderComponent,
+    CashInputComponent,
+    AvatarComponent,
+    CounterComponent,
+    SwitchComponent,
+    OrderCardComponent,
+    SymbolCardComponent,
+    SymbolsListComponent,
+    FooterComponent,
+    WalletSettingsComponent,
+    DeleteWalletMethodsComponent
+  ]
 })
 export class SharedModule { }

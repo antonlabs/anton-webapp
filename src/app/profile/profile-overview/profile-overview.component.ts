@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-profile-overview',
@@ -7,6 +8,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile-overview.component.scss']
 })
 export class ProfileOverviewComponent implements OnInit {
+
+  form = new FormGroup({
+    firstname: new FormControl(''),
+    lastname: new FormControl(''),
+    age: new FormControl(''),
+  });
 
   constructor(
     private router: Router

@@ -7,6 +7,7 @@ import {refreshWallets} from "../../shared/helpers";
 import { ModalService } from 'src/app/modal.service';
 import {rack} from 'src/app/states/app-state';
 import {WalletStateProps} from "../../states/wallets-state";
+import {NotificationService} from "../../shared/notification.service";
 
 
 @Component({
@@ -19,17 +20,20 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
   @ViewChild('setExchangeKeys') setCredentials: TemplateRef<any> | undefined;
   @ViewChild('addToBlacklist') addToBlacklist: TemplateRef<any> | undefined;
   @ViewChild('walletSettings') walletSettings: TemplateRef<any> | undefined;
+  @ViewChild('deleteWalletMethods') deleteWalletMethods: TemplateRef<any> | undefined;
   @ViewChild('deleteBlacklistSymbol') deleteBlacklistSymbol: TemplateRef<any> | undefined;
 
   modalsRoutes: {[key: string]: TemplateRef<any> | undefined} = {};
   currentModal: TemplateRef<any> | undefined;
   currentDialog: string | undefined;
+  currentTimeout: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
+    private notificationService: NotificationService,
     private modalService: ModalService
   ) {
     super();
@@ -40,15 +44,18 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
       setCredentials: this.setCredentials,
       addToBlacklist: this.addToBlacklist,
       walletSettings: this.walletSettings,
+      deleteWalletMethods: this.deleteWalletMethods,
       deleteBlacklistSymbol: this.deleteBlacklistSymbol
-    }
+    };
     this.endpoint = this.router.url.split('?')[0].split('/').splice(-1)[0];
     this.sub.add(
       this.router.events.subscribe(() => {
         this.endpoint = this.router.url.split('?')[0].split('/').splice(-1)[0];
-        console.log(this.endpoint);
         this.currentModal = this.modalsRoutes[this.activatedRoute.snapshot.queryParams['modal']];
         this.currentDialog = this.activatedRoute.snapshot.queryParams['dialog'];
+        if(this.currentDialog) {
+          this.handleDialogTimeout();
+        }
       })
     );
   }
@@ -66,7 +73,18 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
     }
     if(this.activatedRoute.snapshot.queryParams['dialog']) {
       this.currentDialog = this.activatedRoute.snapshot.queryParams['dialog'];
+      this.handleDialogTimeout();
     }
+  }
+
+  handleDialogTimeout() {
+    if (this.currentTimeout) {
+      clearTimeout(this.currentTimeout);
+      this.currentTimeout = undefined;
+    }
+    this.currentTimeout = setTimeout(() => {
+      this.notificationService.closeNotification();
+    }, 5000);
   }
 
   checkIntegrityState(state: WalletStateProps) {

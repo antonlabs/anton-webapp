@@ -4,10 +4,8 @@ import { Validators } from '@angular/forms';
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {StrategyStateType, WalletModel} from "../models/wallet.model";
 import {OrderModel} from "../models/order.model";
-import { state } from '@angular/animations';
 import {rack} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
-import {refreshWallets} from "../../shared/helpers";
 import { Router } from '@angular/router';
 import {NotificationService} from "../../shared/notification.service";
 
@@ -71,8 +69,13 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   async playStrategy() {
     this.playLoading = true;
     try {
-      await this.walletService.playStrategy(rack.states.currentWallet.val.name);
-      this.notificationService.success($localize`You have successful play your wallet strategy`);
+      if(this.wallet?.strategy?.state === StrategyStateType.STOPPED || this.wallet?.strategy?.state === StrategyStateType.DEPLOYED) {
+        await this.walletService.playStrategy(rack.states.currentWallet.val.name);
+        this.notificationService.success($localize`You have successful play your wallet strategy`);
+      }else {
+        await this.walletService.stopStrategy(rack.states.currentWallet.val.name);
+        this.notificationService.success($localize`You have successful stop your wallet strategy`);
+      }
     }catch(e) {
       this.notificationService.error($localize`Ops...you have found an error, contact us or retry later`)
     }finally {

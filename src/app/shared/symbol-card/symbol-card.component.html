@@ -4,5 +4,5 @@
   <button *ngIf="remove" (click)="deleteItem.emit(true)" class="anton-button icon danger">
     <ng-icon name="jam-close"></ng-icon>
   </button>
-  <app-switch (toggle)="select.emit(_symbol)" *ngIf="selectable"></app-switch>
+  <app-switch [control]="fc" (toggle)="toggle($event)" *ngIf="selectable"></app-switch>
 </div>

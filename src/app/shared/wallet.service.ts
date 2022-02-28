@@ -12,6 +12,9 @@ export interface WalletState {
 
 export type WalletPlan = 'BRONZE' | 'GOLD' | 'SILVER' | 'FREE' | 'PLATINUM';
 
+export type DeleteWalletMethod = 'KEEP_ORDERS' | 'SELL_ORDERS';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -72,15 +75,17 @@ export class WalletService {
   }
 
   async playStrategy(walletName: string): Promise<void> {
-    return (await apiG('wallet/'+walletName+'/start' , {
+    await apiG('wallet/'+walletName+'/start' , {
       method: 'PUT'
-    }));
+    });
+    refreshWallets();
   }
 
   async stopStrategy(walletName: string): Promise<void> {
-    return (await apiG('wallet/'+walletName+'/stop' , {
+    await apiG('wallet/'+walletName+'/stop' , {
       method: 'PUT'
-    }));
+    });
+    refreshWallets();
   }
 
   getWalletPlan(budget: number): WalletPlan {
@@ -95,6 +100,12 @@ export class WalletService {
   async getActualBalance(wallet: WalletModel): Promise<number> {
     return (await apiG('wallet/balance/'+wallet.name, {
       method: 'GET'
+    }));
+  }
+
+  async deleteWallet(walletName: string, method: DeleteWalletMethod) {
+    return (await apiG(`wallet/${walletName}?method=${method}`, {
+      method: 'DELETE'
     }));
   }
 

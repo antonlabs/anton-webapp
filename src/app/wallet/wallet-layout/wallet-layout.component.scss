@@ -77,10 +77,8 @@ $max-width-layout: 1000px;
       }
     }
 
-
     .content {
       width: $max-width-layout;
-      height: 100%;
       margin: 0 auto;
       flex: 35;
 
@@ -117,6 +115,7 @@ $max-width-layout: 1000px;
   img {
     width: 150px;
   }
+
   .speech-bubble {
     width: 300px;
     margin: 50px auto;
@@ -141,6 +140,15 @@ $max-width-layout: 1000px;
     border-bottom: 10px solid transparent;
     right: -20px;
     top: 6px;
+  }
+}
+
+@media only screen and (max-width: 768px) { //mobile
+  .notification {
+    img {
+      width: 100px;
+      height: auto;
+    }
   }
 }
 

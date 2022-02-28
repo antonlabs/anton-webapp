@@ -6,6 +6,8 @@
     <app-symbol-card
       *ngFor="let symbol of pages[currentPageIndex]"
       (select)="pushSymbol($event)"
+      [selected]="blacklist.indexOf(symbol) > -1"
+      (deSelect)="removeSymbol($event)"
       [remove]="false"
       [selectable]="true"
       [symbol]="symbol"></app-symbol-card>

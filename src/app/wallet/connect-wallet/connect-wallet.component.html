@@ -7,7 +7,7 @@
     <button class="anton-button primary" i18n>Click here to go on Binance</button>
   </a>
 </div>
-<div class="container mt-50px">
+<div class="container flex-row between mobile-flex-column mt-50px">
   <div class="form">
     <form [formGroup]="form">
       <div>
@@ -38,6 +38,6 @@
 </div>
 
 <div class="flex-row mt-30px center buttons" *ngIf="mode === 'modal'">
-  <app-button [loading]="loading" i18n (click)="connectWallet()">Edit</app-button>
+  <app-button [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Edit</app-button>
   <button class="anton-button" i18n (click)="modalService.closeModal()">Cancel</button>
 </div>

@@ -16,6 +16,12 @@
           "strict": true
         }
       },
+      "i18n": {
+        "sourceLocale": "en",
+        "locales": {
+          "it": "src/locale/messages.it.xlf"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -60,6 +66,9 @@
                 }
               ],
               "outputHashing": "all"
+            },
+            "it": {
+              "localize": ["it"]
             },
             "development": {
               "buildOptimizer": false,

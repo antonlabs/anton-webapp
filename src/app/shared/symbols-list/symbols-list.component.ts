@@ -19,6 +19,7 @@ export class SymbolsListComponent extends AntiMemLeak implements OnInit {
   pages: string[][] = [];
   keys = Object.keys;
   currentPageIndex = 0;
+  blacklist: string[] = [];
 
   @Input() fc: FormControl | undefined;
 
@@ -35,21 +36,33 @@ export class SymbolsListComponent extends AntiMemLeak implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchForm.valueChanges.subscribe(value => {
-      console.log(value);
-      Object.keys(this.symbols ?? {})
-      this.currentPageIndex = 0;
-      this.symbolsFiltered = Object.keys(this.symbols ?? {}).filter(key => value.symbol !== '' ? value.symbol.toUpperCase().indexOf(key) > -1 : true);
-    });
+    this.sub.add(
+      this.searchForm.valueChanges.subscribe(value => {
+        Object.keys(this.symbols ?? {})
+        this.currentPageIndex = 0;
+        this.symbolsFiltered = Object.keys(this.symbols ?? {}).filter(key => value.symbol !== '' ? value.symbol.toUpperCase().indexOf(key) > -1 : true);
+      })
+    );
     this.sub.add(rack.states.exchange.obs.subscribe((state) => {
       this.symbols = state.titles;
       this.symbolsFiltered = Object.keys(this.symbols ?? {}).filter(key => this.searchForm.value.symbol !== '' ? this.searchForm.value.symbol.indexOf(key) > -1 : true);
     }));
+    this.sub.add(
+      rack.states.currentWallet.obs.subscribe(wallet => {
+        this.blacklist = wallet.blacklist ?? [];
+      })
+    );
     rack.states.exchange.refreshState();
   }
 
+  removeSymbol(symbol: string) {
+    this.fc?.setValue((this.fc?.value ?? []).filter((item: string) => item !== symbol));
+  }
+
   pushSymbol(symbol: string) {
-    this.fc?.setValue((this.fc?.value ?? []).push(symbol))
+    const value = (this.fc?.value ?? []);
+    value.push(symbol);
+    this.fc?.setValue(value);
   }
 
 }

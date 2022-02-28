@@ -10,15 +10,15 @@
       <h1 i18n>Your wallet</h1>
       <h5 i18n>Take a look of your journey status in the crypto world</h5>
     </div>
-    <div class="mobile-flex-row flex-row">
-      <app-button *ngIf="wallet?.strategy?.state === strategyState.DEPLOYED" (click)="playStrategy()" [loading]="playLoading" class="mr-10px" [type]="wallet?.running ? '' : 'active'">
-          <ng-container *ngIf="!wallet?.running">
+    <div class="mobile-flex-row flex-row mobile-mt-20px">
+      <app-button *ngIf="wallet?.strategy?.state === strategyState.DEPLOYED || wallet?.strategy?.state === strategyState.STOPPED || wallet?.strategy?.state === strategyState.RUNNING" (click)="playStrategy()" [loading]="playLoading" class="mr-10px" [type]="wallet?.strategy?.state === strategyState.RUNNING ? '' : 'active'">
+          <ng-container *ngIf="wallet?.strategy?.state === strategyState.STOPPED || wallet?.strategy?.state === strategyState.DEPLOYED">
             <ng-icon name="jam-play"></ng-icon>
             <span i18n>
               Play
             </span>
           </ng-container>
-          <ng-container *ngIf="wallet?.running">
+          <ng-container *ngIf="wallet?.strategy?.state === strategyState.RUNNING">
             <ng-icon name="jam-pause"></ng-icon>
             <span i18n>
               Pause
@@ -79,17 +79,19 @@
       <div class="flex-row between ">
         <h2 i18n>My blacklist</h2>
         <button class="anton-button icon primary" [routerLink]="['/overview']" [queryParams]="{modal: 'addToBlacklist'}">
-          <ng-icon name="jam-plus-circle-f"></ng-icon>
+          <ng-icon name="jam-pencil"></ng-icon>
         </button>
       </div>
-      <app-symbol-card *ngFor="let symbol of (wallet?.blacklist ?? [])" [symbol]="symbol" (deleteItem)="deleteBlacklistItem(symbol)"></app-symbol-card>
-      <ng-container *ngIf="wallet?.blacklist?.length === 0">
-        <img alt="guard" src="/assets/guard.png">
-        <h2 i18n>No symbols in blacklist</h2>
-        <div class="alert warn" i18n>
-          This list contains all those symbols that are ignored by Anton algorithm.
-        </div>
-      </ng-container>
+      <div class="body">
+        <app-symbol-card [selectable]="false" *ngFor="let symbol of (wallet?.blacklist ?? [])" [symbol]="symbol" (deleteItem)="deleteBlacklistItem(symbol)"></app-symbol-card>
+        <ng-container *ngIf="wallet?.blacklist?.length === 0">
+          <img alt="guard" src="/assets/guard.png">
+          <h2 i18n>No symbols in blacklist</h2>
+          <div class="alert warn" i18n>
+            This list contains all those symbols that are ignored by Anton algorithm.
+          </div>
+        </ng-container>
+      </div>
 
     </div>
   </div>
