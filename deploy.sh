@@ -15,11 +15,11 @@ fi
 
 
 if [[ "$ENV" == "develop" ]]; then
-  aws s3 rm s3://dev.anton.webapp.fe --recursive && aws s3 sync ./build/ s3://dev.anton.webapp.fe --delete
+  aws s3 rm s3://dev.anton.webapp.fe --recursive && aws s3 sync ./dist/anton-webapp/en/ s3://dev.anton.webapp.fe --delete
   aws cloudfront create-invalidation --distribution-id E3N1LVA6BXVGS7 --paths '/*'
 fi
 
 if [[ "$ENV" == "prod" ]]; then
-  aws s3 rm s3://prod.anton.webapp.fe --recursive && aws s3 sync ./build/ s3://prod.anton.webapp.fe --delete
+  aws s3 rm s3://prod.anton.webapp.fe --recursive && aws s3 sync ./dist/anton-webapp/en/ s3://prod.anton.webapp.fe --delete
   aws cloudfront create-invalidation --distribution-id 	E3MBFSLJ4QSSNO --paths '/*'
 fi
