@@ -1,6 +1,6 @@
 export const environment = {
-  production: true,
-  name: 'prod',
+  production: false,
+  name: 'dev',
   region: 'eu-west-1',
   binanceEndpoint: 'https://api.binance.com',
   beUrl: 'https://dev.api.anton.finance/v1',
