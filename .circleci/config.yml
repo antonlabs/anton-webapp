@@ -12,10 +12,10 @@ jobs:
           profile-name: default
       - run:
           name: Installing dependencies
-          command: npm ci
+          command: npm install && npm install --prefix ./ci
       - run:
           name: Building project
-          command: npm run ci && yarn poeditor:integration && yarn build:${CIRCLE_BRANCH}
+          command: npm run ci:${CIRCLE_BRANCH}
       - persist_to_workspace:
           root: .
           paths:
