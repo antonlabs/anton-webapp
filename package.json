@@ -9,6 +9,8 @@
     "lint": "ng lint",
     "ci:master": "AWS_REGION=eu-west-1 AWS_SDK_LOAD_CONFIG=1 node ci/translations-export.js ./src/locale/ && npm run build:prod",
     "ci:develop": "AWS_REGION=eu-west-1 AWS_SDK_LOAD_CONFIG=1 node ci/translations-export.js ./src/locale/ && npm run build:dev",
+    "deploy:develop": "./deploy.sh develop",
+    "deploy:master": "./deploy.sh prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
