@@ -11,14 +11,11 @@
 
 .content {
   height: calc(100% - 70px);
-  overflow: auto;
   max-width: 500px;
   display: block;
   margin: 0 auto;
+  margin-top: 20px;
   position: relative;
 }
 
-.container {
-  background: #d2d2d2;
-  height: 100%;
-}
+
