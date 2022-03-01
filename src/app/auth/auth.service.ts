@@ -18,6 +18,7 @@ import {UserDto} from "../shared/dto/user.dto";
 import {apiG, cognito, cognitoIdentity, getUserListItem, jwtToUserDto} from "../shared/helpers";
 import {UserService} from "../shared/user.service";
 import {rack} from '../states/app-state';
+import {currentLocation} from "../core/location";
 
 
 export interface OAuthCredentials {
@@ -91,7 +92,7 @@ export class AuthService {
     const body: URLSearchParams = new URLSearchParams({
       client_id: environment.cognitoAppClientId,
       code,
-      redirect_uri: location.origin + '/auth/verify-fallback',
+      redirect_uri: currentLocation() + '/auth/verify-fallback',
       grant_type: 'authorization_code',
       token_endpoint: environment.cognitoUrl + '/oauth2/token',
       scope: 'openid email profile'
