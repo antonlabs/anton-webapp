@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --configuration=development, it",
+    "start": "ng serve --configuration=development",
     "build:prod": "ng build --configuration=production --localize",
     "build:dev": "ng build --configuration=development --localize",
     "lint": "ng lint",
