@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
+import { rack } from 'src/app/states/app-state';
 import {AuthService} from "../auth.service";
 
 @Component({
@@ -37,6 +38,10 @@ export class SendRecoveryMailComponent implements OnInit {
     this.loading = true;
     try {
       await this.authService.recoveryPassword(this.form.value.user);
+      rack.states.user.set({
+        lastEmailRecover: this.form.value.user
+      });
+      rack.states.user.store();
       this.success = true;
     }catch(e: any) {
       this.error = e.message;
