@@ -5,6 +5,7 @@ import {AuthService} from "../auth.service";
 import {Form} from "../form";
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
+import { currentLocation } from 'src/app/core/location';
 
 @Component({
   selector: 'app-login',
@@ -33,6 +34,10 @@ export class LoginComponent extends AntiMemLeak implements OnInit {
       this.email = value.email;
     })
     component?.submit.subscribe((val) => this.login(val, component));
+  }
+
+  get currentLocation() {
+    return currentLocation();
   }
 
   public async login(data: any, component: Form): Promise<void> {

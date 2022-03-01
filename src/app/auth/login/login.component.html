@@ -6,7 +6,7 @@
     <router-outlet (activate)="onMountChild($event)"></router-outlet>
   </div>
   <div class="google-btn mt-20px">
-    <a [href]="cognitoUrl + '/oauth2/authorize?identity_provider=Google&redirect_uri=' + location.origin  + '/auth/verify-fallback&response_type=code&client_id='+environment.cognitoAppClientId+'&scope=email openid profile'">
+    <a [href]="cognitoUrl + '/oauth2/authorize?identity_provider=Google&redirect_uri=' + currentLocation + '/auth/verify-fallback&response_type=code&client_id='+environment.cognitoAppClientId+'&scope=email openid profile'">
       <div class="google-icon-wrapper">
         <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
       </div>
