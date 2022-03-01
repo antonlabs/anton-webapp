@@ -95,6 +95,9 @@
             },
             "development": {
               "browserTarget": "anton-webapp:build:development"
+            },
+            "it": {
+              "browserTarget": "anton-webapp:build:it"
             }
           },
           "defaultConfiguration": "development"

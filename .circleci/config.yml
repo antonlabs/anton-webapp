@@ -15,7 +15,7 @@ jobs:
           command: npm install && npm install --prefix ./ci
       - run:
           name: Building project
-          command: npm run ci:${CIRCLE_BRANCH}
+          command: npm run ci:${CIRCLE_BRANCH} && mv src/assets dist/anton-webapp/assets
       - persist_to_workspace:
           root: .
           paths:

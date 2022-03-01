@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --configuration=it",
-    "build:prod": "ng build --configuration=production,it --localize",
-    "build:dev": "ng build --configuration=development,it --localize",
+    "start": "ng serve --configuration=development,it",
+    "build:prod": "ng build --configuration=production --localize",
+    "build:dev": "ng build --configuration=development --localize",
     "lint": "ng lint",
     "ci:master": "AWS_REGION=eu-west-1 AWS_SDK_LOAD_CONFIG=1 node ci/translations-export.js ./src/locale/ && npm run build:prod",
     "ci:develop": "AWS_REGION=eu-west-1 AWS_SDK_LOAD_CONFIG=1 node ci/translations-export.js ./src/locale/ && npm run build:dev",
