@@ -13,6 +13,8 @@ export class SendRecoveryMailComponent implements OnInit {
   loading = false;
   error: string | undefined;
   finish = false;
+  success = false;
+
 
   form: FormGroup = new FormGroup({
     user: new FormControl('', Validators.required)
@@ -35,6 +37,7 @@ export class SendRecoveryMailComponent implements OnInit {
     this.loading = true;
     try {
       await this.authService.recoveryPassword(this.form.value.user);
+      this.success = true;
     }catch(e: any) {
       this.error = e.message;
     }finally {

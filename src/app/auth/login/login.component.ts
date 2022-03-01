@@ -25,6 +25,7 @@ export class LoginComponent extends AntiMemLeak implements OnInit {
     private router: Router
   ) {
     super();
+    console.log(this.cognitoUrl);
   }
 
   ngOnInit(): void {}

@@ -12,6 +12,8 @@ export class NewPasswordRequiredComponent implements OnInit {
 
   username: string | undefined;
   session: string | undefined;
+  error: string | undefined;
+  loading = false
 
   form: FormGroup = new FormGroup({
     newPassword: new FormControl('', Validators.required)
@@ -31,7 +33,14 @@ export class NewPasswordRequiredComponent implements OnInit {
 
   async changePassword() {
     if(this.form.valid && this.username && this.session) {
-      await this.authService.confirmNewPassword(this.username, this.form.value.newPassword, this.session);
+      this.loading = true;
+      try{
+        await this.authService.confirmNewPassword(this.username, this.form.value.newPassword, this.session);
+      }catch(e) {
+        this.error = $localize`Ops, something were wrong with your request`;
+      }finally {
+        this.loading = false;
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-<div class="send-recovery-mail">
+<div class="send-recovery-mail" *ngIf="!success">
   <a class="primary" [routerLink]="['..']">
     <ng-icon class="mt-10px" name="jam-arrow-circle-left-f"></ng-icon>
   </a>
@@ -9,12 +9,14 @@
     <label i18n>Email</label>
     <input type="text" formControlName="user" class="anton-input mt-10px" />
     <div *ngIf="error" class="alert mt-10px">{{error}}</div>
-    <button class="anton-button primary mt-10px" i18n>
-      <app-spinner *ngIf="loading"></app-spinner>
-      <span>Recover</span>
-    </button>
+    <app-button class="mt-10px" [loading]="loading" i18n>
+      Recover
+    </app-button>
   </form>
 </div>
-
+<div class="success-message" *ngIf="success">
+  <h1 i18n>Congratulations!</h1>
+  <h5 i18n>You have successfully signup! Go to your email and complete email confirmation</h5>
+</div>
 
 

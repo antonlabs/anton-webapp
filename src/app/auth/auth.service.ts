@@ -4,7 +4,7 @@ import {firstValueFrom} from "rxjs";
 import {
   AuthFlowType,
   ChallengeNameType,
-  ChangePasswordCommandOutput,
+  ChangePasswordCommandOutput, ConfirmForgotPasswordCommand,
   ForgotPasswordCommand,
   ForgotPasswordResponse,
   InitiateAuthCommand,
@@ -192,6 +192,15 @@ export class AuthService {
         NEW_PASSWORD: newPassword,
         USERNAME: username
       }
+    }));
+  }
+
+  public async confirmForgotPassword(code: string, username: string, password: string): Promise<ChangePasswordCommandOutput> {
+    return cognito.send(new ConfirmForgotPasswordCommand({
+      ClientId: environment.cognitoAppClientId,
+      ConfirmationCode: code,
+      Password: password,
+      Username: username
     }));
   }
 

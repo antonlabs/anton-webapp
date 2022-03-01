@@ -24,6 +24,7 @@ export class IamCredentialsState extends State<IamCredentialsProperties> {
         REFRESH_TOKEN: refreshToken
       }
     }));
+    console.log(response);
     const logins: {[key: string]: string} = {};
     logins[`cognito-idp.${environment.region}.amazonaws.com/${environment.cognitoUserPoolId}`] = rack.states.oAuthCredentials.val.id_token!;
     const credentials = await fromCognitoIdentityPool({
@@ -37,6 +38,7 @@ export class IamCredentialsState extends State<IamCredentialsProperties> {
       secretAccessKey: credentials.secretAccessKey,
       sessionToken: credentials.sessionToken
     });
+    console.log(this.val);
     rack.states.user.set({
       identityId: credentials.identityId
     });
