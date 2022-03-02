@@ -19,5 +19,9 @@ export class CounterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  isNan = isNaN;
+
+
+
 
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {rack} from "../../states/app-state";
 import {AntiMemLeak} from "../anti-mem-leak";
 import {TitleModel} from "../../core/clients/models/title.model";
@@ -13,15 +13,19 @@ export class SymbolsListComponent extends AntiMemLeak implements OnInit {
 
   symbols: TitleModel | undefined;
   chunkSize = 10;
-  searchForm = new FormGroup({
-    symbol: new FormControl('', Validators.required)
-  });
   pages: string[][] = [];
   keys = Object.keys;
-  currentPageIndex = 0;
   blacklist: string[] = [];
-
+  private _search: string  = '';
+  @Input() currentPageIndex = 0;
   @Input() fc: FormControl | undefined;
+  @Input() set search(symbol: string) {
+    this.currentPageIndex = 0;
+    this._search = symbol;
+    this.symbolsFiltered = Object.keys(this.symbols ?? {}).filter(key => (symbol ?? '') !== '' ? symbol.toUpperCase().indexOf(key) > -1 : true);
+  }
+
+  @Output() pagesChange = new EventEmitter();
 
   constructor() { super(); }
 
@@ -33,19 +37,13 @@ export class SymbolsListComponent extends AntiMemLeak implements OnInit {
     while(val.length > 0) {
       this.pages.push(val.splice(0, 10));
     }
+    this.pagesChange.emit(this.pages);
   }
 
   ngOnInit(): void {
-    this.sub.add(
-      this.searchForm.valueChanges.subscribe(value => {
-        Object.keys(this.symbols ?? {})
-        this.currentPageIndex = 0;
-        this.symbolsFiltered = Object.keys(this.symbols ?? {}).filter(key => value.symbol !== '' ? value.symbol.toUpperCase().indexOf(key) > -1 : true);
-      })
-    );
     this.sub.add(rack.states.exchange.obs.subscribe((state) => {
       this.symbols = state.titles;
-      this.symbolsFiltered = Object.keys(this.symbols ?? {}).filter(key => this.searchForm.value.symbol !== '' ? this.searchForm.value.symbol.indexOf(key) > -1 : true);
+      this.symbolsFiltered = Object.keys(this.symbols ?? {}).filter(key => (this._search ?? '') !== '' ? this._search.indexOf(key) > -1 : true);
     }));
     this.sub.add(
       rack.states.currentWallet.obs.subscribe(wallet => {

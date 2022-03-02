@@ -59,6 +59,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
       this.linked = true;
     } catch(e) {
       this.linked = false;
+      this.actualBalance = NaN;
     }
   }
 

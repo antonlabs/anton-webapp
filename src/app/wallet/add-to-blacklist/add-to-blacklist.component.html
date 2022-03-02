@@ -1,17 +1,38 @@
-<h1 i18n>
-  <img alt="guard" src="/assets/guard.png">
-  Edit blacklist
-</h1>
-<div class="alert warn" i18n style="flex:1; margin-top: 10px">
-  All crypto in the blacklist will be skipped by Anton algorithm and if you have some on your spot wallet will be sold immediately
-</div>
-<form>
-  <app-symbols-list [fc]="symbolsFormControl" style="flex:3"></app-symbols-list>
-  <div class="alert danger mt-50px" i18n *ngIf="error" style="flex:1">
-    {{error}}
+<div class="header">
+  <h1 i18n>
+    <img alt="guard" src="/assets/guard.png">
+    Edit blacklist
+  </h1>
+  <div class="alert warn" i18n style="flex:1; margin-top: 10px">
+    All crypto in the blacklist will be skipped by Anton algorithm and if you have some on your spot wallet will be sold immediately
   </div>
-  <div class="flex-row button end mt-50px" style="flex: 1">
-    <app-button (click)="addToBlacklist()" class="mr-10px" [loading]="loading" i18n>Add</app-button>
+</div>
+<div class="body">
+  <form>
+    <app-symbols-list [currentPageIndex]="currentPageIndex" [search]="symbolSearchFormControl.valueChanges | async" (pagesChange)="pages = $event" [fc]="symbolsFormControl" style="flex:3"></app-symbols-list>
+    <div class="alert danger mt-50px" i18n *ngIf="error" style="flex:1">
+      {{error}}
+    </div>
+  </form>
+</div>
+<div class="footer">
+  <ul class="paginator">
+    <button type="button" class="anton-button icon" (click)="currentPageIndex = (currentPageIndex - 1 < 0 ? 0 : currentPageIndex - 1)">
+      <ng-icon name="jam-arrow-circle-left-f"></ng-icon>
+    </button>
+    <li
+      (click)="currentPageIndex = currentPageIndex + i"
+      class="page__numbers {{i === 0 ? 'active' : ''}}"
+      *ngFor="let page of pages.slice(currentPageIndex, currentPageIndex + 3); let i=index;">
+      {{currentPageIndex + i + 1}}
+    </li>
+    <button type="button" class="anton-button icon" (click)="currentPageIndex = (currentPageIndex + 1 > pages.length ? pages.length : currentPageIndex + 1)">
+      <ng-icon name="jam-arrow-circle-right-f"></ng-icon>
+    </button>
+  </ul>
+  <div class="flex-row button end mt-50px mobile-mt-20px" style="flex: 1">
+    <app-button (click)="addToBlacklist()" class="mr-10px" [loading]="loading" i18n>Edit</app-button>
     <button (click)="modalService.closeModal()" class="anton-button" i18n>Cancel</button>
   </div>
-</form>
+</div>
+

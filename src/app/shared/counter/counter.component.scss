@@ -10,4 +10,21 @@
   .data-col {
     flex: 4;
   }
+  .description-mobile {
+    display: none;
+  }
+}
+
+
+@media only screen and (max-width: 768px) { //mobile
+  .counter {
+    padding: 10px;
+    text-align: center;
+    .description {
+      display: none;
+    }
+    .description-mobile {
+      display: block;
+    }
+  }
 }

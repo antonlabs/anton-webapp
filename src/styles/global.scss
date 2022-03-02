@@ -114,10 +114,28 @@ $marginsPixels: 0px, 10px, 20px, 30px, 40px, 50px;
   .mobile-flex-column {
     display: flex;
     flex-direction: column;
+    &.mobile-center {
+      justify-content: center;
+    }
+    &.mobile-end{
+      justify-content: end;
+    }
+    &.mobile-between {
+      justify-content: space-between;
+    }
   }
   .mobile-flex-row {
     display: flex;
     flex-direction: row;
+    &.mobile-center {
+      justify-content: center;
+    }
+    &.mobile-end{
+      justify-content: end;
+    }
+    &.mobile-between {
+      justify-content: space-between;
+    }
   }
   .mobile-w-100 {
     width: 100%;

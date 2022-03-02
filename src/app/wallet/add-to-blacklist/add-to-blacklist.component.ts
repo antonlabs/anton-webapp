@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { ModalService } from 'src/app/modal.service';
 import {rack} from 'src/app/states/app-state';
@@ -14,8 +14,13 @@ import { Router } from '@angular/router';
 export class AddToBlacklistComponent extends AntiMemLeak implements OnInit {
   loading = false;
   error: string | undefined;
+  currentPageIndex = 0;
   form = new FormGroup({
     symbols: new FormControl(rack.states.currentWallet.val.blacklist ?? [], Validators.required)
+  });
+  pages: [][] = [];
+  searchForm = new FormGroup({
+    symbol: new FormControl('', Validators.required)
   });
 
   constructor(
@@ -32,6 +37,10 @@ export class AddToBlacklistComponent extends AntiMemLeak implements OnInit {
         });
       })
     );
+  }
+
+  get symbolSearchFormControl(): FormControl {
+    return this.searchForm.controls['symbol'] as FormControl;
   }
 
   get symbolsFormControl(): FormControl {

@@ -59,27 +59,4 @@ ul {
   }
 }
 
-.paginator {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 5rem;
-  margin: 3rem;
-  border-radius: 0.6rem;
-  background: #ffffff;
-  box-shadow: 0 0.8rem 2rem rgba(#5a6181, 0.05);
 
-  li {
-    margin-top: 15px;
-    font-size: 25px;
-    cursor: pointer;
-    &:hover {
-      color: $primary-color;
-    }
-
-    &.active {
-      color: $primary-color;
-    }
-  }
-
-}
