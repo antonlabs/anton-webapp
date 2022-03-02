@@ -8,6 +8,7 @@
   font-size: 20px;
   cursor: pointer;
   display: flex;
+  height: 43px;
   justify-content: space-evenly;
 
   .spinner {
@@ -103,3 +104,9 @@
     cursor: not-allowed;
   }
 }
+@media only screen and (max-width: 768px) { //mobile
+  .anton-button {
+    height: auto;
+  }
+}
+

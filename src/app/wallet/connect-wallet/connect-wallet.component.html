@@ -1,43 +1,52 @@
-<h1 i18n>Let's talk with your Binance Wallet</h1>
-<p i18n>
-  This operation is crucial because permits Anton to communicate with your Binance Wallet, so will tell him what to buy and what to sell
-</p>
-<div class="flex-row center">
-  <a class="link-button" href="https://www.binance.com/en/my/settings/api-management" target="_blank">
-    <button class="anton-button primary" i18n>Click here to go on Binance</button>
-  </a>
-</div>
-<div class="container flex-row between mobile-flex-column mt-50px">
-  <div class="form">
-    <form [formGroup]="form">
-      <div>
-        <label i18n>API Key</label>
-        <input formControlName="accessKey" type="text" class="anton-input" />
-      </div>
-      <div>
-        <label i18n>Secret Key</label>
-        <input formControlName="secretKey" type="text" class="anton-input" />
-      </div>
-    </form>
+
+<div class="header">
+  <h1 i18n>Let's talk with your Binance Wallet</h1>
+  <div class="alert warn">
+    <p i18n>
+      This operation is crucial because permits Anton to communicate with your Binance Wallet, so will tell him what to buy and what to sell
+    </p>
   </div>
-  <div class="video">
-    <h2 i18n>A short tutorial...</h2>
-    <div class="video-container mt-20px">
-      <iframe src="https://www.youtube.com/embed/gs8qCuZ7Xac" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <div class="flex-row center mt-10px">
+    <a class="link-button" href="https://www.binance.com/en/my/settings/api-management" target="_blank">
+      <button class="anton-button primary" i18n>Click here to go on Binance</button>
+    </a>
+  </div>
+</div>
+<div class="body">
+  <div class="container flex-row between mobile-flex-column mt-50px mobile-mt-0px">
+    <div class="form">
+      <form [formGroup]="form">
+        <div class="flex-column">
+          <label i18n>API Key</label>
+          <input formControlName="accessKey" type="text" class="anton-input" />
+        </div>
+        <div class="flex-column">
+          <label i18n>Secret Key</label>
+          <input formControlName="secretKey" type="text" class="anton-input" />
+        </div>
+      </form>
+    </div>
+    <div class="video">
+      <h2 i18n>A short tutorial...</h2>
+      <div class="video-container mt-20px">
+        <iframe src="https://www.youtube.com/embed/gs8qCuZ7Xac" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
 </div>
+<div class="footer">
+  <div *ngIf="error" class="alert error mt-20px">
+    {{error}}
+  </div>
 
-<div *ngIf="error" class="alert error mt-20px">
-  {{error}}
+  <div class="flex-row mt-30px center buttons" *ngIf="mode === 'page'">
+    <app-button [loading]="loading" i18n (click)="connectWallet()">Start!</app-button>
+    <button class="anton-button" i18n [routerLink]="['/create-wallet', 'wallet-configuration']">Skip</button>
+  </div>
+
+  <div class="flex-row mt-30px center buttons" *ngIf="mode === 'modal'">
+    <app-button [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Edit</app-button>
+    <button class="anton-button" i18n (click)="modalService.closeModal()">Cancel</button>
+  </div>
 </div>
 
-<div class="flex-row mt-30px center buttons" *ngIf="mode === 'page'">
-  <app-button [loading]="loading" i18n (click)="connectWallet()">Start!</app-button>
-  <button class="anton-button" i18n [routerLink]="['/create-wallet', 'wallet-configuration']">Skip</button>
-</div>
-
-<div class="flex-row mt-30px center buttons" *ngIf="mode === 'modal'">
-  <app-button [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Edit</app-button>
-  <button class="anton-button" i18n (click)="modalService.closeModal()">Cancel</button>
-</div>

@@ -1,11 +1,9 @@
 @import "../../../styles/palette";
 
 .container {
-
   .form {
     padding: 10px;
     max-width: 600px;
-    min-width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -40,6 +38,7 @@
       height: fit-content;
       border-radius: 10px;
       overflow: hidden;
+      max-width: 100%;
       box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
       video {
         width: 100%;
@@ -54,5 +53,7 @@
     }
   }
 }
+
+
 
 

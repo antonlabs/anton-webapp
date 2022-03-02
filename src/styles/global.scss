@@ -17,6 +17,21 @@ h1, h2, h3, h4, h5 {
   color: $primary-color-strong-dark;
 }
 
+@media only screen and (max-width: 768px) { //mobile
+  h1 {
+    font-size: 20px;
+  }
+  .alert {
+    padding: 3px;
+  }
+  .anton-button {
+    font-size: 15px;
+  }
+  p {
+    font-size: 15px;
+  }
+}
+
 a {
   text-decoration: none;
   font-size: 15px;

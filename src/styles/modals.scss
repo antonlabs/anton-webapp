@@ -6,7 +6,9 @@
   height: 100%;
   z-index: 999;
   .close {
-    float: right;
+    position: absolute;
+    right: 5px;
+    top: 5px;
   }
   .backdrop {
     position: absolute;
@@ -41,6 +43,7 @@
         flex:3;
     }
     .body {
+      max-height: 40vh;
       overflow-y: auto;
       flex: 4;
     }
