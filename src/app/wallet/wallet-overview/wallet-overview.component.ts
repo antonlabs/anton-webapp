@@ -51,6 +51,10 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
         }
       })
     );
+    const elements = document.getElementsByClassName('dropdown');
+    for(let i = 0; i<elements.length; i++) {
+      console.log(elements[i]);
+    }
   }
 
   async refreshExchangeLink() {

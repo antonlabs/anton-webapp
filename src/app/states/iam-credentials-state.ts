@@ -24,7 +24,6 @@ export class IamCredentialsState extends State<IamCredentialsProperties> {
         REFRESH_TOKEN: refreshToken
       }
     }));
-    console.log(response);
     rack.states.oAuthCredentials.set({
       id_token: response.AuthenticationResult?.IdToken,
       access_token: response.AuthenticationResult?.AccessToken
@@ -42,7 +41,6 @@ export class IamCredentialsState extends State<IamCredentialsProperties> {
       secretAccessKey: credentials.secretAccessKey,
       sessionToken: credentials.sessionToken
     });
-    console.log(this.val);
     rack.states.user.set({
       identityId: credentials.identityId
     });
