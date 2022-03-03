@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {WalletNameComponent} from "./wallet-name/wallet-name.component";
 import {ConnectWalletComponent} from "../connect-wallet/connect-wallet.component";
 import { ConfigureWalletComponent } from './configure-wallet/configure-wallet.component';
 import { WalletPlatformComponent } from './wallet-platform/wallet-platform.component';

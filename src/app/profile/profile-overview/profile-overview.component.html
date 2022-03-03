@@ -9,7 +9,25 @@
     </div>
   </app-avatar>
 
-  <form></form>
+  <form [formGroup]="form" (submit)="submit()">
+    <div class="flex-row mobile-flex-column between">
+      <div class="flex-column mobile-mt-20px">
+        <h3 i18n>First name</h3>
+        <input formControlName="firstname" class="anton-input" />
+      </div>
+      <div class="flex-column mobile-mt-20px">
+        <h3 i18n>Last name</h3>
+        <input formControlName="lastname" class="anton-input" />
+      </div>
+      <div class="flex-column mobile-mt-20px">
+        <h3 i18n>Age</h3>
+        <input formControlName="age" class="anton-input" />
+      </div>
+    </div>
+    <div class="mt-10px">
+      <app-button i18n>Edit</app-button>
+    </div>
+  </form>
 
 
 </div>

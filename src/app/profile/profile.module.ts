@@ -7,6 +7,7 @@ import {ImageCropperModule} from "ngx-image-cropper";
 import {SharedModule} from "../shared/shared.module";
 import { ProfileLayoutComponent } from './profile-layout/profile-layout.component';
 import {NgIconsModule} from "@ng-icons/core";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -14,12 +15,13 @@ import {NgIconsModule} from "@ng-icons/core";
     ProfileOverviewComponent,
     ProfileLayoutComponent
   ],
-  imports: [
-    CommonModule,
-    ImageCropperModule,
-    ProfileRoutingModule,
-    SharedModule,
-    NgIconsModule
-  ]
+    imports: [
+        CommonModule,
+        ImageCropperModule,
+        ProfileRoutingModule,
+        SharedModule,
+        NgIconsModule,
+        ReactiveFormsModule
+    ]
 })
 export class ProfileModule { }

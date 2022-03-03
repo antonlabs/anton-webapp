@@ -40,7 +40,7 @@
   </div>
 
   <div class="flex-row mt-30px center buttons" *ngIf="mode === 'page'">
-    <app-button [loading]="loading" i18n (click)="connectWallet()">Start!</app-button>
+    <app-button [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Next</app-button>
     <button class="anton-button" i18n [routerLink]="['/create-wallet', 'wallet-configuration']">Skip</button>
   </div>
 

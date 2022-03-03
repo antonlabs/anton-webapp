@@ -8,6 +8,7 @@ import {rack} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
 import { Router } from '@angular/router';
 import {NotificationService} from "../../shared/notification.service";
+import {refreshWallets} from "../../shared/helpers";
 
 @Component({
   selector: 'app-wallet-overview',

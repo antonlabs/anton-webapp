@@ -19,6 +19,8 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
   walletPlan: WalletPlan = 'FREE';
   walletBudgetSubscription = new Subscription();
 
+  @Input() mode: 'wizard' | 'page' = 'page';
+
   @Input()
   set wallet(val: WalletModel | undefined) {
     if(val) {

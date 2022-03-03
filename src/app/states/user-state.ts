@@ -2,7 +2,8 @@ import { UserDto } from "../shared/dto/user.dto";
 import {State} from "@antonlabs/rack";
 
 export interface UserStateProperties extends UserDto {
-  lastEmailRecover?: string
+  lastEmailRecover?: string,
+  withIdp?: boolean;
 }
 
 export class UserState extends State<UserStateProperties> {
@@ -12,6 +13,7 @@ export class UserState extends State<UserStateProperties> {
       identityId: undefined,
       email: '',
       lastEmailRecover: undefined,
+      withIdp: undefined,
       avatar: '',
       name: undefined,
       surname: undefined,

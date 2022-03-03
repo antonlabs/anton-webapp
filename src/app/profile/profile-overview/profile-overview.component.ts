@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {FormControl, FormGroup} from "@angular/forms";
+import {UserService} from "../../shared/user.service";
 
 @Component({
   selector: 'app-profile-overview',
@@ -8,7 +9,7 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./profile-overview.component.scss']
 })
 export class ProfileOverviewComponent implements OnInit {
-
+  loading = false;
   form = new FormGroup({
     firstname: new FormControl(''),
     lastname: new FormControl(''),
@@ -16,7 +17,8 @@ export class ProfileOverviewComponent implements OnInit {
   });
 
   constructor(
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +36,10 @@ export class ProfileOverviewComponent implements OnInit {
     reader.onerror = function (error) {
       console.log('Error: ', error);
     };
+  }
+
+  submit(): void {
+    this.loading = true;
   }
 
 

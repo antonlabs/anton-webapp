@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {Form} from "../form";
+import {AntiMemLeak} from "../../shared/anti-mem-leak";
 
 @Component({
   selector: 'app-email-password-login',
@@ -20,7 +21,9 @@ export class EmailPasswordLoginComponent extends Form implements OnInit {
 
   constructor(private activeRouter: ActivatedRoute) {
     super();
-    this.activeRouter.data.subscribe((data) => this.buttonString = data['buttonString']);
+    this.sub.add(
+      this.activeRouter.data.subscribe((data) => this.buttonString = data['buttonString'])
+    );
   }
 
   ngOnInit(): void {}

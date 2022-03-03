@@ -74,3 +74,12 @@ $baseColor: $primary-color-dark;
     }
   }
 }
+
+
+@media only screen and (max-width: 768px) { //mobile
+  .step {
+    &:before, .node {
+      margin-top: 20px;
+    }
+  }
+}

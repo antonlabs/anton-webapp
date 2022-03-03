@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {rack} from 'src/app/states/app-state';
 import {WalletService} from "../../../shared/wallet.service";
 import {WalletModel} from "../../models/wallet.model";
@@ -26,8 +26,10 @@ export class ConfigureWalletComponent extends AntiMemLeak implements OnInit {
 
   symbols = marketsAvailable;
 
+
   constructor(
     private walletService: WalletService,
+    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
     super();

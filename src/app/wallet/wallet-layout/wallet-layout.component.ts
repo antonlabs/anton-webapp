@@ -8,6 +8,7 @@ import { ModalService } from 'src/app/modal.service';
 import {rack} from 'src/app/states/app-state';
 import {WalletStateProps} from "../../states/wallets-state";
 import {NotificationService} from "../../shared/notification.service";
+import {getRightMarginFromElement} from "../../core/elements-helper";
 
 
 @Component({
@@ -58,6 +59,15 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
         }
       })
     );
+  }
+
+  getDropdownStyle(element: HTMLAnchorElement): {[key: string]: string} {
+    const result: any = {};
+    const margin = getRightMarginFromElement(element);
+    if(margin < 80) {
+      result['transform'] = `translateY(30px) translateX(-80%)`
+    }
+    return result;
   }
 
   async ngOnInit(): Promise<void> {

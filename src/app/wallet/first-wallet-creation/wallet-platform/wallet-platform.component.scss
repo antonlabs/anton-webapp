@@ -21,16 +21,6 @@
 
     &.active {
       outline: 3px solid $primary-color;
-      &:after {
-        position: absolute;
-        content: '';
-        top: 0;
-        left: 0;
-        width: 20px;
-        height: 20px;
-        background: $primary-color;
-        border-bottom-right-radius: 10px;
-      }
     }
 
     img {
@@ -41,8 +31,13 @@
 
 
 @media only screen and (max-width: 768px) { //mobile
-  .platform {
-    display: block;
-    margin: 0 auto;
+  .platforms {
+    .platform {
+      display: block;
+      margin: 0 auto;
+      max-width: 80%;
+      margin-top: 10px;
+    }
   }
+
 }

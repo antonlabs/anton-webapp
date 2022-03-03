@@ -9,9 +9,9 @@
             <h3 id="orders-menu" [routerLink]="['/orders']" [class]="liClass('orders')" i18n>Orders</h3>
           </nav>
         </div>
-        <a class="enable-dropdown">
+        <a class="enable-dropdown" #dropdown>
           <app-avatar fontSize="20px" size="30px"></app-avatar>
-          <div class="dropdown">
+          <div class="dropdown" [ngStyle]="getDropdownStyle(dropdown)">
             <nav>
               <li [routerLink]="['/profile']" i18n>My Profile</li>
               <li (click)="logout()" i18n>Logout</li>
