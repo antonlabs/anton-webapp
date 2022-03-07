@@ -52,6 +52,10 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
         }
       })
     );
+    this.walletService.getAllOrders().then(orders => {
+      console.log(orders);
+      this.orders = orders;
+    });
   }
 
   async refreshExchangeLink() {
@@ -83,7 +87,6 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     }finally {
       this.playLoading = false;
     }
-
   }
 
   async deleteBlacklistItem(symbol: string): Promise<void> {

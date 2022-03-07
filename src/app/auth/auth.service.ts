@@ -164,7 +164,7 @@ export class AuthService {
       }
     }));
     const logins: {[key: string]: string} = {};
-    logins[`cognito-idp.${environment.region}.amazonaws.com/${environment.cognitoUserPoolId}`] = rack.states.oAuthCredentials.val.id_token!;
+    logins[`cognito-idp.${environment.region}.amazonaws.com/${environment.cognitoUserPoolId}`] = response.AuthenticationResult!.IdToken!;
     const credentials = await fromCognitoIdentityPool({
       accountId: environment.accountId,
       logins,

@@ -14,6 +14,7 @@ export const environment = {
   accountId: '682060008544',
   identityPoolId: 'eu-west-1:212cf53c-5356-4d01-8480-8df9ef4d624f',
   userTable: 'registry',
+  transactionsTable: 'transactions',
 };
 
 /*

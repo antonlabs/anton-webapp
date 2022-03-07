@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {apiG, getUserListItem, refreshWallets} from "./helpers";
+import {apiG, getTransactions, getUserListItem, refreshWallets} from "./helpers";
 import {WalletModel} from "../wallet/models/wallet.model";
 import {WalletConverter} from "../wallet/converters/wallet.converter";
 import {OrderModel} from "../wallet/models/order.model";
@@ -66,8 +66,21 @@ export class WalletService {
     return result;
   }
 
-  async getOrders(): Promise<OrderModel[]> {
-    return (await getUserListItem<OrderModel>('WALLET')) ?? [];
+  async getAllOrders(): Promise<OrderModel[]> {
+    const result: OrderModel[] = [];
+    await Promise.all([
+      this.getBuyOrders().then((orders) => result.push(...orders)),
+      this.getSellOrders().then((orders) => result.push(...orders))
+    ]);
+    return result.sort((a, b) => b.transactTime - a.transactTime);
+  }
+
+  async getBuyOrders(): Promise<OrderModel[]> {
+    return (await getTransactions<OrderModel>('BUY')) ?? [];
+  }
+
+  async getSellOrders(): Promise<OrderModel[]> {
+    return (await getTransactions<OrderModel>('SELL')) ?? [];
   }
 
   getWalletBudget(wallet: WalletModel): number {

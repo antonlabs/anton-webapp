@@ -70,10 +70,13 @@
         <h2 i18n>My active orders</h2>
       </div>
       <img alt="guard" *ngIf="orders.length === 0" src="/assets/orders-not-found.png">
-      <h2 i18n>No orders right now </h2>
-      <div class="alert warn" i18n>
-        This list contains all those orders that Anton has just catch
-      </div>
+      <app-symbol-card [selectable]="false" *ngFor="let order of (orders ?? [])" [symbol]="order.symbol" [remove]="false"></app-symbol-card>
+      <ng-container *ngIf="orders.length === 0">
+        <h2 i18n>No orders right now </h2>
+        <div class="alert warn" i18n>
+          This list contains all those orders that Anton has just catch
+        </div>
+      </ng-container>
     </div>
     <div class="card-plain flex-column ml-10px blacklist mobile-ml-0px mobile-mt-10px {{wallet?.blacklist?.length === 0 ? 'between' : ''}}" style="flex: 1">
       <div class="flex-row between ">

@@ -14,6 +14,7 @@ export const getLiteral = (str: string, obj: any): any => {
 };
 
 const tableName = environment.name + '-' + environment.userTable;
+const transactionTableName = environment.name + '-' + environment.transactionsTable;
 
 export const dynamoDbClient = () => new DynamoDBClient({
   region: environment.region,
@@ -111,6 +112,23 @@ export const getUserListItem = async <T>(param: string): Promise<T[] | undefined
     }
   })).Items as T[];
 }
+
+export const getTransactions = async <T>(type: 'SELL' | 'BUY' | 'HISTORY', symbol?: string): Promise<T[] | undefined> => {
+  if(!rack.states.user.val.identityId) return;
+  return (await documentClient().query({
+    TableName: transactionTableName,
+    KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
+    ExpressionAttributeNames: {
+      '#sk': 'sk',
+      '#pk': 'pk'
+    },
+    ExpressionAttributeValues: {
+      ':sk': type + '#' + (symbol ?? ''),
+      ':pk': rack.states.user.val.identityId
+    }
+  })).Items as T[];
+}
+
 
 export const getGlobalProperty = async <T>(param: string): Promise<T[] | undefined> => {
   if(!rack.states.user.val.identityId) return;

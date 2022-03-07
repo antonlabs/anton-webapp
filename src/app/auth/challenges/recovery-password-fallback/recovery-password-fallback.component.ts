@@ -15,6 +15,7 @@ export class RecoveryPasswordFallbackComponent extends AntiMemLeak implements On
   code: string | undefined;
   loading = false;
   error: string | undefined;
+  success = true;
 
   form: FormGroup = new FormGroup({
     email: new FormControl('', Validators.required),
@@ -45,7 +46,12 @@ export class RecoveryPasswordFallbackComponent extends AntiMemLeak implements On
     if(this.form.valid && this.code) {
       this.loading = true;
       try{
-        await this.authService.confirmForgotPassword(this.code, this.form.value.email, this.form.value.newPassword)
+        const result = await this.authService.confirmForgotPassword(this.code, this.form.value.email, this.form.value.newPassword);
+        console.log(result);
+        this.success = true;
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        },2000);
       }catch(e) {
         this.error = $localize`Ops, something were wrong with your request`;
       }finally {

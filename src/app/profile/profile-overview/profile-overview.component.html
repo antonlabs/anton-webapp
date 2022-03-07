@@ -1,33 +1,36 @@
 <div class="profile">
   <h1 i18n>My Profile</h1>
-  <app-avatar size="100px">
-    <div class="overlay">
-      <button class="anton-button icon file-picker" (click)="filepicker.click()">
-        <input type="file" #filepicker (change)="fileChangeEvent($event)" />
-        <ng-icon name="jam-pencil"></ng-icon>
-      </button>
-    </div>
-  </app-avatar>
+  <div class="flex-row mobile-flex-column between">
+    <app-avatar size="100px">
+      <div class="overlay">
+        <button class="anton-button icon file-picker" (click)="filepicker.click()">
+          <input type="file" #filepicker (change)="fileChangeEvent($event)" />
+          <ng-icon name="jam-pencil"></ng-icon>
+        </button>
+      </div>
+    </app-avatar>
+    <div class="vl"></div>
+    <form [formGroup]="form" (submit)="submit()">
+      <div class="flex-column between">
+        <div class="flex-column mobile-mt-20px">
+          <h3 i18n>First name</h3>
+          <input formControlName="firstname" class="anton-input" />
+        </div>
+        <div class="flex-column mobile-mt-20px">
+          <h3 i18n>Last name</h3>
+          <input formControlName="lastname" class="anton-input" />
+        </div>
+        <div class="flex-column mobile-mt-20px">
+          <h3 i18n>Age</h3>
+          <input formControlName="age" class="anton-input" />
+        </div>
+      </div>
+      <div class="mt-10px edit">
+        <app-button i18n>Edit</app-button>
+      </div>
+    </form>
 
-  <form [formGroup]="form" (submit)="submit()">
-    <div class="flex-row mobile-flex-column between">
-      <div class="flex-column mobile-mt-20px">
-        <h3 i18n>First name</h3>
-        <input formControlName="firstname" class="anton-input" />
-      </div>
-      <div class="flex-column mobile-mt-20px">
-        <h3 i18n>Last name</h3>
-        <input formControlName="lastname" class="anton-input" />
-      </div>
-      <div class="flex-column mobile-mt-20px">
-        <h3 i18n>Age</h3>
-        <input formControlName="age" class="anton-input" />
-      </div>
-    </div>
-    <div class="mt-10px">
-      <app-button i18n>Edit</app-button>
-    </div>
-  </form>
+  </div>
 
 
 </div>

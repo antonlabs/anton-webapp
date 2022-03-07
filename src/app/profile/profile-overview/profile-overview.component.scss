@@ -1,5 +1,23 @@
 .profile {
   height: calc(100vh - 250px);
+
+  form {
+    .edit, input {
+      max-width: 200px;
+    }
+  }
+}
+
+.vl {
+  border-left: 2px solid rgba(180, 180, 180, 0.77);
+  border-radius: 100px;
+  height: 500px;
+}
+
+@media only screen and (max-width: 768px) { //mobile
+  .vl {
+    display: none;
+  }
 }
 
 .overlay {
@@ -32,3 +50,4 @@
     opacity: 1;
   }
 }
+

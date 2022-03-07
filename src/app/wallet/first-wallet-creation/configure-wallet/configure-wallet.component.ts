@@ -26,7 +26,6 @@ export class ConfigureWalletComponent extends AntiMemLeak implements OnInit {
 
   symbols = marketsAvailable;
 
-
   constructor(
     private walletService: WalletService,
     private activatedRoute: ActivatedRoute,
@@ -42,7 +41,7 @@ export class ConfigureWalletComponent extends AntiMemLeak implements OnInit {
   }
 
   async submit() {
-    this.router.navigate(['/overview']);
+    this.router.navigateByUrl('/');
   }
 
 }

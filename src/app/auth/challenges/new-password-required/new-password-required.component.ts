@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../auth.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AntiMemLeak} from "../../../shared/anti-mem-leak";
 
 @Component({
   selector: 'app-new-password-required',
   templateUrl: './new-password-required.component.html',
   styleUrls: ['./new-password-required.component.scss']
 })
-export class NewPasswordRequiredComponent implements OnInit {
+export class NewPasswordRequiredComponent extends AntiMemLeak implements OnInit {
 
   username: string | undefined;
   session: string | undefined;
@@ -21,21 +22,27 @@ export class NewPasswordRequiredComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private router: Router,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(queryParams => {
-      this.username = queryParams['username'];
-      this.session = queryParams['session'];
-    });
+    this.sub.add(
+      this.activatedRoute.queryParams.subscribe(queryParams => {
+        this.username = queryParams['username'];
+        this.session = queryParams['session'];
+      })
+    );
   }
 
   async changePassword() {
     if(this.form.valid && this.username && this.session) {
       this.loading = true;
-      try{
+      try {
         await this.authService.confirmNewPassword(this.username, this.form.value.newPassword, this.session);
+        this.router.navigate(['/']);
       }catch(e) {
         this.error = $localize`Ops, something were wrong with your request`;
       }finally {
