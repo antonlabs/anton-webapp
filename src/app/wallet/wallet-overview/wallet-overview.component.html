@@ -70,7 +70,14 @@
         <h2 i18n>My active orders</h2>
       </div>
       <img alt="guard" *ngIf="orders.length === 0" src="/assets/orders-not-found.png">
-      <app-symbol-card [selectable]="false" *ngFor="let order of (orders ?? [])" [symbol]="order.symbol" [remove]="false"></app-symbol-card>
+      <app-symbol-card
+        [selectable]="false"
+        class="symbol mt-10px"
+        *ngFor="let order of (orders ?? [])"
+        [routerLink]="['/orders']"
+        [queryParams]="{order: order.orderId}"
+        [symbol]="order.symbol"
+        [remove]="false"></app-symbol-card>
       <ng-container *ngIf="orders.length === 0">
         <h2 i18n>No orders right now </h2>
         <div class="alert warn" i18n>

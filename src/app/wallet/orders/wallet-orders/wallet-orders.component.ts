@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {OrderModel} from "../../models/order.model";
+import {WalletService} from "../../../shared/wallet.service";
 
 @Component({
   selector: 'app-wallet-orders',
@@ -8,28 +9,12 @@ import {OrderModel} from "../../models/order.model";
 })
 export class WalletOrdersComponent implements OnInit {
 
-  orders: OrderModel[] = [
-    {
-      symbol: 'SHIBBUSD',
-      orderId: 12312,
-      orderListId: 123, // Unless OCO, value will be -1
-      clientOrderId: 'sdf123',
-      transactTime: new Date().getDate(),
-      price: '23.11',
-      type: 'LIMIT',
-      side: 'BUY',
-      origQty: '122.12',
-      executedQty: '122.12',
-      fills: [],
-      cummulativeQuoteQty: '123',
-      status: 'NEW',
-      timeInForce: 'GTC'
-    }
-  ];
+  orders: OrderModel[] | undefined;
 
-  constructor() { }
+  constructor(private walletService: WalletService) { }
 
   ngOnInit(): void {
+    this.walletService.getAllOrders().then(orders => this.orders = orders);
   }
 
 }

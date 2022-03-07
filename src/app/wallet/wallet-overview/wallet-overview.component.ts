@@ -26,8 +26,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   });
   blacklistError: string | undefined;
   playLoading = false;
-  orders: OrderModel[] = []
-
+  orders: OrderModel[] = [];
   strategyState = StrategyStateType;
 
   constructor(

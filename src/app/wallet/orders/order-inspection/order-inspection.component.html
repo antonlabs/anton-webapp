@@ -8,7 +8,7 @@
         <img src="/assets/coinmarketcap.png" />
       </button>
     </div>
-    <div *ngIf="symbol" class="card-plain chart-container {{currentKlines ? '' : 'skeleton'}} mt-20px">
+    <div *ngIf="order" class="card-plain chart-container {{currentKlines ? '' : 'skeleton'}} mt-20px">
       <app-anton-chart [line]="currentKlines"></app-anton-chart>
     </div>
   </div>

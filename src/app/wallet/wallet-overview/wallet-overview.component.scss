@@ -10,6 +10,7 @@
   }
 }
 
+
 .wallet-overview {
   min-height: 1000px;
   height: calc(100% - 100px);
@@ -48,6 +49,13 @@
 
   .orders {
     flex: 2;
+    .symbol {
+      cursor: pointer;
+      border-radius: 3px;
+      &:hover {
+        outline: 2px solid $primary-color;
+      }
+    }
   }
 
   .journey {

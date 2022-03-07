@@ -83,6 +83,12 @@ export class WalletService {
     return (await getTransactions<OrderModel>('SELL')) ?? [];
   }
 
+  async getOrder(orderId: number): Promise<OrderModel | undefined> {
+    const orders = (await this.getAllOrders()) ?? [];
+    console.log(orders);
+    return orders.find(order => order.orderId === orderId);
+  }
+
   getWalletBudget(wallet: WalletModel): number {
     return (wallet.units ?? 0) * (wallet.valuePerUnits ?? 0);
   }
