@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {StrategyStateType, WalletModel} from "../models/wallet.model";
-import {OrderModel} from "../models/order.model";
+import {OcoOrderModel, OrderModel} from "../models/order.model";
 import {rack} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
 import { Router } from '@angular/router';
@@ -26,7 +26,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   });
   blacklistError: string | undefined;
   playLoading = false;
-  orders: OrderModel[] = [];
+  orders: OcoOrderModel[] = [];
   strategyState = StrategyStateType;
 
   constructor(

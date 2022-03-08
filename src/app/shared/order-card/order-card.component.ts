@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {OrderModel} from "../../wallet/models/order.model";
+import {OcoOrderModel, OrderModel} from "../../wallet/models/order.model";
+import {orderTypes} from "../helpers";
+
 
 @Component({
   selector: 'app-order-card',
@@ -8,10 +10,16 @@ import {OrderModel} from "../../wallet/models/order.model";
 })
 export class OrderCardComponent implements OnInit {
 
-  @Input() order: OrderModel | undefined;
+  @Input() order: OcoOrderModel | undefined;
+  types = orderTypes;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  get firstOrder(): OrderModel | undefined {
+    return this.order?.orders[0];
   }
 
 }

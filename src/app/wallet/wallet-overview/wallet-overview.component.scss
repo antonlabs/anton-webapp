@@ -49,24 +49,26 @@
 
   .orders {
     flex: 2;
-    .symbol {
-      cursor: pointer;
-      border-radius: 3px;
-      &:hover {
-        outline: 2px solid $primary-color;
+    text-align: center;
+    .body {
+      padding: 2px;
+      .symbol {
+        cursor: pointer;
+        border-radius: 3px;
+        margin-top: 10px;
+        &:hover {
+          outline: 2px solid $primary-color;
+        }
       }
     }
+
   }
 
   .journey {
     flex: 1;
   }
 
-  .orders {
-    text-align: center;
-  }
-
-  .blacklist {
+  .blacklist, .orders {
     .body {
       max-height: 300px;
       overflow: auto;

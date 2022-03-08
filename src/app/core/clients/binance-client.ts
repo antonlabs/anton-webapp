@@ -9,7 +9,7 @@ import {KlineModel} from "./models/kline.model";
 import {AccountInformationConverter} from "./converters/account-information.converter";
 import {AccountInformationModel} from "./models/account-information.model";
 import { ChartPoint } from 'src/app/shared/anton-chart/anton-chart.component';
-import { UTCTimestamp } from 'lightweight-charts';
+import {LineData, UTCTimestamp } from 'lightweight-charts';
 
 export let globalExchangeInfo: any | undefined;
 
@@ -283,8 +283,8 @@ export class BinanceClient extends ExchangeClient {
         return symbols.sort((a, b) => parseFloat(b.volume) - parseFloat(a.volume)).slice(0, 20);
     }
 
-    async getHistoricalData(symbol: string, startTime?: number, endTime?: number, interval = '5m', limit = 1000): Promise<ChartPoint[]> {
-        const result: ChartPoint[] = [];
+    async getHistoricalData(symbol: string, startTime?: number, endTime?: number, interval = '5m', limit = 1000): Promise<LineData[]> {
+        const result: LineData[] = [];
         const matrix: string[][] = (await this.prepareRequest('/api/v3/klines', 'GET', false, {
             symbol,
             limit,

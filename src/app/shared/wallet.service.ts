@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {apiG, getTransactions, getUserListItem, refreshWallets} from "./helpers";
 import {WalletModel} from "../wallet/models/wallet.model";
 import {WalletConverter} from "../wallet/converters/wallet.converter";
-import {OrderModel} from "../wallet/models/order.model";
+import {OcoOrderModel, OrderModel} from "../wallet/models/order.model";
 import {rack} from "../states/app-state";
 
 export interface WalletState {
@@ -66,27 +66,36 @@ export class WalletService {
     return result;
   }
 
-  async getAllOrders(): Promise<OrderModel[]> {
-    const result: OrderModel[] = [];
+  async getAllOpenOrders(): Promise<OcoOrderModel[]> {
+    const result: OcoOrderModel[] = [];
     await Promise.all([
       this.getBuyOrders().then((orders) => result.push(...orders)),
       this.getSellOrders().then((orders) => result.push(...orders))
     ]);
-    return result.sort((a, b) => b.transactTime - a.transactTime);
+    return result.sort((a, b) => b.orders[0].transactTime - a.orders[0].transactTime);
   }
 
-  async getBuyOrders(): Promise<OrderModel[]> {
-    return (await getTransactions<OrderModel>('BUY')) ?? [];
+  async getAllOrders(): Promise<OcoOrderModel[]> {
+    const result: OcoOrderModel[] = (await getTransactions(['BUY', 'SELL', 'HISTORY']))?.data ?? [];
+    return result.sort((a, b) => b.orders[0].transactTime - a.orders[0].transactTime);
   }
 
-  async getSellOrders(): Promise<OrderModel[]> {
-    return (await getTransactions<OrderModel>('SELL')) ?? [];
+  async getBuyOrders(): Promise<OcoOrderModel[]> {
+    return (await getTransactions(['BUY']))?.data ?? [];
   }
 
-  async getOrder(orderId: number): Promise<OrderModel | undefined> {
+  async getSellOrders(): Promise<OcoOrderModel[]> {
+    return (await getTransactions(['SELL']))?.data ?? [];
+  }
+
+  async getHistoryOrders(): Promise<OcoOrderModel[]> {
+    return (await getTransactions(['HISTORY']))?.data ?? [];
+  }
+
+  async getOrder(orderId: number): Promise<OcoOrderModel | undefined> {
     const orders = (await this.getAllOrders()) ?? [];
     console.log(orders);
-    return orders.find(order => order.orderId === orderId);
+    return orders.find(order => order.orders.findIndex(sub => sub.orderId === orderId) > -1);
   }
 
   getWalletBudget(wallet: WalletModel): number {

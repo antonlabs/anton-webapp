@@ -1,15 +1,17 @@
-<div class="flex-column order-inspection">
+<div class="flex-column order-inspection" *ngIf="currentOrders && currentOrders.length > 0">
   <div class="flex-column ml-10px">
     <div class="flex-row mt-20px">
-      <button class="anton-button image">
-        <img src="/assets/binance-logo.png" />
-      </button>
+      <a [href]="'https://www.binance.com/en/trade/' + currentOrders[0].symbol + '?type=spot'" target="_blank">
+        <button class="anton-button image">
+          <img src="/assets/binance-logo.png" />
+        </button>
+      </a>
       <button class="anton-button image ml-10px">
         <img src="/assets/coinmarketcap.png" />
       </button>
     </div>
-    <div *ngIf="order" class="card-plain chart-container {{currentKlines ? '' : 'skeleton'}} mt-20px">
-      <app-anton-chart [line]="currentKlines"></app-anton-chart>
+    <div *ngIf="currentOrders" class="card-plain chart-container {{currentKlines ? '' : 'skeleton'}} mt-20px">
+      <app-order-chart [data]="{orders: currentOrders, dataSeries: currentKlines}"></app-order-chart>
     </div>
   </div>
 

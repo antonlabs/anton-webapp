@@ -7,8 +7,9 @@ export interface OrderModel extends OrderResponse {
 
 export interface OcoOrderModel {
     orderListId: number;
+    oco: boolean;
+    open?: boolean;
     orders: OrderModel[];
-    orderReports: OrderModel[];
-    listOrderStatus: 'EXECUTING' |  'ALL_DONE' | 'REJECT';
     symbol: string;
 }
+

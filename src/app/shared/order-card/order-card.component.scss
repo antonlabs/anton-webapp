@@ -4,6 +4,7 @@
   padding: 10px;
   margin-top: 10px;
   cursor: pointer;
+  position: relative;
   &.selected, &:hover {
     outline: 2px solid $primary-color;
   }
@@ -12,15 +13,32 @@
     margin-top: 8px;
   }
   .price {
-    border: 2px dashed;
     border-radius: 5px;
     padding: 5px;
     &.buy {
-      border-color: $primary-active;
+      background: $primary-active;
+      color: #fff;
     }
     &.sell {
-      border-color: $primary-danger;
+      background: $primary-danger;
+      color: #fff;
     }
+  }
+  .down {
+    top: 10px;
+    font-size: 30px;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+}
+
+.sub-order {
+  transform: scale(.95);
+  display: none;
+  &.open {
+    display: flex;
   }
 }
 

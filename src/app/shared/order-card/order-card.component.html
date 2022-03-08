@@ -1,4 +1,20 @@
-<div class="order-card card-plain flex-row between" *ngIf="order">
-  <h4>{{order.symbol}}</h4>
-  <span class="price {{order.side.toLowerCase()}}">{{order.price}}</span>
+<div class="order-card card-plain flex-row between" *ngIf="!order?.oco && firstOrder">
+  <h4>{{firstOrder.symbol}}</h4>
+  <span class="price {{firstOrder.side.toLowerCase()}}">{{types[firstOrder.type] ?? ''}}</span>
+</div>
+
+<div class="order-card card-plain" *ngIf="order && order?.oco && firstOrder">
+  <div class="flex-row between">
+    <h4>{{firstOrder.symbol}}</h4>
+    <div class="flex-row">
+      <span class="price {{firstOrder.side.toLowerCase()}}">OCO</span>
+      <ng-icon (click)="order.open = !(order.open)" class="down" name="jam-arrow-circle-down-f"></ng-icon>
+    </div>
+  </div>
+</div>
+<div class="sub-order order-card card-plain flex-row between {{order?.open ? 'open' : ''}}" *ngFor="let item of (order?.orders ?? [])">
+  {{item.type}}
+  {{item.status}}
+  {{item.orderId}}
+  {{item.orderListId}}
 </div>

@@ -5,13 +5,16 @@
   .orders-list {
     flex: 1;
     min-width: 200px;
-    height: 100%;
-    overflow-y: auto;
     border-right: 1px solid $primary-field-background;
     padding: 5px;
+    .list {
+      padding: 1px;
+      height: calc(100vh - 200px);
+      overflow-y: auto;
+    }
   }
   .order-inspect {
     flex: 3;
-
+    overflow: auto;
   }
 }

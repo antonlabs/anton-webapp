@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {MatCurrencyExchange, MatLink, MatLinkOff, MatTelegram} from '@ng-icons/material-icons';
 import {
+  JamArrowCircleDownF,
   JamArrowCircleLeftF,
   JamArrowCircleRightF,
   JamBell,
@@ -30,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
       NgIconsModule.withIcons({
         MatTelegram,
         JamArrowCircleLeftF,
+        JamArrowCircleDownF,
         JamArrowCircleRightF,
         JamUserCircle,
         MatCurrencyExchange,

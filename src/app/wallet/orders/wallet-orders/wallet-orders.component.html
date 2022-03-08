@@ -1,10 +1,12 @@
 <div class="flex-row mobile-flex-column wallet-orders">
   <div class="orders-list">
     <h2 i18n class="mt-10px">Orders</h2>
-    <app-order-card [routerLink]="['/orders']" [queryParams]="{order: order.orderId}" *ngFor="let order of orders" [order]="order"></app-order-card>
+    <div class="list">
+      <app-order-card [routerLink]="['/orders']" [queryParams]="order.oco ? {orderListId: order.orderListId} : {order: order.orders[0].orderId}" *ngFor="let order of orders" [order]="order"></app-order-card>
+    </div>
   </div>
-  <div class="order-inspect">
-    <h2 i18n class="mt-10px ml-10px">Order Inspection</h2>
-    <app-order-inspection></app-order-inspection>
+  <div class="order-inspect" *ngIf="currentOrder">
+    <h2 *ngFor="let order of currentOrder.orders" i18n class="mt-10px ml-10px">{{order?.symbol}} - {{types[order.type]}} - {{getTransactTime(order)}}</h2>
+    <app-order-inspection [order]="currentOrder.orders"></app-order-inspection>
   </div>
 </div>

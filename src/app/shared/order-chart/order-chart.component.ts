@@ -1,6 +1,17 @@
 import {AfterViewInit, Component, HostListener, Input, OnInit} from '@angular/core';
-import {createChart, PriceLineOptions} from 'lightweight-charts';
-import {darkTheme, lightTheme} from "./themes";
+import {
+  createChart,
+  IChartApi,
+  IPriceLine,
+  ISeriesApi,
+  LineData,
+  LineStyle,
+  PriceLineOptions
+} from "lightweight-charts";
+import {OrderModel} from "../../wallet/models/order.model";
+import {AntiMemLeak} from "../anti-mem-leak";
+import {darkTheme, lightTheme} from "../anton-chart/themes";
+
 
 const makeid = (length: number) => {
   let result           = '';
@@ -18,49 +29,46 @@ const themes = {
   light: lightTheme
 }
 
-export interface ChartPoint {
-  time: number,
-  value: number
-}
-
 @Component({
-  selector: 'app-anton-chart',
-  templateUrl: './anton-chart.component.html',
-  styleUrls: ['./anton-chart.component.scss']
+  selector: 'app-order-chart',
+  templateUrl: './order-chart.component.html',
+  styleUrls: ['./order-chart.component.scss']
 })
-export class AntonChartComponent implements OnInit, AfterViewInit {
-  chart: any;
+export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterViewInit {
+  chart: IChartApi | undefined;
   id: string = makeid(10);
   lastSize: any = {};
-  chartLines: any;
+  chartLines: ISeriesApi<'Area'> | undefined;
   loaded = false;
-  priceLinesString: string[] = [];
+  currentPriceLines: IPriceLine[] = []
 
   @Input()
-  set priceLines(val: PriceLineOptions[] | undefined) {
-    for(const line of (val ?? [])) {
-      const string = JSON.stringify(line);
-      if(this.priceLinesString.indexOf(string) === -1) {
-        const interval = setInterval(() => {
-          if(this.chartLines) {
-            this.chartLines.createPriceLine(line);
-            this.priceLinesString.push(string);
-            clearInterval(interval);
-          }
-        }, 100)
-      }
-    }
-  }
-
-  @Input()
-  set line(val: ChartPoint[]) {
+  set data(val: {orders: OrderModel[], dataSeries: LineData[]}) {
     if(val) {
+      for(const priceLine of this.currentPriceLines) {
+        this.chartLines?.removePriceLine(priceLine);
+      }
+      this.chartLines?.setData(val.dataSeries);
+      for(const order of val.orders) {
+        const priceLine = this.chartLines?.createPriceLine({
+          price: order.type === 'STOP_LOSS_LIMIT' ? parseFloat(order.stopPrice ?? '0') : parseFloat(order.price),
+          color: order.side === 'SELL' ? '#700' : '#070',
+          axisLabelVisible: true,
+          title: order.type,
+          lineWidth: 2,
+          lineStyle: LineStyle.Solid
+        });
+        if(priceLine) {
+          this.currentPriceLines.push(priceLine);
+        }
+      }
       this.loaded = true;
-      this.chartLines.setData(val);
     }
   }
 
-  constructor() { }
+  constructor() {
+    super();
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -69,7 +77,7 @@ export class AntonChartComponent implements OnInit, AfterViewInit {
     console.log(width);
     if(width && this.lastSize?.width !== width) {
       this.lastSize.width = width;
-      this.chart.applyOptions({width});
+      this.chart?.applyOptions({width});
     }
   }
 
@@ -95,11 +103,14 @@ export class AntonChartComponent implements OnInit, AfterViewInit {
         priceFormat: {
           type: 'price',
           precision: 9,
-          minMove: 0.0000001
+          minMove: 0.00001
         }
       });
       this.chartLines.applyOptions(themes.light.series);
     }
   }
 
+
 }
+
+

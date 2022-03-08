@@ -8,6 +8,7 @@ import jwtDecode from "jwt-decode";
 import {rack} from "../states/app-state";
 import {CognitoIdentityProviderClient} from "@aws-sdk/client-cognito-identity-provider";
 import {CognitoIdentityClient} from "@aws-sdk/client-cognito-identity";
+import {OcoOrderModel, OrderModel} from "../wallet/models/order.model";
 
 export const getLiteral = (str: string, obj: any): any => {
   return str.split('.').reduce((o, i) => (o ?? {[str]: undefined})[i], obj);
@@ -21,7 +22,9 @@ export const dynamoDbClient = () => new DynamoDBClient({
   credentials: rack.states.iamCredentials.val
 });
 
-export const documentClient = (): DynamoDBDocument => DynamoDBDocument.from(dynamoDbClient())
+export const documentClient = (): DynamoDBDocument => DynamoDBDocument.from(dynamoDbClient(), {
+  marshallOptions: {removeUndefinedValues: true}
+})
 
 
 export const cognito = new CognitoIdentityProviderClient({region: environment.region});
@@ -86,7 +89,7 @@ export const refreshWallets = async <T>(): Promise<void> => {
     wallets: wallets ?? []
   });
 
-  for(const wallet of wallets ?? []) {
+  for(const wallet of (wallets ?? [])) {
     if(wallet.name === rack.states.currentWallet.val.name) {
       rack.states.currentWallet.set(wallet);
     }
@@ -113,20 +116,72 @@ export const getUserListItem = async <T>(param: string): Promise<T[] | undefined
   })).Items as T[];
 }
 
-export const getTransactions = async <T>(type: 'SELL' | 'BUY' | 'HISTORY', symbol?: string): Promise<T[] | undefined> => {
-  if(!rack.states.user.val.identityId) return;
-  return (await documentClient().query({
-    TableName: transactionTableName,
-    KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
-    ExpressionAttributeNames: {
-      '#sk': 'sk',
-      '#pk': 'pk'
-    },
-    ExpressionAttributeValues: {
-      ':sk': type + '#' + (symbol ?? ''),
-      ':pk': rack.states.user.val.identityId
+export interface GetTransactionOutput<T> {
+    data: T[],
+    pagination: {
+      [key: string]: {[key: string] : any} | undefined
     }
-  })).Items as T[];
+}
+
+export const getTransactions = async (types: ('SELL' | 'BUY' | 'HISTORY')[], symbol?: string, pagination: {[key: string]: any} = {}): Promise<GetTransactionOutput<OcoOrderModel>| undefined> => {
+  if(!rack.states.user.val.identityId) return;
+  const dynamoResponse: GetTransactionOutput<OrderModel> = {
+    data: [],
+    pagination: {}
+  };
+  await Promise.all(
+    types.map(type => documentClient().query({
+        TableName: transactionTableName,
+        KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
+        ExclusiveStartKey: pagination[type] ? {
+          S: pagination[type]
+        } : undefined,
+        ExpressionAttributeNames: {
+          '#sk': 'sk',
+          '#pk': 'pk'
+        },
+        ExpressionAttributeValues: {
+          ':sk': type + '#' + (symbol ?? ''),
+          ':pk': rack.states.user.val.identityId
+        },
+        Limit: 100
+    }).then(response => {
+      dynamoResponse.data.push(...(response.Items as OrderModel[]).filter(item => dynamoResponse.data.findIndex(data => data.orderId === item.orderId) === -1));
+      dynamoResponse.pagination[type] = response.LastEvaluatedKey;
+    }))
+  );
+  const transactionsMap: {[key: string]: OrderModel[]} = {};
+  const ocoOrders: OcoOrderModel[] = [];
+  const transactions = dynamoResponse.data;
+  for(const transaction of transactions) {
+    if(transaction.orderListId === -1) {
+      ocoOrders.push({
+        orders: [transaction],
+        oco: false,
+        symbol: transaction.symbol,
+        orderListId: -1
+      });
+    }else {
+      if(transactionsMap[transaction.orderListId.toString()] === undefined) {
+        transactionsMap[transaction.orderListId.toString()] = [JSON.parse(JSON.stringify(transaction))];
+      }else {
+        transactionsMap[transaction.orderListId.toString()].push(JSON.parse(JSON.stringify(transaction)));
+      }
+    }
+  }
+  for(const key of Object.keys(transactionsMap)) {
+    ocoOrders.push({
+      orders: transactionsMap[key],
+      oco: true,
+      symbol: transactionsMap[key][0].symbol,
+      orderListId: parseFloat(key)
+    })
+  }
+
+  return {
+    data: ocoOrders,
+    pagination: dynamoResponse.pagination
+  };
 }
 
 
@@ -156,4 +211,11 @@ export const jwtToUserDto = (jwt: string): UserDto => {
     name: data.given_name,
     surname: data.family_name
   }
+}
+
+export const orderTypes: {[key: string] : string} = {
+  'STOP_LOSS_LIMIT': $localize`Stop loss limit`,
+  'LIMIT_MAKER': $localize`Limit maker`,
+  'LIMIT': $localize`Limit`,
+  'MARKET': $localize`Market`,
 }
