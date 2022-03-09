@@ -1,0 +1,23 @@
+@import "../../../../styles/palette";
+
+  .tabs {
+    .tab {
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+      background: #fbf7f7;
+      border-bottom: none;
+      padding: 3px;
+      &.selected {
+        background: #fff;
+      }
+    }
+  }
+  .detail {
+    background: #fff;
+    border-top-left-radius: 0;
+    float: left;
+    .att {
+      display: inline-block;
+      margin: 10px;
+    }
+  }

@@ -38,6 +38,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.sub.add(
       rack.states.user.obs.subscribe(state => {
         this.name = state.name;

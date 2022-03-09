@@ -268,3 +268,14 @@ $marginsPixels: 0px, 10px, 20px, 30px, 40px, 50px;
     background-position: right -40px top 0;
   }
 }
+
+.price {
+  &.buy {
+    background: $primary-active;
+    color: #fff;
+  }
+  &.sell {
+    background: $primary-danger;
+    color: #fff;
+  }
+}

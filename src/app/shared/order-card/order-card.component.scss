@@ -12,9 +12,11 @@
     padding: 0;
     margin-top: 8px;
   }
-  .price {
+  .status, .price {
     border-radius: 5px;
     padding: 5px;
+  }
+  .price {
     &.buy {
       background: $primary-active;
       color: #fff;
@@ -27,7 +29,10 @@
   .down {
     top: 10px;
     font-size: 30px;
-
+    transition: .3s ease all;
+    &.open {
+      transform: rotate(180deg);
+    }
     &:hover {
       color: $primary-color;
     }

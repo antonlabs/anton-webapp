@@ -16,6 +16,8 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
   orders: OcoOrderModel[] | undefined;
   currentOrder: OcoOrderModel | undefined;
   types = orderTypes;
+  currentOrderId: number | undefined;
+  orderListId: number | undefined;
 
   constructor(
     private walletService: WalletService,
@@ -40,12 +42,11 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
   }
 
   refreshCurrentOrder() {
-    const orderId = this.activatedRoute.snapshot.queryParams['order'];
-    const orderListId = this.activatedRoute.snapshot.queryParams['orderListId'];
-    console.log(orderId, orderListId);
-    if(orderId) {
-      rack.states.currentWallet.getOrder(parseInt(orderId)).then((order) => {
-        console.log(order);
+    this.currentOrderId = parseInt(this.activatedRoute.snapshot.queryParams['order']);
+    this.orderListId = parseInt(this.activatedRoute.snapshot.queryParams['orderListId']);
+    console.log(this.currentOrderId, this.orderListId);
+    if (this.currentOrderId) {
+      rack.states.currentWallet.getOrder(this.currentOrderId).then((order) => {
         if(order) {
           this.currentOrder = {
             orderListId: -1,
@@ -55,8 +56,8 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
           };
         }
       });
-    }else if(orderListId) {
-      rack.states.currentWallet.getOco(parseInt(orderListId)).then((order) => {
+    } else if(this.orderListId) {
+      rack.states.currentWallet.getOco(this.orderListId).then((order) => {
         console.log(order);
         if(order) {
           this.currentOrder = order;

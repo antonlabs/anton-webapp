@@ -6,7 +6,11 @@
   .chart-container {
     min-height: 400px;
     width: 80%;
+    flex: 1;
     max-width: 800px;
+  }
+  .order-details-panel {
+    flex: 1;
   }
 
 }

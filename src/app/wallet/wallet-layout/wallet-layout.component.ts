@@ -28,6 +28,7 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
   currentModal: TemplateRef<any> | undefined;
   currentDialog: string | undefined;
   currentTimeout: any;
+  ordersInterval: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,

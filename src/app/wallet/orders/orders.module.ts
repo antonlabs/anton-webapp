@@ -4,13 +4,15 @@ import {WalletOrdersComponent} from "./wallet-orders/wallet-orders.component";
 import { OrdersRoutingModule } from './wallet-orders/orders-routing.module';
 import {SharedModule} from "../../shared/shared.module";
 import { OrderInspectionComponent } from './order-inspection/order-inspection.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 
 
 @NgModule({
   declarations: [
     WalletOrdersComponent,
-    OrderInspectionComponent
+    OrderInspectionComponent,
+    OrderDetailsComponent
   ],
   imports: [
     CommonModule,

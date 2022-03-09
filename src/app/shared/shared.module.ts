@@ -19,6 +19,7 @@ import { FooterComponent } from './footer/footer.component';
 import { WalletSettingsComponent } from './wallet-settings/wallet-settings.component';
 import { DeleteWalletMethodsComponent } from './delete-wallet-methods/delete-wallet-methods.component';
 import { OrderChartComponent } from './order-chart/order-chart.component';
+import {RouterModule} from "@angular/router";
 
 
 
@@ -42,11 +43,12 @@ import { OrderChartComponent } from './order-chart/order-chart.component';
     DeleteWalletMethodsComponent,
     OrderChartComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NgIconsModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        NgIconsModule,
+        RouterModule
+    ],
     exports: [
         LogoComponent,
         AntonChartComponent,

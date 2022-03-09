@@ -11,6 +11,7 @@ import {
 import {OrderModel} from "../../wallet/models/order.model";
 import {AntiMemLeak} from "../anti-mem-leak";
 import {darkTheme, lightTheme} from "../anton-chart/themes";
+import { orderTypes } from '../helpers';
 
 
 const makeid = (length: number) => {
@@ -50,16 +51,31 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
       }
       this.chartLines?.setData(val.dataSeries);
       for(const order of val.orders) {
-        const priceLine = this.chartLines?.createPriceLine({
-          price: order.type === 'STOP_LOSS_LIMIT' ? parseFloat(order.stopPrice ?? '0') : parseFloat(order.price),
-          color: order.side === 'SELL' ? '#700' : '#070',
-          axisLabelVisible: true,
-          title: order.type,
-          lineWidth: 2,
-          lineStyle: LineStyle.Solid
-        });
-        if(priceLine) {
-          this.currentPriceLines.push(priceLine);
+        if(order.stopPrice) {
+          const priceLine = this.chartLines?.createPriceLine({
+            price: parseFloat(order.stopPrice),
+            color: '#c69e38',
+            axisLabelVisible: true,
+            title: $localize`Stop`,
+            lineWidth: 2,
+            lineStyle: LineStyle.Solid
+          });
+          if(priceLine) {
+            this.currentPriceLines.push(priceLine);
+          }
+        }
+        if(order.price) {
+          const priceLine = this.chartLines?.createPriceLine({
+            price: parseFloat(order.price),
+            color: order.side === 'SELL' ? '#700' : '#070',
+            axisLabelVisible: true,
+            title: orderTypes[order.type],
+            lineWidth: 2,
+            lineStyle: LineStyle.Solid
+          });
+          if(priceLine) {
+            this.currentPriceLines.push(priceLine);
+          }
         }
       }
       this.loaded = true;

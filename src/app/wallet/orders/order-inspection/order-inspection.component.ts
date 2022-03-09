@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {rack} from 'src/app/states/app-state';
 import {AntiMemLeak} from "../../../shared/anti-mem-leak";
-import {ChartPoint} from "../../../shared/anton-chart/anton-chart.component";
 import {OrderModel} from "../../models/order.model";
 import {LineData, LineStyle, PriceLineOptions} from "lightweight-charts";
 import {orderTypes} from "../../../shared/helpers";
@@ -36,7 +35,10 @@ export class OrderInspectionComponent extends AntiMemLeak implements OnInit {
     if(this.currentOrders && this.currentOrders?.length > 0) {
       const client = await rack.states.exchange.getClient();
       if(client) {
-        this.currentKlines = (await client.getHistoricalData(this.currentOrders[0].symbol, this.currentOrders[0].transactTime - 3333200)) ?? [];
+        this.currentKlines = (await client.getHistoricalData(
+          this.currentOrders[0].symbol,
+          this.currentOrders[0].transactTime - 3333200)
+        ) ?? [];
         console.log(this.currentKlines);
       }
     }

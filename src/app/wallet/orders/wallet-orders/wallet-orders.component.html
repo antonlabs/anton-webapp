@@ -2,7 +2,7 @@
   <div class="orders-list">
     <h2 i18n class="mt-10px">Orders</h2>
     <div class="list">
-      <app-order-card [routerLink]="['/orders']" [queryParams]="order.oco ? {orderListId: order.orderListId} : {order: order.orders[0].orderId}" *ngFor="let order of orders" [order]="order"></app-order-card>
+      <app-order-card [active]="order.oco ? order.orderListId === orderListId : order.orders[0].orderId === currentOrderId" *ngFor="let order of orders" [order]="order"></app-order-card>
     </div>
   </div>
   <div class="order-inspect" *ngIf="currentOrder">

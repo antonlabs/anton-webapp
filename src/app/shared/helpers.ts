@@ -219,3 +219,11 @@ export const orderTypes: {[key: string] : string} = {
   'LIMIT': $localize`Limit`,
   'MARKET': $localize`Market`,
 }
+
+
+export const orderStatus: {[key: string] : string} = {
+  'NEW': $localize`Pending`,
+  'EXPIRED': $localize`Canceled`,
+  'CANCELED': $localize`Canceled`,
+  'FILLED': $localize`Completed`,
+}
