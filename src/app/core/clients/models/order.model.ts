@@ -2,8 +2,7 @@ import {Model} from "./model";
 import {OrderResponse} from "./order-response";
 
 export interface OrderModel extends OrderResponse {
-    alreadyIncrement?: boolean;
-    parentOrder?: OrderModel;
+  transactionId: string
 }
 
 export interface OcoOrderModel {
