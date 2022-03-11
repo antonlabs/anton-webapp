@@ -26,7 +26,7 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
     if(val) {
       this._wallet = val;
       this.settingsForm = new FormGroup({
-        walletBudget: new FormControl((val.valuePerUnits ?? 0) * (val.units ?? 0), Validators.required),
+        walletBudget: new FormControl(val.budget, Validators.required),
         symbolMarket: new FormControl(val.symbolMarket, Validators.required),
         autoReinvest: new FormControl(val.autoReinvest)
       });
@@ -80,8 +80,8 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
       this.submit.emit(await this.walletService.updateWallet({
         autoReinvest: this.settingsForm.value.autoReinvest,
         symbolMarket: this.settingsForm.value.symbolMarket,
-        units: this.settingsForm.value.walletBudget / 50,
-        valuePerUnits: 50
+        budget: this.settingsForm.value.walletBudget,
+        maxOrderValue: 50
       }));
       this.notificationService.success($localize`You successfully updated this wallet!`);
     }catch(e: any) {

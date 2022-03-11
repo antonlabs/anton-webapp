@@ -9,11 +9,9 @@ export interface WalletState {
   name: string;
 }
 
-
 export type WalletPlan = 'BRONZE' | 'GOLD' | 'SILVER' | 'FREE' | 'PLATINUM';
 
 export type DeleteWalletMethod = 'KEEP_ORDERS' | 'SELL_ORDERS';
-
 
 @Injectable({
   providedIn: 'root'
@@ -96,10 +94,6 @@ export class WalletService {
     const orders = (await this.getAllOrders()) ?? [];
     console.log(orders);
     return orders.find(order => order.orders.findIndex(sub => sub.orderId === orderId) > -1);
-  }
-
-  getWalletBudget(wallet: WalletModel): number {
-    return (wallet.units ?? 0) * (wallet.valuePerUnits ?? 0);
   }
 
   async playStrategy(walletName: string): Promise<void> {

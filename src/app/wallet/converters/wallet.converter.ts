@@ -4,34 +4,32 @@ import {WalletType} from "../enums/wallet-type.enum";
 
 export class WalletConverter {
 
-  static toModel(dto: WalletDto) {
+  static toModel(dto: WalletDto): WalletModel {
     return {
       name: dto.name,
       symbolMarket: dto.symbolMarket,
-      units: dto.units,
+      budget: dto.budget,
       alias: dto.alias,
       earnings: dto.earnings,
-      totalEarnings: dto.totalEarnings,
+      maxOrderValue: dto.maxOrderValue,
       type: dto.type,
       accessKey: dto.accessKey,
       secretKey: dto.secretKey,
-      valuePerUnits: dto.valuePerUnits,
       blacklist: dto.blacklist
     }
   }
 
-  static toDto(model: WalletModel) {
+  static toDto(model: WalletModel): WalletDto {
     return {
       name: model.name,
       symbolMarket: model.symbolMarket ?? 'BUSD',
-      units: model.units,
       alias: 'my-wallet',
       earnings: model.earnings,
-      totalEarnings: model.totalEarnings,
+      maxOrderValue: model.maxOrderValue,
       type: WalletType.BINANCE,
       accessKey: model.accessKey ?? '',
       secretKey: model.secretKey ?? '',
-      valuePerUnits: model.valuePerUnits,
+      budget: model.budget,
       blacklist: model.blacklist
     }
   }

@@ -13,14 +13,14 @@ export class WalletState extends State<WalletProperties> {
     return {
       name: '',
       symbolMarket: undefined,
-      units: undefined,
       alias: undefined,
       earnings: undefined,
       totalEarnings: undefined,
       type: undefined,
       accessKey: undefined,
       secretKey: undefined,
-      valuePerUnits: undefined,
+      maxOrderValue: 50,
+      budget: 0,
       blacklist: [],
       orders: {
         data: [],

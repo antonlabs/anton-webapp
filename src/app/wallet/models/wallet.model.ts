@@ -21,7 +21,6 @@ export interface StrategyAssociationModel extends Model {
 export interface WalletModel {
   name: string;
   symbolMarket?: string;
-  units?: number;
   alias?: string;
   earnings?: number;
   totalEarnings?: number;
@@ -30,6 +29,7 @@ export interface WalletModel {
   accessKey?: string;
   autoReinvest?: boolean;
   secretKey?: string;
-  valuePerUnits?: number;
+  budget: number;
+  maxOrderValue: number;
   blacklist?: string[];
 }

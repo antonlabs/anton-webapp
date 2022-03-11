@@ -69,7 +69,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   }
 
   get walletBalance(): number {
-    return ((this.wallet?.units ?? 0) * (this.wallet?.valuePerUnits ?? 0)) + (this.wallet?.totalEarnings ?? 0);
+    return ((this.wallet?.budget ?? 0) + (this.wallet?.totalEarnings ?? 0));
   }
 
   async playStrategy() {
