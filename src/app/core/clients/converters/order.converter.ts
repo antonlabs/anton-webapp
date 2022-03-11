@@ -1,18 +1,10 @@
 import {OcoOrderModel, OrderModel} from "../models/order.model";
 
 export class OrderConverter {
-    static toDynamoModel(order: OrderModel) {
-        const ttl = new Date();
-        ttl.setMonth(ttl.getMonth() + 1);
-        return Object.assign({
-            pk: order.symbol,
-            sk: `ORDER#${new Date(order.transactTime ?? order.updateTime).toISOString()}#`+order.type,
-            ttl
-        }, order)
-    }
 
     static fromDynamoModel(order: any): OrderModel {
         return {
+            transactionId: order.sk.split('#')[0],
             symbol: order.symbol,
             orderId: order.orderId,
             orderListId: order.orderListId,
@@ -27,8 +19,6 @@ export class OrderConverter {
             status: order.status,
             timeInForce: order.timeInForce,
             type: order.type,
-            alreadyIncrement: order.alreadyIncrement,
-            parentOrder: order.parentOrder,
             side: order.side
         };
     }

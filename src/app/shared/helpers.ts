@@ -9,6 +9,7 @@ import {rack} from "../states/app-state";
 import {CognitoIdentityProviderClient} from "@aws-sdk/client-cognito-identity-provider";
 import {CognitoIdentityClient} from "@aws-sdk/client-cognito-identity";
 import {OcoOrderModel, OrderModel} from "../wallet/models/order.model";
+import {OrderConverter} from "../core/clients/converters/order.converter";
 
 export const getLiteral = (str: string, obj: any): any => {
   return str.split('.').reduce((o, i) => (o ?? {[str]: undefined})[i], obj);
@@ -123,49 +124,35 @@ export interface GetTransactionOutput<T> {
     }
 }
 
-export const getTransactions = async (types: ('SELL' | 'BUY' | 'HISTORY')[], symbol?: string, pagination: {[key: string]: any} = {}): Promise<GetTransactionOutput<OcoOrderModel>| undefined> => {
-  if(!rack.states.user.val.identityId) return;
-  const dynamoResponse: GetTransactionOutput<OrderModel> = {
-    data: [],
-    pagination: {}
-  };
-  await Promise.all(
-    types.map(type => documentClient().query({
-        TableName: transactionTableName,
-        KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
-        ExclusiveStartKey: pagination[type] ? {
-          S: pagination[type]
-        } : undefined,
-        ExpressionAttributeNames: {
-          '#sk': 'sk',
-          '#pk': 'pk'
-        },
-        ExpressionAttributeValues: {
-          ':sk': type + '#' + (symbol ?? ''),
-          ':pk': rack.states.user.val.identityId
-        },
-        Limit: 100
-    }).then(response => {
-      dynamoResponse.data.push(...(response.Items as OrderModel[]).filter(item => dynamoResponse.data.findIndex(data => data.orderId === item.orderId) === -1));
-      dynamoResponse.pagination[type] = response.LastEvaluatedKey;
-    }))
-  );
+export const getOrders = async (transactionId: string): Promise<OcoOrderModel[]> => {
+  const orders: OrderModel[] = ((await documentClient().query({
+    TableName: transactionTableName,
+    KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
+    ExpressionAttributeNames: {
+      '#sk': 'sk',
+      '#pk': 'pk'
+    },
+    ExpressionAttributeValues: {
+      ':sk': transactionId,
+      ':pk': rack.states.user.val.identityId
+    }
+  })).Items ?? []).map(item => OrderConverter.fromDynamoModel(item));
+
   const transactionsMap: {[key: string]: OrderModel[]} = {};
   const ocoOrders: OcoOrderModel[] = [];
-  const transactions = dynamoResponse.data;
-  for(const transaction of transactions) {
-    if(transaction.orderListId === -1) {
+  for(const order of orders) {
+    if(order.orderListId === -1) {
       ocoOrders.push({
-        orders: [transaction],
+        orders: [order],
         oco: false,
-        symbol: transaction.symbol,
+        symbol: order.symbol,
         orderListId: -1
       });
     }else {
-      if(transactionsMap[transaction.orderListId.toString()] === undefined) {
-        transactionsMap[transaction.orderListId.toString()] = [JSON.parse(JSON.stringify(transaction))];
+      if(transactionsMap[order.orderListId.toString()] === undefined) {
+        transactionsMap[order.orderListId.toString()] = [JSON.parse(JSON.stringify(order))];
       }else {
-        transactionsMap[transaction.orderListId.toString()].push(JSON.parse(JSON.stringify(transaction)));
+        transactionsMap[order.orderListId.toString()].push(JSON.parse(JSON.stringify(order)));
       }
     }
   }
@@ -177,11 +164,23 @@ export const getTransactions = async (types: ('SELL' | 'BUY' | 'HISTORY')[], sym
       orderListId: parseFloat(key)
     })
   }
+  return ocoOrders;
+}
 
-  return {
-    data: ocoOrders,
-    pagination: dynamoResponse.pagination
-  };
+export const getTransactions = async (): Promise<string[]> => {
+  if(!rack.states.user.val.identityId) return [];
+  return ((await documentClient().query({
+    TableName: transactionTableName,
+    KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
+    ExpressionAttributeNames: {
+      '#sk': 'sk',
+      '#pk': 'pk'
+    },
+    ExpressionAttributeValues: {
+      ':sk': 'TRANSACTIONS',
+      ':pk': rack.states.user.val.identityId
+    }
+  })).Items ?? []).map(item => item['id']);
 }
 
 
