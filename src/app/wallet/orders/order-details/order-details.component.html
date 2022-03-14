@@ -28,9 +28,14 @@
            <h4 i18n>Status</h4>
            {{orderStatus[currentOrder!.status]}}
          </div>
-       </div>
-       <div class="date">
-         {{getLocalTime(currentOrder?.transactTime ?? 0)}}
+         <div class="att" *ngIf="currentOrder?.transactTime">
+           <h4 i18n>Create date</h4>
+           {{getLocalTime(currentOrder?.transactTime ?? 0)}}
+         </div>
+         <div class="att" *ngIf="currentOrder?.updateTime">
+           <h4 i18n>Update date</h4>
+           {{getLocalTime(currentOrder?.updateTime ?? 0)}}
+         </div>
        </div>
      </div>
    </div>

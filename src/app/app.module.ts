@@ -7,7 +7,7 @@ import {MatCurrencyExchange, MatLink, MatLinkOff, MatTelegram} from '@ng-icons/m
 import {
   JamArrowCircleDownF,
   JamArrowCircleLeftF,
-  JamArrowCircleRightF,
+  JamArrowCircleRightF, JamArrowUp,
   JamBell,
   JamClose, JamCogs,
   JamCoin, JamFacebookCircle, JamGithubCircle, JamInstagram,
@@ -39,6 +39,7 @@ import { HttpClientModule } from '@angular/common/http';
         JamPlay,
         MatLinkOff,
         JamClose,
+        JamArrowUp,
         JamInstagram,
         JamTwitterCircle,
         JamGithubCircle,

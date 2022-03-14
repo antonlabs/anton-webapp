@@ -5,6 +5,7 @@ import { OrdersRoutingModule } from './wallet-orders/orders-routing.module';
 import {SharedModule} from "../../shared/shared.module";
 import { OrderInspectionComponent } from './order-inspection/order-inspection.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
+import {NgIconsModule} from "@ng-icons/core";
 
 
 
@@ -17,7 +18,8 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
   imports: [
     CommonModule,
     OrdersRoutingModule,
-    SharedModule
+    SharedModule,
+    NgIconsModule
   ]
 })
 export class OrdersModule { }
