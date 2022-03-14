@@ -36,7 +36,9 @@ export class OrderInspectionComponent extends AntiMemLeak implements OnInit {
       if(client) {
         this.currentKlines = (await client.getHistoricalData(
           this.currentOrders[0].symbol,
-          this.currentOrders.slice(-1)[0].orders.slice(-1)[0].transactTime - 33332000)
+          this.currentOrders.slice(-1)[0].orders.slice(-1)[0].transactTime - 33332000,
+            (this.currentOrders.slice(-1)[0].orders.slice(-1)[0].updateTime ?? this.currentOrders.slice(-1)[0].orders.slice(-1)[0].transactTime)+ 33332000
+          )
         ) ?? [];
         console.log(this.currentKlines);
       }

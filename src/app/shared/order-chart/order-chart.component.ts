@@ -93,7 +93,7 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
             }
           }else {
             markers.push({
-              time: (order.transactTime / 1000) as Time,
+              time: ((order.updateTime ?? order.transactTime) / 1000) as Time,
               text: orderTypes[order.type],
               color: this.getColorByOrder(order),
               position: order.side === 'BUY' ? 'belowBar' : 'aboveBar',
@@ -102,7 +102,7 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
           }
         }
       }
-      this.chartLines?.setMarkers(markers);
+      this.chartLines?.setMarkers(markers.sort((b, a) => (b.time as number) - (a.time as number)));
       this.loaded = true;
     }
   }
@@ -138,7 +138,7 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
           secondsVisible: true
         }
       });
-      //this.chart.timeScale().fitContent();
+      this.chart.timeScale().fitContent();
       this.chart.applyOptions(themes.light.chart);
       this.chartLines = this.chart.addAreaSeries({
         priceFormat: {

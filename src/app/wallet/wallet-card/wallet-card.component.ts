@@ -81,7 +81,7 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
         autoReinvest: this.settingsForm.value.autoReinvest,
         symbolMarket: this.settingsForm.value.symbolMarket,
         budget: this.settingsForm.value.walletBudget,
-        maxOrderValue: 50
+        maxOrderValue: 20
       }));
       this.notificationService.success($localize`You successfully updated this wallet!`);
     }catch(e: any) {
