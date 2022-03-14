@@ -5,9 +5,7 @@
   .orders-list {
     flex: 1;
     min-width: 200px;
-    border-right: 1px solid $primary-field-background;
     padding: 5px;
-    background: #fbf7f7;
     .list {
       padding: 1px;
       height: calc(100vh - 200px);

@@ -1,0 +1,23 @@
+@import "../../../styles/palette";
+
+.transaction-card {
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  position: relative;
+  &.selected, &:hover {
+    outline: 2px solid $primary-color;
+  }
+  img {
+    width: 30px;
+  }
+  h4 {
+    padding: 0;
+    margin-top: 8px;
+  }
+  .status, .price {
+    border-radius: 5px;
+    padding: 5px;
+  }
+}
+

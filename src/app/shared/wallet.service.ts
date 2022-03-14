@@ -64,38 +64,6 @@ export class WalletService {
     return result;
   }
 
-  async getAllOpenOrders(): Promise<OcoOrderModel[]> {
-    const result: OcoOrderModel[] = [];
-    await Promise.all([
-      this.getBuyOrders().then((orders) => result.push(...orders)),
-      this.getSellOrders().then((orders) => result.push(...orders))
-    ]);
-    return result.sort((a, b) => b.orders[0].transactTime - a.orders[0].transactTime);
-  }
-
-  async getAllOrders(): Promise<OcoOrderModel[]> {
-    const result: OcoOrderModel[] = (await getTransactions(['BUY', 'SELL', 'HISTORY']))?.data ?? [];
-    return result.sort((a, b) => b.orders[0].transactTime - a.orders[0].transactTime);
-  }
-
-  async getBuyOrders(): Promise<OcoOrderModel[]> {
-    return (await getTransactions(['BUY']))?.data ?? [];
-  }
-
-  async getSellOrders(): Promise<OcoOrderModel[]> {
-    return (await getTransactions(['SELL']))?.data ?? [];
-  }
-
-  async getHistoryOrders(): Promise<OcoOrderModel[]> {
-    return (await getTransactions(['HISTORY']))?.data ?? [];
-  }
-
-  async getOrder(orderId: number): Promise<OcoOrderModel | undefined> {
-    const orders = (await this.getAllOrders()) ?? [];
-    console.log(orders);
-    return orders.find(order => order.orders.findIndex(sub => sub.orderId === orderId) > -1);
-  }
-
   async playStrategy(walletName: string): Promise<void> {
     await apiG('wallet/'+walletName+'/start' , {
       method: 'PUT'

@@ -64,26 +64,26 @@
     <app-anton-chart i18n-title title="Your journey"></app-anton-chart>
   </div>
 
-  <div class="flex-row between mt-10px orders mobile-flex-column">
-    <div class="card-plain flex-column {{orders.length === 0 ? 'between' : ''}}" style="flex: 1">
+  <div class="flex-row between mt-10px openTransactions mobile-flex-column">
+    <div class="card-plain flex-column {{openTransactions.length === 0 ? 'between' : ''}}" style="flex: 1">
       <div class="flex-row between">
-        <h2 i18n>My active orders</h2>
+        <h2 i18n>My active openTransactions</h2>
       </div>
-      <img alt="guard" *ngIf="orders.length === 0" src="/assets/orders-not-found.png">
+      <img alt="guard" *ngIf="openTransactions.length === 0" src="/assets/orders-not-found.png">
       <div class="body">
         <app-symbol-card
           [selectable]="false"
           class="symbol mt-10px"
-          *ngFor="let order of (orders ?? [])"
+          *ngFor="let order of (openTransactions ?? [])"
           [routerLink]="['/orders']"
-          [queryParams]="order.oco ? {orderListId: order.orderListId} : {order: order.orders[0].orderId}"
+          [queryParams]="{transaction: order.id}"
           [symbol]="order.symbol"
           [remove]="false"></app-symbol-card>
       </div>
-      <ng-container *ngIf="orders.length === 0">
-        <h2 i18n>No orders right now </h2>
+      <ng-container *ngIf="openTransactions.length === 0">
+        <h2 i18n>No openTransactions right now </h2>
         <div class="alert warn" i18n>
-          This list contains all those orders that Anton has just catch
+          This list contains all those openTransactions that Anton has just catch
         </div>
       </ng-container>
     </div>

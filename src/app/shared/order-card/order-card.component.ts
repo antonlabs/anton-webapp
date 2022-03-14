@@ -3,6 +3,7 @@ import {OcoOrderModel, OrderModel} from "../../wallet/models/order.model";
 import {orderStatus, orderTypes} from "../helpers";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AntiMemLeak} from "../anti-mem-leak";
+import {TransactionModel} from "../../core/clients/models/transaction.model";
 
 
 @Component({
@@ -31,7 +32,7 @@ export class OrderCardComponent extends AntiMemLeak implements OnInit {
         if(queryParams) {
           this.selectedOrder = parseInt(queryParams['order']);
           if(this.order) {
-            if(this.order.orders.findIndex(item => item.orderId === this.selectedOrder) > -1) {
+            if((this.order.orders ?? []).findIndex(item => item.orderListId === this.selectedOrder) > -1) {
               this.order.open = true;
             }
           }

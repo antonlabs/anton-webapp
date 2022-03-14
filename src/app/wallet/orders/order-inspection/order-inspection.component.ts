@@ -1,9 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {rack} from 'src/app/states/app-state';
 import {AntiMemLeak} from "../../../shared/anti-mem-leak";
-import {OrderModel} from "../../models/order.model";
-import {LineData, LineStyle, PriceLineOptions} from "lightweight-charts";
-import {orderTypes} from "../../../shared/helpers";
+import {OcoOrderModel} from "../../models/order.model";
+import {LineData} from "lightweight-charts";
 
 @Component({
   selector: 'app-order-inspection',
@@ -12,17 +11,17 @@ import {orderTypes} from "../../../shared/helpers";
 })
 export class OrderInspectionComponent extends AntiMemLeak implements OnInit {
 
-  currentOrders: OrderModel[] | undefined;
+  currentOrders: OcoOrderModel[] | undefined;
+  currentKlines: LineData[] = [];
 
   @Input()
-  set order(val: OrderModel[] | undefined) {
+  set orders(val: OcoOrderModel[] | undefined) {
     if(JSON.stringify(val) !== JSON.stringify(this.currentOrders)) {
       this.currentOrders = val;
       this.refreshTicks();
     }
   }
 
-  currentKlines: LineData[] = [];
 
   constructor() {
     super();
@@ -37,22 +36,11 @@ export class OrderInspectionComponent extends AntiMemLeak implements OnInit {
       if(client) {
         this.currentKlines = (await client.getHistoricalData(
           this.currentOrders[0].symbol,
-          this.currentOrders[0].transactTime - 3333200)
+          this.currentOrders.slice(-1)[0].orders.slice(-1)[0].transactTime - 33332000)
         ) ?? [];
         console.log(this.currentKlines);
       }
     }
-  }
-
-  get priceLines(): PriceLineOptions[] | undefined {
-    return (this.currentOrders ?? []).map((order: OrderModel) => ({
-      price: parseFloat(order.price),
-      title: orderTypes[order.type],
-      color: '#c69e38',
-      lineWidth: 2,
-      lineStyle: LineStyle.Solid,
-      axisLabelVisible: true
-    }));
   }
 
 }

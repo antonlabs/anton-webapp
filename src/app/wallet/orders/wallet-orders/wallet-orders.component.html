@@ -2,11 +2,11 @@
   <div class="orders-list">
     <h2 i18n class="mt-10px">Orders</h2>
     <div class="list">
-      <app-order-card [active]="order.oco ? order.orderListId === orderListId : order.orders[0].orderId === currentOrderId" *ngFor="let order of orders" [order]="order"></app-order-card>
+      <app-transaction-card [active]="currentTransaction?.id === transaction.id" *ngFor="let transaction of values(transactions ?? {})" [transaction]="transaction"></app-transaction-card>
     </div>
   </div>
-  <div class="order-inspect" *ngIf="currentOrder">
-    <h2 *ngFor="let order of currentOrder.orders" i18n class="mt-10px ml-10px">{{order?.symbol}} - {{types[order.type]}} - {{getTransactTime(order)}}</h2>
-    <app-order-inspection [order]="currentOrder.orders"></app-order-inspection>
+  <div class="order-inspect" *ngIf="currentTransaction">
+    <h2 i18n class="mt-10px ml-10px">{{currentTransaction?.symbol}} - {{getTransactTime(currentTransaction)}}</h2>
+    <app-order-inspection [orders]="currentTransaction.orders"></app-order-inspection>
   </div>
 </div>

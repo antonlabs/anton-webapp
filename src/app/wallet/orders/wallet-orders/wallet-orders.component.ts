@@ -5,6 +5,7 @@ import {AntiMemLeak} from "../../../shared/anti-mem-leak";
 import {ActivatedRoute} from "@angular/router";
 import {orderTypes} from "../../../shared/helpers";
 import {rack} from "../../../states/app-state";
+import {TransactionModel} from "../../../core/clients/models/transaction.model";
 
 @Component({
   selector: 'app-wallet-orders',
@@ -13,11 +14,10 @@ import {rack} from "../../../states/app-state";
 })
 export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
 
-  orders: OcoOrderModel[] | undefined;
-  currentOrder: OcoOrderModel | undefined;
+  transactions: {[key: string]: TransactionModel} | undefined;
+  currentTransaction: TransactionModel | undefined;
   types = orderTypes;
-  currentOrderId: number | undefined;
-  orderListId: number | undefined;
+  values = Object.values;
 
   constructor(
     private walletService: WalletService,
@@ -29,45 +29,32 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
   ngOnInit(): void {
     this.sub.add(
       rack.states.currentWallet.obs.subscribe((wallet) => {
-        if(wallet.orders?.data) {
-          this.orders = wallet.orders.data;
-          this.refreshCurrentOrder();
+        if(wallet.transactions) {
+          this.transactions = wallet.transactions;
+          this.refreshCurrentTransaction();
         }
       })
     );
-    rack.states.currentWallet.nextPageOrders(['BUY', 'SELL',  'HISTORY']);
+    rack.states.currentWallet.refreshTransactions();
     this.sub.add(this.activatedRoute.queryParams.subscribe((_: any) => {
-      this.refreshCurrentOrder();
+      this.refreshCurrentTransaction();
     }));
   }
 
-  refreshCurrentOrder() {
-    this.currentOrderId = parseInt(this.activatedRoute.snapshot.queryParams['order']);
-    this.orderListId = parseInt(this.activatedRoute.snapshot.queryParams['orderListId']);
-    console.log(this.currentOrderId, this.orderListId);
-    if (this.currentOrderId) {
-      rack.states.currentWallet.getOrder(this.currentOrderId).then((order) => {
-        if(order) {
-          this.currentOrder = {
-            orderListId: -1,
-            oco: false,
-            symbol: order.symbol,
-            orders: [order]
-          };
-        }
-      });
-    } else if(this.orderListId) {
-      rack.states.currentWallet.getOco(this.orderListId).then((order) => {
-        console.log(order);
-        if(order) {
-          this.currentOrder = order;
-        }
-      });
+  refreshCurrentTransaction() {
+    const transaction = this.activatedRoute.snapshot.queryParams['transaction'];
+    if (transaction && this.transactions) {
+      this.currentTransaction = this.transactions[transaction];
+      if(this.currentTransaction) {
+        rack.states.currentWallet.getTransactionOrders(transaction).then(
+          (orders) => this.currentTransaction!.orders = orders
+        );
+      }
     }
   }
 
-  getTransactTime(order: OrderModel): string {
-    return new Date(order.transactTime).toLocaleString();
+  getTransactTime(transactionModel: TransactionModel): string {
+    return new Date(transactionModel.time).toLocaleString();
   }
 
 }

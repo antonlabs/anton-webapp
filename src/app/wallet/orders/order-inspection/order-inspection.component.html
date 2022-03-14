@@ -13,8 +13,8 @@
     <div *ngIf="currentOrders" class="card-plain chart-container {{currentKlines ? '' : 'skeleton'}} mt-20px">
       <app-order-chart [data]="{orders: currentOrders, dataSeries: currentKlines}"></app-order-chart>
     </div>
-    <div class="order-details-panel mt-20px">
-      <app-order-details [orders]="currentOrders" ></app-order-details>
+    <div class="order-details-panel mt-20px flex-column">
+      <app-order-details *ngFor="let oco of currentOrders" [oco]="oco" class="mt-40px" ></app-order-details>
     </div>
   </div>
 

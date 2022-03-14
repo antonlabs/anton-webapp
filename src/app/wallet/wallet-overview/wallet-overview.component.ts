@@ -3,12 +3,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {StrategyStateType, WalletModel} from "../models/wallet.model";
-import {OcoOrderModel, OrderModel} from "../models/order.model";
 import {rack} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
 import { Router } from '@angular/router';
 import {NotificationService} from "../../shared/notification.service";
-import {refreshWallets} from "../../shared/helpers";
+import {getTransactions} from "../../shared/helpers";
+import {TransactionModel} from "../../core/clients/models/transaction.model";
 
 @Component({
   selector: 'app-wallet-overview',
@@ -26,7 +26,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   });
   blacklistError: string | undefined;
   playLoading = false;
-  orders: OcoOrderModel[] = [];
+  openTransactions: TransactionModel[] = [];
   strategyState = StrategyStateType;
 
   constructor(
@@ -52,9 +52,8 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
         }
       })
     );
-    this.walletService.getAllOrders().then(orders => {
-      console.log(orders);
-      this.orders = orders;
+    getTransactions('OPEN').then(transactions => {
+      this.openTransactions = transactions;
     });
   }
 

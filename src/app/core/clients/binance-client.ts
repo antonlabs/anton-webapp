@@ -4,11 +4,10 @@ import {DailyTickerModel} from "./models/daily-ticker.model";
 import {OrderResponse} from "./models/order-response";
 import {TitleModel} from "./models/title.model";
 import { PricesConverter } from './converters/prices.converter';
-import {OcoOrderModel, OrderModel} from "./models/order.model";
+import {OrderModel} from "./models/order.model";
 import {KlineModel} from "./models/kline.model";
 import {AccountInformationConverter} from "./converters/account-information.converter";
 import {AccountInformationModel} from "./models/account-information.model";
-import { ChartPoint } from 'src/app/shared/anton-chart/anton-chart.component';
 import {LineData, UTCTimestamp } from 'lightweight-charts';
 
 export let globalExchangeInfo: any | undefined;
@@ -115,44 +114,6 @@ export class BinanceClient extends ExchangeClient {
         return Math.floor(price);
     }
 
-    async getOco(orderListId: number): Promise<OcoOrderModel> {
-        const result: OcoOrderModel = (await this.prepareRequest('/api/v3/orderList', 'GET', true, {
-            orderListId
-        }));
-        return result;
-    }
-
-    async newOco(symbol: string, priceLimit: number, priceStop: number, quantity: number): Promise<OcoOrderModel> {
-        if (!(symbol && priceStop)) throw new Error('TITLE AND PRICE MANDATORY');
-        if(!this.ticks || !this.ticks[symbol]) throw new Error('Tick no present for title' + symbol);
-        if(!this.stepSizes || !this.stepSizes[symbol]) throw new Error('Step size no present for title' + symbol);
-        const priceLimitPrecision = this.getPriceWithPrecision(priceLimit, this.ticks[symbol]);
-        const priceStopPrecision = this.getPriceWithPrecision(priceStop, this.ticks[symbol]);
-        const priceStopLimitPrecision = this.getPriceWithPrecision(priceStop + (priceStop * 0.004), this.ticks[symbol]);
-        const quantityPrecision = this.getPriceWithPrecision(quantity, this.stepSizes[symbol]);
-        const result = (await this.prepareRequest('/api/v3/order/oco', 'POST', true, {
-            symbol,
-            side: 'SELL',
-            newOrderRespType: 'FULL',
-            price: priceLimitPrecision,
-            stopLimitPrice: priceStopLimitPrecision,
-            stopLimitTimeInForce: 'GTC',
-            stopPrice: priceStopPrecision,
-            quantity: quantityPrecision
-        }));
-        console.warn(result);
-        return result;
-    }
-
-    async cancelOco(symbol: string, orderListId: number): Promise<OrderModel> {
-        const result = (await this.prepareRequest('/api/v3/orderList', 'DELETE', true, {
-            symbol,
-            orderListId,
-        }));
-        console.warn(result);
-        return result;
-    }
-
     async buyTitle(symbol: string, price: number, quantity: number, retries: number = 3, type: string = 'LIMIT_MAKER'): Promise<OrderModel> {
         if (!(symbol && price)) throw new Error('TITLE AND PRICE MANDATORY');
         if(!this.ticks || !this.ticks[symbol]) throw new Error('Tick no present for title' + symbol);
@@ -184,13 +145,6 @@ export class BinanceClient extends ExchangeClient {
             await new Promise((resolve) => setTimeout(() => resolve(''), 1000))
             return this.buyTitle(symbol, price, quantity, retries);
         }
-    }
-
-    async getOrderBook(symbol: string): Promise<{bids: string[][], asks: string[][]}> {
-        return (await this.prepareRequest('/api/v3/depth', 'GET', false, {
-            symbol,
-            limit: 5000
-        }));
     }
 
     async stopLossMarket(symbol: string, price: number, quantity: number): Promise<OrderModel> {
@@ -277,13 +231,7 @@ export class BinanceClient extends ExchangeClient {
         return (await this.prepareRequest('/api/v3/ticker/24hr', 'GET', false));
     }
 
-    async getHotSymbols(): Promise<DailyTickerModel[]> {
-        const tickers = await this.getDailyTickers();
-        const symbols = tickers.filter(item => item.symbol.endsWith('BUSD'));
-        return symbols.sort((a, b) => parseFloat(b.volume) - parseFloat(a.volume)).slice(0, 20);
-    }
-
-    async getHistoricalData(symbol: string, startTime?: number, endTime?: number, interval = '5m', limit = 1000): Promise<LineData[]> {
+    async getHistoricalData(symbol: string, startTime?: number, endTime?: number, interval = '1m', limit = 1000): Promise<LineData[]> {
         const result: LineData[] = [];
         const matrix: string[][] = (await this.prepareRequest('/api/v3/klines', 'GET', false, {
             symbol,

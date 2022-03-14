@@ -1,4 +1,4 @@
-import {OcoOrderModel, OrderModel} from "../models/order.model";
+import {OrderModel} from "../models/order.model";
 
 export class OrderConverter {
 

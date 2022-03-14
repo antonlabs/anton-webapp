@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, HostListener, Input, OnInit} from '@angular/core';
-import {createChart, PriceLineOptions} from 'lightweight-charts';
+import {createChart, PriceLineOptions, SeriesMarker} from 'lightweight-charts';
 import {darkTheme, lightTheme} from "./themes";
 
 const makeid = (length: number) => {
@@ -51,6 +51,11 @@ export class AntonChartComponent implements OnInit, AfterViewInit {
       }
     }
   }
+
+  @Input()
+  set markers(val: SeriesMarker<any>[]) {
+
+}
 
   @Input()
   set line(val: ChartPoint[]) {

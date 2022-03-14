@@ -1,37 +1,36 @@
-<div class="flex-column">
-  <div class="mt-20px">
-    <div class="tabs flex-row">
-      <div *ngFor="let order of orders; let i = index" class="tab {{selectedIndex === i ? 'selected' : ''}}" (click)="selectedIndex=i">
-        {{orderTypes[order.type]}}
-      </div>
-    </div>
-    <div class="card-plain detail">
-      <div class="att">
-        <h4 i18n>Coin Quantity</h4>
-        {{currentOrder?.origQty}}
-      </div>
-      <div class="att">
-        <h4 i18n>Side</h4>
-        {{currentOrder?.side}}
-      </div>
-      <div class="att">
-        <h4 i18n>Price</h4>
-        <div class="price">
-          {{currentOrder?.price}}
-        </div>
-      </div>
-      <div class="att" *ngIf="currentOrder?.stopPrice">
-        <h4 i18n>Stop price</h4>
-        {{currentOrder?.stopPrice}}
-      </div>
-      <div class="att" *ngIf="currentOrder?.status">
-        <h4 i18n>Status</h4>
-        {{orderStatus[currentOrder!.status]}}
-      </div>
-    </div>
-
-  </div>
-
-  <app-order-details *ngIf="parentOrder" [orders]="[parentOrder]"></app-order-details>
-
-</div>
+   <div class="order-details flex-row">
+     <div>
+       <div class="tabs flex-row">
+         <div *ngFor="let order of (oco?.orders ?? []); let i = index" class="tab {{selectedIndex === i ? 'selected' : ''}}" (click)="selectedIndex=i">
+           {{orderTypes[order.type]}}
+         </div>
+       </div>
+       <div class="card-plain detail">
+         <div class="att">
+           <h4 i18n>Coin Quantity</h4>
+           {{currentOrder?.origQty}}
+         </div>
+         <div class="att">
+           <h4 i18n>Side</h4>
+           {{currentOrder?.side}}
+         </div>
+         <div class="att">
+           <h4 i18n>Price</h4>
+           <div class="price">
+             {{currentOrder?.price}}
+           </div>
+         </div>
+         <div class="att" *ngIf="currentOrder?.stopPrice">
+           <h4 i18n>Stop price</h4>
+           {{currentOrder?.stopPrice}}
+         </div>
+         <div class="att" *ngIf="currentOrder?.status">
+           <h4 i18n>Status</h4>
+           {{orderStatus[currentOrder!.status]}}
+         </div>
+       </div>
+       <div class="date">
+         {{getLocalTime(currentOrder?.transactTime ?? 0)}}
+       </div>
+     </div>
+   </div>

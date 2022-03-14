@@ -1,11 +1,11 @@
 import {WalletModel} from "../wallet/models/wallet.model";
 import {State} from "@antonlabs/rack";
-import {OcoOrderModel, OrderModel} from "../wallet/models/order.model";
-import {getOrders, GetTransactionOutput, getTransactions} from "../shared/helpers";
+import {OcoOrderModel} from "../wallet/models/order.model";
+import {getOrders, getTransactions} from "../shared/helpers";
+import {TransactionModel} from "../core/clients/models/transaction.model";
 
 export interface WalletProperties extends WalletModel {
-  orders: {[key: string]: OcoOrderModel[]},
-  transactions: string[]
+  transactions: {[key: string]: TransactionModel}
 }
 
 export class WalletState extends State<WalletProperties> {
@@ -23,8 +23,7 @@ export class WalletState extends State<WalletProperties> {
       maxOrderValue: 50,
       budget: 0,
       blacklist: [],
-      transactions: [],
-      orders: {}
+      transactions: {}
     };
   }
 
@@ -32,12 +31,22 @@ export class WalletState extends State<WalletProperties> {
 
   async refreshTransactions() {
     const transactions = await getTransactions();
+    const result: {[key: string] : TransactionModel} = {};
+    for(const transaction of transactions) {
+      result[transaction.id] = transaction;
+    }
     this.set({
-      transactions
+      transactions: result
     });
   }
 
-  async nextPageActiveOrders(types: ('SELL' | 'BUY' | 'HISTORY')[]) {
+  async getTransactionOrders(transactionId: string): Promise<OcoOrderModel[]> {
+    const transactions = this.val.transactions;
+    const transaction = transactions[transactionId];
+    if(transaction) {
+      return (await getOrders(transactionId)).sort((a, b) => b.orders.slice(-1)[0].transactTime - a.orders.slice(-1)[0].transactTime);
+    }
+    return [];
   }
 
 

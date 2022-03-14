@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {OrderModel} from "../../models/order.model";
+import {OcoOrderModel, OrderModel} from "../../models/order.model";
 import {orderStatus, orderTypes} from "../../../shared/helpers";
 import {rack} from "../../../states/app-state";
 
@@ -10,7 +10,7 @@ import {rack} from "../../../states/app-state";
 })
 export class OrderDetailsComponent implements OnInit {
 
-  @Input() orders: OrderModel[] | undefined;
+  @Input() oco: OcoOrderModel | undefined;
   selectedIndex: number = 0;
   orderTypes = orderTypes;
   orderStatus = orderStatus;
@@ -21,14 +21,11 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   get currentOrder(): OrderModel | undefined {
-    if(this.orders) {
-      return this.orders[this.selectedIndex];
-    }
-    return undefined;
+    return this.oco?.orders[this.selectedIndex];
   }
 
-  get parentOrder(): OrderModel | undefined {
-    return this.currentOrder?.parentOrder;
+  getLocalTime(time: number) {
+    return new Date(time).toLocaleString();
   }
 
 }

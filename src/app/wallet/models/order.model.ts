@@ -7,6 +7,7 @@ export interface OrderModel extends OrderResponse {
 
 export interface OcoOrderModel {
     orderListId: number;
+    transactionId: string;
     oco: boolean;
     open?: boolean;
     orders: OrderModel[];

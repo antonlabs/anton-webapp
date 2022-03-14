@@ -6,12 +6,13 @@ import {
   ISeriesApi,
   LineData,
   LineStyle,
-  PriceLineOptions
+  PriceLineOptions, SeriesMarker, Time
 } from "lightweight-charts";
-import {OrderModel} from "../../wallet/models/order.model";
+import {OcoOrderModel, OrderModel} from "../../wallet/models/order.model";
 import {AntiMemLeak} from "../anti-mem-leak";
 import {darkTheme, lightTheme} from "../anton-chart/themes";
 import { orderTypes } from '../helpers';
+import {OrderResponse} from "../../wallet/models/order-response";
 
 
 const makeid = (length: number) => {
@@ -43,41 +44,65 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
   loaded = false;
   currentPriceLines: IPriceLine[] = []
 
+  getColorByOrder(order: OrderResponse): string {
+    if(order.status === 'CANCELED' || order.status === 'EXPIRED' || order.status === 'REJECTED') {
+      return '#6a6a6a';
+    }
+    if(order.side === 'BUY') {
+      return '#12a123';
+    }
+    return '#a11211';
+  }
+
   @Input()
-  set data(val: {orders: OrderModel[], dataSeries: LineData[]}) {
+  set data(val: {orders: OcoOrderModel[], dataSeries: LineData[]}) {
     if(val) {
       for(const priceLine of this.currentPriceLines) {
         this.chartLines?.removePriceLine(priceLine);
       }
+      const markers: SeriesMarker<Time>[] = [];
       this.chartLines?.setData(val.dataSeries);
-      for(const order of val.orders) {
-        if(order.stopPrice) {
-          const priceLine = this.chartLines?.createPriceLine({
-            price: parseFloat(order.stopPrice),
-            color: '#c69e38',
-            axisLabelVisible: true,
-            title: $localize`Stop`,
-            lineWidth: 2,
-            lineStyle: LineStyle.Solid
-          });
-          if(priceLine) {
-            this.currentPriceLines.push(priceLine);
-          }
-        }
-        if(order.price) {
-          const priceLine = this.chartLines?.createPriceLine({
-            price: parseFloat(order.price),
-            color: order.side === 'SELL' ? '#700' : '#070',
-            axisLabelVisible: true,
-            title: orderTypes[order.type],
-            lineWidth: 2,
-            lineStyle: LineStyle.Solid
-          });
-          if(priceLine) {
-            this.currentPriceLines.push(priceLine);
+      for(const ocoOrder of val.orders) {
+        for(const order of ocoOrder.orders) {
+          if(order.status === 'NEW') {
+            if(order.stopPrice) {
+              const priceLine = this.chartLines?.createPriceLine({
+                price: parseFloat(order.stopPrice),
+                color: '#c69e38',
+                axisLabelVisible: true,
+                title: $localize`Stop`,
+                lineWidth: 2,
+                lineStyle: LineStyle.Solid
+              });
+              if(priceLine) {
+                this.currentPriceLines.push(priceLine);
+              }
+            }
+            if(order.price) {
+              const priceLine = this.chartLines?.createPriceLine({
+                price: parseFloat(order.price),
+                color: order.side === 'SELL' ? '#700' : '#070',
+                axisLabelVisible: true,
+                title: orderTypes[order.type],
+                lineWidth: 2,
+                lineStyle: LineStyle.Solid
+              });
+              if(priceLine) {
+                this.currentPriceLines.push(priceLine);
+              }
+            }
+          }else {
+            markers.push({
+              time: (order.transactTime / 1000) as Time,
+              text: orderTypes[order.type],
+              color: this.getColorByOrder(order),
+              position: order.side === 'BUY' ? 'belowBar' : 'aboveBar',
+              shape: order.side === 'BUY' ? 'arrowUp' : 'arrowDown'
+            });
           }
         }
       }
+      this.chartLines?.setMarkers(markers);
       this.loaded = true;
     }
   }
@@ -113,7 +138,7 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
           secondsVisible: true
         }
       });
-      this.chart.timeScale().fitContent();
+      //this.chart.timeScale().fitContent();
       this.chart.applyOptions(themes.light.chart);
       this.chartLines = this.chart.addAreaSeries({
         priceFormat: {

@@ -10,6 +10,8 @@ import {CognitoIdentityProviderClient} from "@aws-sdk/client-cognito-identity-pr
 import {CognitoIdentityClient} from "@aws-sdk/client-cognito-identity";
 import {OcoOrderModel, OrderModel} from "../wallet/models/order.model";
 import {OrderConverter} from "../core/clients/converters/order.converter";
+import {TransactionModel} from "../core/clients/models/transaction.model";
+import {TransactionConverter} from "../core/clients/converters/transaction.converter";
 
 export const getLiteral = (str: string, obj: any): any => {
   return str.split('.').reduce((o, i) => (o ?? {[str]: undefined})[i], obj);
@@ -125,6 +127,7 @@ export interface GetTransactionOutput<T> {
 }
 
 export const getOrders = async (transactionId: string): Promise<OcoOrderModel[]> => {
+  console.log( 'HISTORY#'+transactionId);
   const orders: OrderModel[] = ((await documentClient().query({
     TableName: transactionTableName,
     KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
@@ -133,7 +136,7 @@ export const getOrders = async (transactionId: string): Promise<OcoOrderModel[]>
       '#pk': 'pk'
     },
     ExpressionAttributeValues: {
-      ':sk': transactionId,
+      ':sk': 'HISTORY#'+transactionId,
       ':pk': rack.states.user.val.identityId
     }
   })).Items ?? []).map(item => OrderConverter.fromDynamoModel(item));
@@ -145,6 +148,7 @@ export const getOrders = async (transactionId: string): Promise<OcoOrderModel[]>
       ocoOrders.push({
         orders: [order],
         oco: false,
+        transactionId,
         symbol: order.symbol,
         orderListId: -1
       });
@@ -160,6 +164,7 @@ export const getOrders = async (transactionId: string): Promise<OcoOrderModel[]>
     ocoOrders.push({
       orders: transactionsMap[key],
       oco: true,
+      transactionId,
       symbol: transactionsMap[key][0].symbol,
       orderListId: parseFloat(key)
     })
@@ -167,7 +172,7 @@ export const getOrders = async (transactionId: string): Promise<OcoOrderModel[]>
   return ocoOrders;
 }
 
-export const getTransactions = async (): Promise<string[]> => {
+export const getTransactions = async (type?: 'OPEN' | 'CLOSE'): Promise<TransactionModel[]> => {
   if(!rack.states.user.val.identityId) return [];
   return ((await documentClient().query({
     TableName: transactionTableName,
@@ -177,10 +182,10 @@ export const getTransactions = async (): Promise<string[]> => {
       '#pk': 'pk'
     },
     ExpressionAttributeValues: {
-      ':sk': 'TRANSACTIONS',
+      ':sk': `TRANSACTION${type ? '#'+type : ''}`,
       ':pk': rack.states.user.val.identityId
     }
-  })).Items ?? []).map(item => item['id']);
+  })).Items ?? []).map(item => new TransactionConverter().fromDynamoModel(item));
 }
 
 
