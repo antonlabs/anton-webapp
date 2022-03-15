@@ -41,6 +41,10 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
     }));
   }
 
+  sortTransaction(transactions: TransactionModel[]) {
+    return transactions.sort((b, a) => a.time.getTime() - b.time.getTime());
+  }
+
   refreshCurrentTransaction() {
     const transaction = this.activatedRoute.snapshot.queryParams['transaction'];
     if (transaction && this.transactions) {

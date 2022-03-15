@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, HostListener, Input, OnInit} from '@angular/core';
 import {
+  BarData,
   createChart,
   IChartApi,
   IPriceLine,
@@ -40,7 +41,7 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
   chart: IChartApi | undefined;
   id: string = makeid(10);
   lastSize: any = {};
-  chartLines: ISeriesApi<'Area'> | undefined;
+  chartLines: ISeriesApi<'Candlestick'> | undefined;
   loaded = false;
   currentPriceLines: IPriceLine[] = []
 
@@ -55,7 +56,7 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
   }
 
   @Input()
-  set data(val: {orders: OcoOrderModel[], dataSeries: LineData[]}) {
+  set data(val: {orders: OcoOrderModel[], dataSeries: BarData[]}) {
     if(val) {
       for(const priceLine of this.currentPriceLines) {
         this.chartLines?.removePriceLine(priceLine);
@@ -140,14 +141,18 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
       });
       this.chart.timeScale().fitContent();
       this.chart.applyOptions(themes.light.chart);
-      this.chartLines = this.chart.addAreaSeries({
+      this.chartLines = this.chart.addCandlestickSeries({
+        upColor: 'rgb(38,166,154)',
+        downColor: 'rgb(255,82,82)',
+        wickUpColor: 'rgb(38,166,154)',
+        wickDownColor: 'rgb(255,82,82)',
+        borderVisible: false,
         priceFormat: {
           type: 'price',
           precision: 9,
           minMove: 0.00001
         }
       });
-      this.chartLines.applyOptions(themes.light.series);
     }
   }
 

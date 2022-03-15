@@ -6,7 +6,7 @@ import {OrderModel} from "./models/order.model";
 import * as crypto from 'crypto-js';
 import * as querystring from 'querystring';
 import { ChartPoint } from "src/app/shared/anton-chart/anton-chart.component";
-import {LineData} from "lightweight-charts";
+import {BarData, LineData} from "lightweight-charts";
 
 
 export abstract class ExchangeClient {
@@ -80,7 +80,7 @@ export abstract class ExchangeClient {
 
     abstract getSymbols(market: string): Promise<string[]>;
 
-    abstract getHistoricalData(symbol: string, startTime?: number, endTime?: number): Promise<LineData[]>;
+    abstract getHistoricalData(symbol: string, startTime?: number, endTime?: number): Promise<BarData[]>;
 
     abstract getActualBalance(symbolMarket: string): Promise<number>;
 

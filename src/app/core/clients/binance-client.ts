@@ -8,7 +8,7 @@ import {OrderModel} from "./models/order.model";
 import {KlineModel} from "./models/kline.model";
 import {AccountInformationConverter} from "./converters/account-information.converter";
 import {AccountInformationModel} from "./models/account-information.model";
-import {LineData, UTCTimestamp } from 'lightweight-charts';
+import {BarData, LineData, UTCTimestamp} from 'lightweight-charts';
 
 export let globalExchangeInfo: any | undefined;
 
@@ -231,8 +231,8 @@ export class BinanceClient extends ExchangeClient {
         return (await this.prepareRequest('/api/v3/ticker/24hr', 'GET', false));
     }
 
-    async getHistoricalData(symbol: string, startTime?: number, endTime?: number, interval = '3m', limit = 1000): Promise<LineData[]> {
-        const result: LineData[] = [];
+    async getHistoricalData(symbol: string, startTime?: number, endTime?: number, interval = '3m', limit = 1000): Promise<BarData[]> {
+        const result: BarData[] = [];
         const matrix: string[][] = (await this.prepareRequest('/api/v3/klines', 'GET', false, {
             symbol,
             limit,
@@ -240,12 +240,14 @@ export class BinanceClient extends ExchangeClient {
             endTime,
             interval
         }));
-
         matrix.forEach((item: any[]) => {
           const timestamp = (item[0] / 1000) as UTCTimestamp;
           return result.push({
             time: timestamp,
-            value: parseFloat(item[1])
+            open: parseFloat(item[1]),
+            high: parseFloat(item[2]),
+            low: parseFloat(item[3]),
+            close: parseFloat(item[4])
           })
         })
 

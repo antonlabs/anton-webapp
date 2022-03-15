@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {rack} from 'src/app/states/app-state';
 import {AntiMemLeak} from "../../../shared/anti-mem-leak";
 import {OcoOrderModel} from "../../models/order.model";
-import {LineData} from "lightweight-charts";
+import {BarData, LineData} from "lightweight-charts";
 
 @Component({
   selector: 'app-order-inspection',
@@ -12,7 +12,7 @@ import {LineData} from "lightweight-charts";
 export class OrderInspectionComponent extends AntiMemLeak implements OnInit {
 
   currentOrders: OcoOrderModel[] | undefined;
-  currentKlines: LineData[] = [];
+  currentKlines: BarData[] = [];
 
   @Input()
   set orders(val: OcoOrderModel[] | undefined) {

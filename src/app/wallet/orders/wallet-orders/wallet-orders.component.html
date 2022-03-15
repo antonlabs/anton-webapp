@@ -2,7 +2,7 @@
   <div class="orders-list">
     <h2 i18n class="mt-10px">Orders</h2>
     <div class="list">
-      <app-transaction-card [active]="currentTransaction?.id === transaction.id" *ngFor="let transaction of values(transactions ?? {})" [transaction]="transaction"></app-transaction-card>
+      <app-transaction-card [active]="currentTransaction?.id === transaction.id" *ngFor="let transaction of sortTransaction(values(transactions ?? {}))" [transaction]="transaction"></app-transaction-card>
     </div>
   </div>
   <div class="order-inspect" *ngIf="currentTransaction">
