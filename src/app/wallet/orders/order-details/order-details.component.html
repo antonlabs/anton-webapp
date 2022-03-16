@@ -36,6 +36,10 @@
            <h4 i18n>Update date</h4>
            {{getLocalTime(currentOrder?.updateTime ?? 0)}}
          </div>
+         <div class="att" *ngIf="currentOrder?.earnings">
+           <h4 i18n>Earnings</h4>
+           {{currentOrder?.earnings}}
+         </div>
        </div>
      </div>
    </div>

@@ -8,6 +8,7 @@ export class OrderConverter {
             symbol: order.symbol,
             orderId: order.orderId,
             orderListId: order.orderListId,
+            earnings: order.earnings,
             clientOrderId: order.clientOrderId,
             updateTime: order.updateTime,
             transactTime: order.transactTime,

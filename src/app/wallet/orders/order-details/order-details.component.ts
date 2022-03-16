@@ -21,6 +21,9 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   get currentOrder(): OrderModel | undefined {
+    if(this.oco?.orders[this.selectedIndex].earnings) {
+      this.oco.orders[this.selectedIndex].status = 'FILLED';
+    }
     return this.oco?.orders[this.selectedIndex];
   }
 

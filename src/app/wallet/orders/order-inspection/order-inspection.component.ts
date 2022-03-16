@@ -22,6 +22,7 @@ export class OrderInspectionComponent extends AntiMemLeak implements OnInit {
     }
   }
 
+  @Input() pro = true;
 
   constructor() {
     super();
