@@ -41,7 +41,6 @@ export class OrderInspectionComponent extends AntiMemLeak implements OnInit {
             (this.currentOrders.slice(-1)[0].orders.slice(-1)[0].updateTime ?? this.currentOrders.slice(-1)[0].orders.slice(-1)[0].transactTime)+ 33332000
           )
         ) ?? [];
-        console.log(this.currentKlines);
       }
     }
   }

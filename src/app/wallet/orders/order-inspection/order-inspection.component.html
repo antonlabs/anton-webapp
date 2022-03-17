@@ -11,7 +11,7 @@
       </button>
     </div>
     <div *ngIf="currentOrders" class="card-plain chart-container {{currentKlines ? '' : 'skeleton'}} mt-20px">
-      <app-order-chart [data]="{orders: currentOrders, dataSeries: currentKlines}"></app-order-chart>
+      <app-order-chart [data]="{orders: currentOrders, dataSeries: currentKlines, pro}"></app-order-chart>
     </div>
     <div class="order-details-panel mt-20px flex-column">
       <div class="arrow-container flex-column" *ngFor="let oco of currentOrders; let i = index">

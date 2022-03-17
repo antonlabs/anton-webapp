@@ -89,7 +89,6 @@
   &.skeleton {
     color: $primary-color;
   }
-
   &.danger {
     background-color: $primary-danger;
     color: $primary-danger-text;
@@ -104,6 +103,7 @@
     cursor: not-allowed;
   }
 }
+
 @media only screen and (max-width: 768px) { //mobile
   .anton-button {
     height: auto;

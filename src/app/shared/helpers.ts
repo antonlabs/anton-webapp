@@ -127,7 +127,6 @@ export interface GetTransactionOutput<T> {
 }
 
 export const getOrders = async (transactionId: string): Promise<OcoOrderModel[]> => {
-  console.log( 'HISTORY#'+transactionId);
   const orders: OrderModel[] = ((await documentClient().query({
     TableName: transactionTableName,
     KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',

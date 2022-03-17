@@ -41,9 +41,11 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
   chart: IChartApi | undefined;
   id: string = makeid(10);
   lastSize: any = {};
-  chartLines: ISeriesApi<'Candlestick'> | undefined;
+  chartCandles: ISeriesApi<'Candlestick'> | undefined;
+  chartLines: ISeriesApi<'Line'> | undefined;
   loaded = false;
-  currentPriceLines: IPriceLine[] = []
+  currentPriceLines: IPriceLine[] = [];
+  pro = false;
 
   getColorByOrder(order: OrderResponse): string {
     if(order.status === 'CANCELED' || order.status === 'EXPIRED' || order.status === 'REJECTED') {
@@ -56,43 +58,22 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
   }
 
   @Input()
-  set data(val: {orders: OcoOrderModel[], dataSeries: BarData[]}) {
+  set data(val: {orders: OcoOrderModel[], dataSeries: BarData[], pro: boolean}) {
     if(val) {
+      this.pro = val.pro;
       for(const priceLine of this.currentPriceLines) {
+        this.chartCandles?.removePriceLine(priceLine);
         this.chartLines?.removePriceLine(priceLine);
       }
       const markers: SeriesMarker<Time>[] = [];
-      this.chartLines?.setData(val.dataSeries);
+      if(val.pro) {
+        this.chartCandles?.setData(val.dataSeries);
+      }else {
+        this.chartLines?.setData(val.dataSeries.map(i => ({time: i.time, value: i.open})));
+      }
       for(const ocoOrder of val.orders) {
         for(const order of ocoOrder.orders) {
-          if(order.status === 'NEW') {
-            if(order.stopPrice) {
-              const priceLine = this.chartLines?.createPriceLine({
-                price: parseFloat(order.stopPrice),
-                color: '#c69e38',
-                axisLabelVisible: true,
-                title: $localize`Stop`,
-                lineWidth: 2,
-                lineStyle: LineStyle.Solid
-              });
-              if(priceLine) {
-                this.currentPriceLines.push(priceLine);
-              }
-            }
-            if(order.price) {
-              const priceLine = this.chartLines?.createPriceLine({
-                price: parseFloat(order.price),
-                color: order.side === 'SELL' ? '#700' : '#070',
-                axisLabelVisible: true,
-                title: orderTypes[order.type],
-                lineWidth: 2,
-                lineStyle: LineStyle.Solid
-              });
-              if(priceLine) {
-                this.currentPriceLines.push(priceLine);
-              }
-            }
-          }else {
+          if(order.status === 'FILLED') {
             markers.push({
               time: ((order.updateTime ?? order.transactTime) / 1000) as Time,
               text: orderTypes[order.type],
@@ -100,10 +81,70 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
               position: order.side === 'BUY' ? 'belowBar' : 'aboveBar',
               shape: order.side === 'BUY' ? 'arrowUp' : 'arrowDown'
             });
+          }else {
+            if(this.pro) {
+              if(order.stopPrice) {
+                const priceLine = this.chartCandles?.createPriceLine({
+                  price: parseFloat(order.stopPrice),
+                  color: this.getColorByOrder(order),
+                  axisLabelVisible: true,
+                  title: $localize`Stop`,
+                  lineWidth: 2,
+                  lineStyle: LineStyle.Solid
+                });
+                if(priceLine) {
+                  this.currentPriceLines.push(priceLine);
+                }
+              }
+              if(order.price) {
+                const priceLine = this.chartCandles?.createPriceLine({
+                  price: parseFloat(order.price),
+                  color: this.getColorByOrder(order),
+                  axisLabelVisible: true,
+                  title: orderTypes[order.type],
+                  lineWidth: 2,
+                  lineStyle: LineStyle.Solid
+                });
+                if(priceLine) {
+                  this.currentPriceLines.push(priceLine);
+                }
+              }
+            }else {
+              if(order.stopPrice) {
+                const priceLine = this.chartLines?.createPriceLine({
+                  price: parseFloat(order.stopPrice),
+                  color: this.getColorByOrder(order),
+                  axisLabelVisible: true,
+                  title: $localize`Stop`,
+                  lineWidth: 2,
+                  lineStyle: LineStyle.Solid
+                });
+                if(priceLine) {
+                  this.currentPriceLines.push(priceLine);
+                }
+              }
+              if(order.price) {
+                const priceLine = this.chartLines?.createPriceLine({
+                  price: parseFloat(order.price),
+                  color: this.getColorByOrder(order),
+                  axisLabelVisible: true,
+                  title: orderTypes[order.type],
+                  lineWidth: 2,
+                  lineStyle: LineStyle.Solid
+                });
+                if(priceLine) {
+                  this.currentPriceLines.push(priceLine);
+                }
+              }
+            }
           }
         }
       }
-      this.chartLines?.setMarkers(markers.sort((b, a) => (b.time as number) - (a.time as number)));
+      if(val.pro) {
+        this.chartCandles?.setMarkers(markers.sort((b, a) => (b.time as number) - (a.time as number)));
+      }else {
+        this.chartLines?.setMarkers(markers.sort((b, a) => (b.time as number) - (a.time as number)));
+      }
       this.loaded = true;
     }
   }
@@ -141,18 +182,28 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
       });
       this.chart.timeScale().fitContent();
       this.chart.applyOptions(themes.light.chart);
-      this.chartLines = this.chart.addCandlestickSeries({
-        upColor: 'rgb(38,166,154)',
-        downColor: 'rgb(255,82,82)',
-        wickUpColor: 'rgb(38,166,154)',
-        wickDownColor: 'rgb(255,82,82)',
-        borderVisible: false,
-        priceFormat: {
-          type: 'price',
-          precision: 9,
-          minMove: 0.00001
-        }
-      });
+      if(this.pro) {
+        this.chartCandles = this.chart.addCandlestickSeries({
+          upColor: 'rgb(38,166,154)',
+          downColor: 'rgb(255,82,82)',
+          wickUpColor: 'rgb(38,166,154)',
+          wickDownColor: 'rgb(255,82,82)',
+          borderVisible: false,
+          priceFormat: {
+            type: 'price',
+            precision: 7,
+            minMove: 0.0000001
+          }
+        });
+      }else {
+        this.chartLines = this.chart.addLineSeries({
+          priceFormat: {
+            type: 'price',
+            precision: 9,
+            minMove: 0.00001
+          }
+        });
+      }
     }
   }
 

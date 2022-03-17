@@ -1,8 +1,8 @@
 <div class="flex-row mobile-flex-column wallet-orders">
   <div class="orders-list">
     <h2 i18n class="mt-10px">Orders</h2>
-    <div class="list">
-      <app-transaction-card [active]="currentTransaction?.id === transaction.id" *ngFor="let transaction of sortTransaction(values(transactions ?? {}))" [transaction]="transaction"></app-transaction-card>
+    <div class="list {{currentTransaction ? 'close' : 'open'}}">
+      <app-transaction-card [active]="currentTransaction?.id === transaction.id" *ngFor="let transaction of transactionsList" [transaction]="transaction"></app-transaction-card>
     </div>
   </div>
   <div class="order-inspect" *ngIf="currentTransaction">

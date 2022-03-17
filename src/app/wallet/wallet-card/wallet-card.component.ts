@@ -6,6 +6,7 @@ import {WalletPlan, WalletService} from "../../shared/wallet.service";
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import { Subscription } from 'rxjs';
 import {NotificationService} from "../../shared/notification.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -39,6 +40,7 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
 
   constructor(
     public walletService: WalletService,
+    private router: Router,
     private notificationService: NotificationService
   ) {
     super();
@@ -84,6 +86,7 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
         maxOrderValue: 20
       }));
       this.notificationService.success($localize`You successfully updated this wallet!`);
+      this.router.navigate(['/']);
     }catch(e: any) {
       this.error.emit($localize`Ops there are some errors, retry later`);
       console.error(e);

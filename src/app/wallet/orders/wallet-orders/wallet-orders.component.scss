@@ -1,11 +1,11 @@
 @import "../../../../styles/palette";
 
 .wallet-orders {
-  height: 100%;
+  height: 100vh;
   .orders-list {
     flex: 1;
-    min-width: 200px;
     padding: 5px;
+    height: 100%;
     .list {
       padding: 1px;
       height: calc(100vh - 200px);
@@ -25,8 +25,26 @@
     .orders-list {
       .list {
         height: auto;
-        max-height: 200px;
+        &.open {
+          max-height: calc(100vh - 11px);
+        }
+        &.close {
+          max-height: 200px;
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          &::ng-deep {
+            &:not(&:first-child) {
+              .transaction-card {
+                margin-left: 10px;
+              }
+            }
+          }
+        }
       }
+    }
+    .order-inspect {
+      flex: 6;
     }
   }
 

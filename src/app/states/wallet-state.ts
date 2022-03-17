@@ -31,6 +31,7 @@ export class WalletState extends State<WalletProperties> {
 
   async refreshTransactions() {
     const transactions = await getTransactions();
+    console.log(transactions);
     const result: {[key: string] : TransactionModel} = {};
     for(const transaction of transactions) {
       result[transaction.id] = transaction;
@@ -38,6 +39,7 @@ export class WalletState extends State<WalletProperties> {
     this.set({
       transactions: result
     });
+    console.log(result);
   }
 
   async getTransactionOrders(transactionId: string): Promise<OcoOrderModel[]> {

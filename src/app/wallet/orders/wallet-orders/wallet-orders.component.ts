@@ -15,6 +15,7 @@ import {TransactionModel} from "../../../core/clients/models/transaction.model";
 export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
 
   transactions: {[key: string]: TransactionModel} | undefined;
+  transactionsList: TransactionModel[] = [];
   currentTransaction: TransactionModel | undefined;
   types = orderTypes;
   values = Object.values;
@@ -31,6 +32,7 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
       rack.states.currentWallet.obs.subscribe((wallet) => {
         if(wallet.transactions) {
           this.transactions = wallet.transactions;
+          this.transactionsList = this.sortTransaction(Object.values(wallet.transactions));
           this.refreshCurrentTransaction();
         }
       })
@@ -42,7 +44,7 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
   }
 
   sortTransaction(transactions: TransactionModel[]) {
-    return transactions.sort((b, a) => a.time.getTime() - b.time.getTime());
+    return (transactions ?? []).sort((b, a) => new Date(a.time).getTime() - new Date(b.time).getTime());
   }
 
   refreshCurrentTransaction() {
