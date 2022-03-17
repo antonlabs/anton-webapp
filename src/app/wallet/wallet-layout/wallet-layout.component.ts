@@ -109,7 +109,7 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
   }
 
   liClass(liId: string) {
-    const route = this.router.url.split('/')[1];
+    const route = this.router.url.split('?')[0].split('/')[1];
     return route === liId ? 'active' : '';
   }
 
