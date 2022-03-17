@@ -7,10 +7,19 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CounterComponent implements OnInit {
 
-  floor = Math.floor;
+  countNumber: number | undefined;
   @Input() icon: string | undefined;
   @Input() image: string | undefined;
-  @Input() value: number | undefined = 0;
+  @Input()
+  set value(val: number | undefined) {
+    if(val) {
+      if(val > 999) {
+        this.countNumber = Math.floor(val);
+      }else {
+        this.countNumber = parseFloat(val.toFixed(2));
+      }
+    }
+  }
   @Input() sign: string | undefined;
   @Input() description: string | undefined;
 

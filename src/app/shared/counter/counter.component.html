@@ -1,12 +1,12 @@
-<div class="card-plain counter {{value === undefined ? 'skeleton' : ''}}" *ngIf="icon || image">
+<div class="card-plain counter {{countNumber === undefined ? 'skeleton' : ''}}" *ngIf="icon || image">
   <div class="flex-row">
     <div class="icon-col flex-column">
       <ng-icon *ngIf="icon" [name]="icon"></ng-icon>
       <img *ngIf="image" alt="counter-image" [src]="image" />
     </div>
     <div class="data-col flex-column">
-      <h1 *ngIf="isNan(value ?? 0)">N/A</h1>
-      <h1 *ngIf="!isNan(value ?? 0)">{{sign}}{{floor(value ?? 0)}}</h1>
+      <h1 *ngIf="isNan(countNumber ?? 0)">N/A</h1>
+      <h1 *ngIf="!isNan(countNumber ?? 0)">{{sign}}{{countNumber ?? 0}}</h1>
       <p class="description">{{description}}</p>
     </div>
   </div>
