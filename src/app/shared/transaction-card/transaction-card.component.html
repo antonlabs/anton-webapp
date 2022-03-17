@@ -1,5 +1,6 @@
 <div class="transaction-card card-plain flex-row between {{active ? 'selected' : ''}}" *ngIf="transaction"
      [routerLink]="['/orders']"
+     queryParamsHandling="merge"
      [queryParams]="{transaction: transaction.id}">
   <img alt="symbol-logo" [src]="imgSrc" onerror="this.src='/assets/unknown-coin.png'">
   <h4>{{transaction.symbol}}</h4>

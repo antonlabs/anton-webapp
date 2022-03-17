@@ -104,6 +104,9 @@ li {
   &.between {
     justify-content: space-between;
   }
+  &.evenly{
+    justify-content: space-evenly;
+  }
   &.space {
     justify-content: space-around;
   }

@@ -1,27 +1,32 @@
 @import "../../../../styles/palette";
 
 .wallet-orders {
-  height: 100vh;
   .orders-list {
     flex: 1;
     padding: 5px;
     height: 100%;
     .list {
-      padding: 1px;
+      padding: 2px;
       height: calc(100vh - 200px);
       overflow-y: auto;
     }
   }
   .order-inspect {
     flex: 3;
-    overflow: auto;
     white-space: normal;
+  }
+  .mode {
+    cursor: pointer;
+    &:hover, &.active {
+      color: $primary-color;
+    }
   }
 }
 
 
 @media only screen and (max-width: 768px) { //mobile
   .wallet-orders {
+    height: 100vh;
     .orders-list {
       .list {
         height: auto;
@@ -45,6 +50,7 @@
     }
     .order-inspect {
       flex: 6;
+      overflow: auto;
     }
   }
 

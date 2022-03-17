@@ -29,8 +29,8 @@ export class WalletState extends State<WalletProperties> {
 
   async refreshState(): Promise<void> {}
 
-  async refreshTransactions() {
-    const transactions = await getTransactions();
+  async refreshTransactions(mode?: 'OPEN' | 'CLOSE') {
+    const transactions = await getTransactions(mode);
     console.log(transactions);
     const result: {[key: string] : TransactionModel} = {};
     for(const transaction of transactions) {

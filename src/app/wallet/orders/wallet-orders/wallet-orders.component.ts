@@ -19,6 +19,7 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
   currentTransaction: TransactionModel | undefined;
   types = orderTypes;
   values = Object.values;
+  mode: 'OPEN' | 'CLOSE' = 'OPEN';
 
   constructor(
     private walletService: WalletService,
@@ -37,8 +38,13 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
         }
       })
     );
-    rack.states.currentWallet.refreshTransactions();
-    this.sub.add(this.activatedRoute.queryParams.subscribe((_: any) => {
+    this.sub.add(this.activatedRoute.queryParams.subscribe((queryParams: any) => {
+      if(this.mode !== queryParams.mode) {
+        if(queryParams.mode) {
+          this.mode = queryParams.mode;
+        }
+        rack.states.currentWallet.refreshTransactions(this.mode);
+      }
       this.refreshCurrentTransaction();
     }));
   }

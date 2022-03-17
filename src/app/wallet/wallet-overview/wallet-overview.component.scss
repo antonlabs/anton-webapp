@@ -68,11 +68,33 @@
     flex: 1;
   }
 
-  .blacklist, .orders {
+  .blacklist, .openTransactions {
     .body {
+      padding: 5px;
       max-height: 300px;
       overflow: auto;
     }
+  }
+
+  .openTransactions {
+    .card-plain {
+      .symbol {
+        cursor: pointer;
+        &:hover {
+          ::ng-deep {
+            .symbol-card {
+              outline: 2px solid $primary-color;
+            }
+          }
+        }
+      }
+      ::ng-deep {
+        .symbol-card {
+          margin-top: 15px;
+        }
+      }
+    }
+
   }
 
 }
