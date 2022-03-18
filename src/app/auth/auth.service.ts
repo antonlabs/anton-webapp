@@ -56,7 +56,6 @@ export class AuthService {
         PASSWORD: password
       }
     }));
-
     rack.states.oAuthCredentials.set({
         refresh_token: response.AuthenticationResult?.RefreshToken,
         id_token: response.AuthenticationResult?.IdToken,
@@ -82,9 +81,6 @@ export class AuthService {
     const userPayload: UserDto = jwtToUserDto((response.AuthenticationResult?.IdToken) as any);
 
     await this.loginSignal(userPayload);
-
-    this.router.navigateByUrl(await this.firstDestination());
-
     return response;
   }
 
@@ -117,14 +113,6 @@ export class AuthService {
     return message;
   }
 
-  public async firstDestination(): Promise<string> {
-    const wallets = await getUserListItem('WALLET');
-    if(wallets?.length === 0) {
-      return '/create-wallet'
-    }
-    return '/';
-  }
-
   public async loginWithIdpCode(code: string) {
     const response = await this.getOAuthCredentials(code);
     rack.states.user.set(jwtToUserDto((response.id_token) as any));
@@ -135,7 +123,7 @@ export class AuthService {
     const userPayload: UserDto = jwtToUserDto((response.id_token) as any);
 
     await this.loginSignal(userPayload);
-    this.router.navigateByUrl(await this.firstDestination());
+    this.router.navigate(['/']);
   }
 
   public signup(email: string, captcha: string): Promise<any> {

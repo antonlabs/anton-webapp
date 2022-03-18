@@ -28,7 +28,7 @@ export class VerifyFallbackComponent implements OnInit {
       if(queryParams['code']) {
         await this.authService.loginWithIdpCode(queryParams['code']);
       }else if(queryParams['user'] && queryParams['key']) {
-        await this.authService.login(queryParams['user'], queryParams['key']);
+        await this.authService.login(queryParams['user'].replace(' ', '+'), queryParams['key']);
       }else {
         this.router.navigate(['/auth']);
       }

@@ -8,18 +8,18 @@
   </div>
   <div class="body">
     <app-slider class="slider" [fc]="walletBudgetControl" (onChange)="walletBudgetControl.setValue($event)" [min]="50" [max]="walletService.planBudgetInterval['PLATINUM'][1]"></app-slider>
-    <div class="flex-row controls mt-10px">
-      <div class="control">
+    <div class="flex-row controls evenly mt-10px">
+      <!--div class="control">
         <label i18n>Auto reinvest</label>
         <app-switch class="mt-20px" [control]="autoReinvestControl"></app-switch>
-      </div>
+      </div-->
       <div class="control">
         <label i18n>Anton's fee</label>
         <h1>${{walletService.planFees[walletPlan]}}</h1>
       </div>
       <div class="control">
         <label i18n>Market</label>
-        <select class="anton-select">
+        <select class="anton-select" [value]="'BUSD'" disabled>
           <option *ngFor="let market of walletService.markets" [value]="market">{{market}}</option>
         </select>
       </div>

@@ -4,7 +4,6 @@ import {ReCaptchaV3Service} from "ng-recaptcha";
 import {AuthService} from "../auth.service";
 import {Form} from "../form";
 import {environment} from "../../../environments/environment";
-import {Router} from "@angular/router";
 import { currentLocation } from 'src/app/core/location';
 
 @Component({
@@ -21,8 +20,7 @@ export class LoginComponent extends AntiMemLeak implements OnInit {
 
   constructor(
     private recaptchaV3Service: ReCaptchaV3Service,
-    private authService: AuthService,
-    private router: Router
+    private authService: AuthService
   ) {
     super();
     console.log(this.cognitoUrl);
@@ -44,9 +42,15 @@ export class LoginComponent extends AntiMemLeak implements OnInit {
   public async login(data: any, component: Form): Promise<void> {
     component.loading = true;
     try {
-      await this.authService.login(data.email, data.password);
+      await this.authService.login(data.email.replace(' ', '+'), data.password);
+      location.reload();
     }catch(e: any) {
-      component.error.emit(e);
+      console.log(e);
+      if(e.message.indexOf('Incorrect') > -1 || e.message.indexOf('User does not exist') > -1) {
+        component.error.emit($localize`Incorrect username or password, please check and retry but not too many times`);
+      }else {
+        component.error.emit($localize`Error during login, sorry, please retry later`);
+      }
     }finally {
       component.loading = false;
     }

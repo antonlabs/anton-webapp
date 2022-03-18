@@ -210,7 +210,6 @@ export const jwtToUserDto = (jwt: string): UserDto => {
   return {
     email: data.email,
     avatar: data.picture,
-    identityId: data.identities[0].userId,
     name: data.given_name,
     surname: data.family_name
   }

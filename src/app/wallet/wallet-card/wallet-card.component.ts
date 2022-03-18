@@ -8,7 +8,6 @@ import { Subscription } from 'rxjs';
 import {NotificationService} from "../../shared/notification.service";
 import {Router} from "@angular/router";
 
-
 @Component({
   selector: 'app-wallet-card',
   templateUrl: './wallet-card.component.html',
@@ -47,6 +46,9 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  getMaxOrderValueByBudget(val: number) {
   }
 
   subscribeToBudgetChange() {
