@@ -45,7 +45,7 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
   chartLines: ISeriesApi<'Line'> | undefined;
   loaded = false;
   currentPriceLines: IPriceLine[] = [];
-  pro = false;
+  pro: boolean | undefined = undefined;
 
   getColorByOrder(order: OrderResponse): string {
     if(order.status === 'CANCELED' || order.status === 'EXPIRED' || order.status === 'REJECTED') {
@@ -60,12 +60,63 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
   @Input()
   set data(val: {orders: OcoOrderModel[], dataSeries: BarData[], pro: boolean}) {
     if(val) {
-      this.pro = val.pro;
       for(const priceLine of this.currentPriceLines) {
         this.chartCandles?.removePriceLine(priceLine);
         this.chartLines?.removePriceLine(priceLine);
       }
       const markers: SeriesMarker<Time>[] = [];
+      if(!this.chart) {
+        const chartContainer = document.getElementById(this.id)!;
+        console.log(chartContainer);
+        console.log(val);
+        const width = chartContainer?.offsetWidth ?? 0;
+        let height = chartContainer?.offsetHeight ?? 0;
+        if(height < 400) height = 400;
+        if(width && height) {
+          this.chart = createChart(this.id, {
+            width,
+            height,
+            timeScale: {
+              timeVisible: true,
+              secondsVisible: true
+            }
+          });
+          this.chart.timeScale().fitContent();
+          this.chart.applyOptions(themes.light.chart);
+        }
+      }
+      if(val.pro !== this.pro && this.chart) {
+        this.pro = val.pro;
+        if(this.pro) {
+          if(this.chartLines) {
+            this.chart?.removeSeries(this.chartLines);
+          }
+          this.chartCandles = this.chart?.addCandlestickSeries({
+            upColor: 'rgb(38,166,154)',
+            downColor: 'rgb(255,82,82)',
+            wickUpColor: 'rgb(38,166,154)',
+            wickDownColor: 'rgb(255,82,82)',
+            borderVisible: false,
+            priceFormat: {
+              type: 'price',
+              precision: 7,
+              minMove: 0.0000001
+            }
+          });
+        }else {
+          if(this.chartCandles) {
+            this.chart?.removeSeries(this.chartCandles);
+          }
+          this.chartLines = this.chart?.addLineSeries({
+            priceFormat: {
+              type: 'price',
+              precision: 7,
+              minMove: 0.0000001
+            }
+          });
+          console.log('add chart lines', this.chart);
+        }
+      }
       if(val.pro) {
         this.chartCandles?.setData(val.dataSeries);
       }else {
@@ -74,35 +125,59 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
       let orderI = 0;
       for(const ocoOrder of val.orders) {
         for(const order of ocoOrder.orders) {
-            if(this.pro) {
-              if(order.status === 'FILLED') {
-                markers.push({
-                  time: ((order.updateTime ?? order.transactTime) / 1000) as Time,
-                  text: orderTypes[order.type],
-                  color: this.getColorByOrder(order),
-                  position: order.side === 'BUY' ? 'belowBar' : 'aboveBar',
-                  shape: order.side === 'BUY' ? 'arrowUp' : 'arrowDown'
-                });
+          if(this.pro) {
+            if(order.status === 'FILLED') {
+              markers.push({
+                time: ((order.updateTime ?? order.transactTime) / 1000) as Time,
+                text: orderTypes[order.type],
+                color: this.getColorByOrder(order),
+                position: order.side === 'BUY' ? 'belowBar' : 'aboveBar',
+                shape: order.side === 'BUY' ? 'arrowUp' : 'arrowDown'
+              });
+            }
+            if(order.stopPrice) {
+              const priceLine = this.chartCandles?.createPriceLine({
+                price: parseFloat(order.stopPrice),
+                color: this.getColorByOrder(order),
+                axisLabelVisible: true,
+                title: $localize`Stop`,
+                lineWidth: 2,
+                lineStyle: LineStyle.Solid
+              });
+              if(priceLine) {
+                this.currentPriceLines.push(priceLine);
               }
-              if(order.stopPrice) {
-                const priceLine = this.chartCandles?.createPriceLine({
-                  price: parseFloat(order.stopPrice),
-                  color: this.getColorByOrder(order),
-                  axisLabelVisible: true,
-                  title: $localize`Stop`,
-                  lineWidth: 2,
-                  lineStyle: LineStyle.Solid
-                });
-                if(priceLine) {
-                  this.currentPriceLines.push(priceLine);
-                }
+            }
+            if(order.price) {
+              const priceLine = this.chartCandles?.createPriceLine({
+                price: parseFloat(order.price),
+                color: this.getColorByOrder(order),
+                axisLabelVisible: true,
+                title: orderTypes[order.type],
+                lineWidth: 2,
+                lineStyle: LineStyle.Solid
+              });
+              if(priceLine) {
+                this.currentPriceLines.push(priceLine);
               }
-              if(order.price) {
-                const priceLine = this.chartCandles?.createPriceLine({
+            }
+          } else {
+            if(order.status === 'FILLED') {
+              markers.push({
+                time: ((order.updateTime ?? order.transactTime) / 1000) as Time,
+                text: order.side,
+                color: this.getColorByOrder(order),
+                position: order.side === 'BUY' ? 'belowBar' : 'aboveBar',
+                shape: order.side === 'BUY' ? 'arrowUp' : 'arrowDown'
+              });
+            }
+            if(orderI === 0 || orderI === val.orders.length - 1) {
+              if(order.status === 'NEW' && (order.type === 'LIMIT_MAKER' || order.type === 'MARKET')) {
+                const priceLine = this.chartLines?.createPriceLine({
                   price: parseFloat(order.price),
                   color: this.getColorByOrder(order),
                   axisLabelVisible: true,
-                  title: orderTypes[order.type],
+                  title: order.side,
                   lineWidth: 2,
                   lineStyle: LineStyle.Solid
                 });
@@ -110,32 +185,8 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
                   this.currentPriceLines.push(priceLine);
                 }
               }
-            } else {
-              if(order.status === 'FILLED') {
-                markers.push({
-                  time: ((order.updateTime ?? order.transactTime) / 1000) as Time,
-                  text: order.side,
-                  color: this.getColorByOrder(order),
-                  position: order.side === 'BUY' ? 'belowBar' : 'aboveBar',
-                  shape: order.side === 'BUY' ? 'arrowUp' : 'arrowDown'
-                });
-              }
-              if(orderI === 0 || orderI === val.orders.length - 1) {
-                if(order.status === 'NEW' && (order.type === 'LIMIT_MAKER' || order.type === 'MARKET')) {
-                  const priceLine = this.chartLines?.createPriceLine({
-                    price: parseFloat(order.price),
-                    color: this.getColorByOrder(order),
-                    axisLabelVisible: true,
-                    title: order.side,
-                    lineWidth: 2,
-                    lineStyle: LineStyle.Solid
-                  });
-                  if(priceLine) {
-                    this.currentPriceLines.push(priceLine);
-                  }
-                }
-              }
             }
+          }
         }
         orderI++;
       }
@@ -166,44 +217,6 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
   ngOnInit() {}
 
   ngAfterViewInit(): void {
-    const chartContainer = document.getElementById(this.id)!;
-    const width = chartContainer?.offsetWidth ?? 0;
-    let height = chartContainer?.offsetHeight ?? 0;
-    if(height < 400) height = 400;
-    if(width && height) {
-      this.chart = createChart(this.id, {
-        width,
-        height,
-        timeScale: {
-          timeVisible: true,
-          secondsVisible: true
-        }
-      });
-      this.chart.timeScale().fitContent();
-      this.chart.applyOptions(themes.light.chart);
-      if(this.pro) {
-        this.chartCandles = this.chart.addCandlestickSeries({
-          upColor: 'rgb(38,166,154)',
-          downColor: 'rgb(255,82,82)',
-          wickUpColor: 'rgb(38,166,154)',
-          wickDownColor: 'rgb(255,82,82)',
-          borderVisible: false,
-          priceFormat: {
-            type: 'price',
-            precision: 7,
-            minMove: 0.0000001
-          }
-        });
-      }else {
-        this.chartLines = this.chart.addLineSeries({
-          priceFormat: {
-            type: 'price',
-            precision: 7,
-            minMove: 0.0000001
-          }
-        });
-      }
-    }
   }
 
 

@@ -16,28 +16,31 @@ import { EmailPasswordLoginComponent } from './email-password-login/email-passwo
 
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    AuthLayoutComponent,
-    AuthMethodsComponent,
-    EmailLoginComponent,
-    SendRecoveryMailComponent,
-    RegisterComponent,
-    VerifyFallbackComponent,
-    EmailPasswordLoginComponent
-  ],
-  imports: [
-    SharedModule,
-    CommonModule,
-    RecaptchaV3Module,
-    AuthRoutingModule,
-    NgIconsModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
-  providers: [
-    { provide: RECAPTCHA_V3_SITE_KEY, useValue: "6Ldd2RQeAAAAABidUe7PPYzpYUnwIa599ZatjTf_" }
-  ]
+    declarations: [
+        LoginComponent,
+        AuthLayoutComponent,
+        AuthMethodsComponent,
+        EmailLoginComponent,
+        SendRecoveryMailComponent,
+        RegisterComponent,
+        VerifyFallbackComponent,
+        EmailPasswordLoginComponent
+    ],
+    imports: [
+        SharedModule,
+        CommonModule,
+        RecaptchaV3Module,
+        AuthRoutingModule,
+        NgIconsModule,
+        ReactiveFormsModule,
+        FormsModule
+    ],
+    exports: [
+        SendRecoveryMailComponent
+    ],
+    providers: [
+        {provide: RECAPTCHA_V3_SITE_KEY, useValue: "6Ldd2RQeAAAAABidUe7PPYzpYUnwIa599ZatjTf_"}
+    ]
 })
 export class AuthModule { }
 

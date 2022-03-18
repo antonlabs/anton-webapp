@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OcoOrderModel, OrderModel} from "../../models/order.model";
 import {WalletService} from "../../../shared/wallet.service";
 import {AntiMemLeak} from "../../../shared/anti-mem-leak";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {orderTypes} from "../../../shared/helpers";
 import {rack} from "../../../states/app-state";
 import {TransactionModel} from "../../../core/clients/models/transaction.model";
@@ -25,6 +25,7 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
 
   constructor(
     private walletService: WalletService,
+    private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
     super();
@@ -47,8 +48,16 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
         }
         rack.states.currentWallet.refreshTransactions(this.mode);
       }
+      if(queryParams.pro !== this.proSwitch.value) {
+        this.proSwitch.setValue(queryParams.pro ?? false);
+      }
       this.refreshCurrentTransaction();
     }));
+    this.sub.add(
+      this.proSwitch.valueChanges.subscribe(val => {
+        this.router.navigate(['/orders'], {queryParams: {pro: val}, queryParamsHandling: 'merge'})
+      })
+    );
   }
 
   sortTransaction(transactions: TransactionModel[]) {
