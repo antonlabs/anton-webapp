@@ -56,6 +56,7 @@ export class WalletService {
 
   async updateWallet(wallet: Partial<WalletModel>): Promise<string> {
     const walletPayload = {...rack.states.currentWallet.val, ...wallet};
+    console.log(walletPayload);
     const result = await (await apiG('wallet/'+walletPayload['name'], {
       method: 'PUT',
       body: JSON.stringify(WalletConverter.toDto(walletPayload as WalletModel))

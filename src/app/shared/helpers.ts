@@ -227,5 +227,6 @@ export const orderStatus: {[key: string] : string} = {
   'NEW': $localize`Pending`,
   'EXPIRED': $localize`Canceled`,
   'CANCELED': $localize`Canceled`,
+  'PARTIALLY_FILLED': $localize`Partially filled`,
   'FILLED': $localize`Completed`,
 }

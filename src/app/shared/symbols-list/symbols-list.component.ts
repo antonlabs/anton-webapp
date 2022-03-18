@@ -30,7 +30,6 @@ export class SymbolsListComponent extends AntiMemLeak implements OnInit {
   constructor() { super(); }
 
   set symbolsFiltered(val: string[]) {
-    console.log(val);
     if(val.length > 0) {
       this.pages = [];
     }

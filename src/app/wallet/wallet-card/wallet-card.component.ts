@@ -85,7 +85,7 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
         autoReinvest: this.settingsForm.value.autoReinvest,
         symbolMarket: this.settingsForm.value.symbolMarket,
         budget: this.settingsForm.value.walletBudget,
-        maxOrderValue: 20
+        maxOrderValue: 50
       }));
       if(this.mode === 'wizard') {
         this.router.navigate(['/']);

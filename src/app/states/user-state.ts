@@ -4,6 +4,7 @@ import {State} from "@antonlabs/rack";
 export interface UserStateProperties extends UserDto {
   lastEmailRecover?: string,
   withIdp?: boolean;
+  pro?: boolean;
 }
 
 export class UserState extends State<UserStateProperties> {
@@ -17,7 +18,8 @@ export class UserState extends State<UserStateProperties> {
       avatar: '',
       name: undefined,
       surname: undefined,
-      chatId: undefined
+      chatId: undefined,
+      pro: false
     };
   }
 

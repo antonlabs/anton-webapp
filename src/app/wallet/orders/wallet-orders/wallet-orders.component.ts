@@ -21,7 +21,7 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
   types = orderTypes;
   values = Object.values;
   mode: 'OPEN' | 'CLOSE' = 'OPEN';
-  proSwitch = new FormControl(false);
+  proSwitch = new FormControl(rack.states.user.val.pro);
 
   constructor(
     private walletService: WalletService,
@@ -48,16 +48,23 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
         }
         rack.states.currentWallet.refreshTransactions(this.mode);
       }
-      if(queryParams.pro !== this.proSwitch.value) {
-        this.proSwitch.setValue(queryParams.pro ?? false);
-      }
       this.refreshCurrentTransaction();
     }));
     this.sub.add(
-      this.proSwitch.valueChanges.subscribe(val => {
-        this.router.navigate(['/orders'], {queryParams: {pro: val}, queryParamsHandling: 'merge'})
+      rack.states.user.obs.subscribe(user => {
+        console.log(user.pro);
+        if(user.pro !== this.proSwitch.value) {
+          this.proSwitch.setValue(user.pro ?? false);
+        }
       })
     );
+  }
+
+  togglePro() {
+    rack.states.user.set({
+      pro: this.proSwitch.value
+    });
+    rack.states.user.store();
   }
 
   sortTransaction(transactions: TransactionModel[]) {
