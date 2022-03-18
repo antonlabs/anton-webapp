@@ -7,7 +7,7 @@ import {rack} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
 import { Router } from '@angular/router';
 import {NotificationService} from "../../shared/notification.service";
-import {getTransactions, refreshWallets} from "../../shared/helpers";
+import {getTransactions, refreshEarnings, refreshWallets} from "../../shared/helpers";
 import {TransactionModel} from "../../core/clients/models/transaction.model";
 
 @Component({
@@ -41,8 +41,10 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     this.intervals.push(
       setInterval(() => {
         refreshWallets();
+        refreshEarnings();
       }, 15000)
     );
+    refreshEarnings();
     this.sub.add(
       rack.states.user.obs.subscribe(state => {
         this.name = state.name;

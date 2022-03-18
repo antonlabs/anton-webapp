@@ -21,6 +21,7 @@ import { DeleteWalletMethodsComponent } from './delete-wallet-methods/delete-wal
 import { OrderChartComponent } from './order-chart/order-chart.component';
 import {RouterModule} from "@angular/router";
 import { TransactionCardComponent } from './transaction-card/transaction-card.component';
+import { RevenuesChartComponent } from './revenues-chart/revenues-chart.component';
 
 
 
@@ -43,7 +44,8 @@ import { TransactionCardComponent } from './transaction-card/transaction-card.co
     WalletSettingsComponent,
     DeleteWalletMethodsComponent,
     OrderChartComponent,
-    TransactionCardComponent
+    TransactionCardComponent,
+    RevenuesChartComponent
   ],
     imports: [
         CommonModule,
@@ -69,7 +71,8 @@ import { TransactionCardComponent } from './transaction-card/transaction-card.co
         WalletSettingsComponent,
         DeleteWalletMethodsComponent,
         OrderChartComponent,
-        TransactionCardComponent
+        TransactionCardComponent,
+        RevenuesChartComponent
     ]
 })
 export class SharedModule { }

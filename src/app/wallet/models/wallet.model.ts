@@ -1,5 +1,6 @@
 import {WalletType} from "../enums/wallet-type.enum";
 import {Model} from "../../core/clients/models/model";
+import {EarningModel} from "./earning.model";
 
 export enum StrategyStateType {
   RUNNING = 'RUNNING',
@@ -23,6 +24,7 @@ export interface WalletModel {
   symbolMarket?: string;
   alias?: string;
   earnings?: number;
+  earningsHistory?: EarningModel[];
   totalEarnings?: number;
   type?: WalletType;
   strategy?: StrategyAssociationModel;

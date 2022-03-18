@@ -12,6 +12,7 @@ import {OcoOrderModel, OrderModel} from "../wallet/models/order.model";
 import {OrderConverter} from "../core/clients/converters/order.converter";
 import {TransactionModel} from "../core/clients/models/transaction.model";
 import {TransactionConverter} from "../core/clients/converters/transaction.converter";
+import {EarningModel} from "../wallet/models/earning.model";
 
 export const getLiteral = (str: string, obj: any): any => {
   return str.split('.').reduce((o, i) => (o ?? {[str]: undefined})[i], obj);
@@ -101,6 +102,14 @@ export const refreshWallets = async <T>(): Promise<void> => {
   if(!rack.states.currentWallet.val.name && (wallets ?? []).length > 0) {
     rack.states.currentWallet.set(wallets![0])
   }
+}
+
+export const refreshEarnings = async <T>(): Promise<void> => {
+  const earnings: EarningModel[] | undefined = await getUserListItem<EarningModel>('EARNINGS');
+
+  rack.states.currentWallet.set({
+    earningsHistory: earnings
+  });
 }
 
 export const getUserListItem = async <T>(param: string): Promise<T[] | undefined> => {

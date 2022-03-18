@@ -16,7 +16,7 @@ import { orderTypes } from '../helpers';
 import {OrderResponse} from "../../wallet/models/order-response";
 
 
-const makeid = (length: number) => {
+export const makeid = (length: number) => {
   let result           = '';
   const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
@@ -27,7 +27,7 @@ const makeid = (length: number) => {
   return result;
 }
 
-const themes = {
+export const themes = {
   dark: darkTheme,
   light: lightTheme
 }
