@@ -13,7 +13,7 @@
     <div *ngIf="currentOrders" class="card-plain chart-container {{currentKlines ? '' : 'skeleton'}} mt-20px">
       <app-order-chart [data]="{orders: currentOrders, dataSeries: currentKlines, pro}"></app-order-chart>
     </div>
-    <div class="order-details-panel mt-20px flex-column">
+    <div class="order-details-panel mt-20px flex-column" *ngIf="pro">
       <div class="arrow-container flex-column" *ngFor="let oco of currentOrders; let i = index">
         <div class="flex-row center mt-10px" style="font-size: 50px">
           <ng-icon *ngIf="i > 0" name="jam-arrow-up"></ng-icon>

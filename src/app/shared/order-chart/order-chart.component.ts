@@ -71,18 +71,19 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
       }else {
         this.chartLines?.setData(val.dataSeries.map(i => ({time: i.time, value: i.open})));
       }
+      let orderI = 0;
       for(const ocoOrder of val.orders) {
         for(const order of ocoOrder.orders) {
-          if(order.status === 'FILLED') {
-            markers.push({
-              time: ((order.updateTime ?? order.transactTime) / 1000) as Time,
-              text: orderTypes[order.type],
-              color: this.getColorByOrder(order),
-              position: order.side === 'BUY' ? 'belowBar' : 'aboveBar',
-              shape: order.side === 'BUY' ? 'arrowUp' : 'arrowDown'
-            });
-          }else {
             if(this.pro) {
+              if(order.status === 'FILLED') {
+                markers.push({
+                  time: ((order.updateTime ?? order.transactTime) / 1000) as Time,
+                  text: orderTypes[order.type],
+                  color: this.getColorByOrder(order),
+                  position: order.side === 'BUY' ? 'belowBar' : 'aboveBar',
+                  shape: order.side === 'BUY' ? 'arrowUp' : 'arrowDown'
+                });
+              }
               if(order.stopPrice) {
                 const priceLine = this.chartCandles?.createPriceLine({
                   price: parseFloat(order.stopPrice),
@@ -109,36 +110,34 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
                   this.currentPriceLines.push(priceLine);
                 }
               }
-            }else {
-              if(order.stopPrice) {
-                const priceLine = this.chartLines?.createPriceLine({
-                  price: parseFloat(order.stopPrice),
+            } else {
+              if(order.status === 'FILLED') {
+                markers.push({
+                  time: ((order.updateTime ?? order.transactTime) / 1000) as Time,
+                  text: order.side,
                   color: this.getColorByOrder(order),
-                  axisLabelVisible: true,
-                  title: $localize`Stop`,
-                  lineWidth: 2,
-                  lineStyle: LineStyle.Solid
+                  position: order.side === 'BUY' ? 'belowBar' : 'aboveBar',
+                  shape: order.side === 'BUY' ? 'arrowUp' : 'arrowDown'
                 });
-                if(priceLine) {
-                  this.currentPriceLines.push(priceLine);
-                }
               }
-              if(order.price) {
-                const priceLine = this.chartLines?.createPriceLine({
-                  price: parseFloat(order.price),
-                  color: this.getColorByOrder(order),
-                  axisLabelVisible: true,
-                  title: orderTypes[order.type],
-                  lineWidth: 2,
-                  lineStyle: LineStyle.Solid
-                });
-                if(priceLine) {
-                  this.currentPriceLines.push(priceLine);
+              if(orderI === 0 || orderI === val.orders.length - 1) {
+                if(order.status === 'NEW' && (order.type === 'LIMIT_MAKER' || order.type === 'MARKET')) {
+                  const priceLine = this.chartLines?.createPriceLine({
+                    price: parseFloat(order.price),
+                    color: this.getColorByOrder(order),
+                    axisLabelVisible: true,
+                    title: order.side,
+                    lineWidth: 2,
+                    lineStyle: LineStyle.Solid
+                  });
+                  if(priceLine) {
+                    this.currentPriceLines.push(priceLine);
+                  }
                 }
               }
             }
-          }
         }
+        orderI++;
       }
       if(val.pro) {
         this.chartCandles?.setMarkers(markers.sort((b, a) => (b.time as number) - (a.time as number)));
@@ -199,8 +198,8 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
         this.chartLines = this.chart.addLineSeries({
           priceFormat: {
             type: 'price',
-            precision: 9,
-            minMove: 0.00001
+            precision: 7,
+            minMove: 0.0000001
           }
         });
       }

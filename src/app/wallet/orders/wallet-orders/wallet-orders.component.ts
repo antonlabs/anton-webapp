@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {orderTypes} from "../../../shared/helpers";
 import {rack} from "../../../states/app-state";
 import {TransactionModel} from "../../../core/clients/models/transaction.model";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-wallet-orders',
@@ -20,6 +21,7 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
   types = orderTypes;
   values = Object.values;
   mode: 'OPEN' | 'CLOSE' = 'OPEN';
+  proSwitch = new FormControl(false);
 
   constructor(
     private walletService: WalletService,

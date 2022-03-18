@@ -9,7 +9,9 @@
     </div>
   </div>
   <div class="order-inspect" *ngIf="currentTransaction">
-    <h2 i18n class="mt-10px ml-10px">{{currentTransaction?.symbol}} - {{getTransactTime(currentTransaction)}}</h2>
-    <app-order-inspection [orders]="currentTransaction.orders"></app-order-inspection>
+    <div class="flex-row between">
+      <h2 i18n class="mt-10px ml-10px">{{currentTransaction?.symbol}} - {{getTransactTime(currentTransaction)}}</h2>
+    </div>
+    <app-order-inspection [pro]="false" [orders]="currentTransaction.orders"></app-order-inspection>
   </div>
 </div>

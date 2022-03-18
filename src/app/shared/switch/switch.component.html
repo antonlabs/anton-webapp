@@ -1,5 +1,4 @@
-<div class="button r" id="button-2">
-  <input type="checkbox" (change)="onToggle($event)" [formControl]="control" class="checkbox" />
-  <div class="knobs"></div>
-  <div class="layer"></div>
+<div class="switch">
+  <input (change)="onToggle($event)" type="checkbox" [formControl]="control" name="switch" class="checkbox" />
+  <div></div>
 </div>

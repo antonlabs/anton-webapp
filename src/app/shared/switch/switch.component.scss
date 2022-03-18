@@ -1,5 +1,11 @@
 @import "../../../styles/palette";
 
+$height: 20px;
+$track-color: lightgray;
+$knob-color: white;
+$active-track-color: green;
+$active-knob-color: white;
+
 .button-cover,
 .knobs,
 .layer {
@@ -50,49 +56,51 @@
   z-index: 1;
 }
 
-#button-2 .knobs:before,
-#button-2 .knobs:after {
-  content: "YES";
+.switch {
+  height: $height;
+  border-radius: $height;
+  position: relative;
+  aspect-ratio: 2;
+}
+.switch input[type="checkbox"] {
   position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 20px;
-  height: 10px;
-  color: #fff;
-  font-size: 10px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 1;
-  padding: 9px 4px;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.switch div:before,
+.switch div:after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: $height;
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+.switch div:before {
+  top: 0;
+  min-height: 100%;
+  min-width: 100%;
+  background-color: $track-color;
+  transition-delay: 0.2s;
+}
+.switch div:after {
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%);
+  background-color: $knob-color;
+  min-height: calc(100% - 6px);
+  aspect-ratio: 1;
+}
+.switch input[type="checkbox"]:checked ~ div:after {
+  left: 24px;
+  background-color: $active-knob-color;
+}
+.switch input[type="checkbox"]:checked ~ div:before {
   background-color: $primary-color;
-  border-radius: 50%;
-  transition: 0.3s ease all;
-}
-
-#button-2 .knobs:before {
-  content: "YES";
-}
-
-#button-2 .knobs:after {
-  content: "NO";
-}
-
-#button-2 .knobs:after {
-  right: -28px;
-  left: auto;
-  background-color: #f44336;
-}
-
-#button-2 .checkbox:checked + .knobs:before {
-  left: -28px;
-}
-
-#button-2 .checkbox:checked + .knobs:after {
-  right: 4px;
-}
-
-#button-2 .checkbox:checked ~ .layer {
-  background-color: #fcebeb;
 }
 
 
