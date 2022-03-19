@@ -65,10 +65,8 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
         this.chartLines?.removePriceLine(priceLine);
       }
       const markers: SeriesMarker<Time>[] = [];
-      if(!this.chart) {
+      if (!this.chart) {
         const chartContainer = document.getElementById(this.id)!;
-        console.log(chartContainer);
-        console.log(val);
         const width = chartContainer?.offsetWidth ?? 0;
         let height = chartContainer?.offsetHeight ?? 0;
         if(height < 400) height = 400;
@@ -103,7 +101,7 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
               minMove: 0.0000001
             }
           });
-        }else {
+        } else {
           if(this.chartCandles) {
             this.chart?.removeSeries(this.chartCandles);
           }
@@ -114,7 +112,6 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
               minMove: 0.0000001
             }
           });
-          console.log('add chart lines', this.chart);
         }
       }
       if(val.pro) {
@@ -135,30 +132,32 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
                 shape: order.side === 'BUY' ? 'arrowUp' : 'arrowDown'
               });
             }
-            if(order.stopPrice) {
-              const priceLine = this.chartCandles?.createPriceLine({
-                price: parseFloat(order.stopPrice),
-                color: this.getColorByOrder(order),
-                axisLabelVisible: true,
-                title: $localize`Stop`,
-                lineWidth: 2,
-                lineStyle: LineStyle.Solid
-              });
-              if(priceLine) {
-                this.currentPriceLines.push(priceLine);
+            if(order.status === 'NEW') {
+              if(order.stopPrice) {
+                const priceLine = this.chartCandles?.createPriceLine({
+                  price: parseFloat(order.stopPrice),
+                  color: this.getColorByOrder(order),
+                  axisLabelVisible: true,
+                  title: $localize`Stop`,
+                  lineWidth: 2,
+                  lineStyle: LineStyle.Solid
+                });
+                if(priceLine) {
+                  this.currentPriceLines.push(priceLine);
+                }
               }
-            }
-            if(order.price) {
-              const priceLine = this.chartCandles?.createPriceLine({
-                price: parseFloat(order.price),
-                color: this.getColorByOrder(order),
-                axisLabelVisible: true,
-                title: orderTypes[order.type],
-                lineWidth: 2,
-                lineStyle: LineStyle.Solid
-              });
-              if(priceLine) {
-                this.currentPriceLines.push(priceLine);
+              if(order.price) {
+                const priceLine = this.chartCandles?.createPriceLine({
+                  price: parseFloat(order.price),
+                  color: this.getColorByOrder(order),
+                  axisLabelVisible: true,
+                  title: orderTypes[order.type],
+                  lineWidth: 2,
+                  lineStyle: LineStyle.Solid
+                });
+                if(priceLine) {
+                  this.currentPriceLines.push(priceLine);
+                }
               }
             }
           } else {
