@@ -36,12 +36,10 @@ export class RevenuesChartComponent extends AntiMemLeak implements OnInit, After
   }
 
   ngOnInit(): void {
-
     this.sub.add(
       rack.states.currentWallet.obs.subscribe((wallet) => {
         this.chart?.timeScale().fitContent();
-        this.chartLines?.setData((wallet.earningsHistory ?? []).map(i => (
-          {
+        this.chartLines?.setData((wallet.earningsHistory ?? []).map(i => ({
             time: (new Date(i.earningsDate).getTime() / 1000 as Time),
             value: i.earnings
           })));
