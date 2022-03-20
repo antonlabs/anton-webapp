@@ -10,6 +10,17 @@
         <img src="/assets/coinmarketcap.png" />
       </button>
     </div>
+    <div class="flex-row mt-10px">
+      <div class="period {{currentPeriod === '1h' ? 'active' : ''}}" (click)="refreshTicks('1h')">
+        1h
+      </div>
+      <div class="period {{currentPeriod === '5m' ? 'active' : ''}}" (click)="refreshTicks('5m')">
+        5m
+      </div>
+      <div class="period {{currentPeriod === '3m' ? 'active' : ''}}" (click)="refreshTicks('3m')">
+        3m
+      </div>
+    </div>
     <div *ngIf="currentOrders" class="card-plain chart-container {{currentKlines ? '' : 'skeleton'}} mt-20px">
       <app-order-chart [data]="{orders: currentOrders, dataSeries: currentKlines, pro}"></app-order-chart>
     </div>

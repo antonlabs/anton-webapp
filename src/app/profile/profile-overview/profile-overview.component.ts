@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {FormControl, FormGroup} from "@angular/forms";
 import {UserService} from "../../shared/user.service";
+import {rack} from "../../states/app-state";
 
 @Component({
   selector: 'app-profile-overview',
@@ -22,6 +23,11 @@ export class ProfileOverviewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+  }
+
+  get user() {
+    return rack.states.user.obs;
   }
 
   fileChangeEvent(event: any) {

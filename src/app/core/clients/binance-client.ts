@@ -231,7 +231,7 @@ export class BinanceClient extends ExchangeClient {
         return (await this.prepareRequest('/api/v3/ticker/24hr', 'GET', false));
     }
 
-    async getHistoricalData(symbol: string, startTime?: number, endTime?: number, interval = '3m', limit = 1000): Promise<BarData[]> {
+    async getHistoricalData(symbol: string, startTime?: number, endTime?: number, interval: '1h' | '5m' | '3m' = '5m', limit = 1000): Promise<BarData[]> {
         const result: BarData[] = [];
         const matrix: string[][] = (await this.prepareRequest('/api/v3/klines', 'GET', false, {
             symbol,

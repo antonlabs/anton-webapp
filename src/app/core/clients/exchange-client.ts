@@ -80,7 +80,7 @@ export abstract class ExchangeClient {
 
     abstract getSymbols(market: string): Promise<string[]>;
 
-    abstract getHistoricalData(symbol: string, startTime?: number, endTime?: number): Promise<BarData[]>;
+    abstract getHistoricalData(symbol: string, startTime?: number, endTime?: number, period?: '1h' | '5m' | '3m'): Promise<BarData[]>;
 
     abstract getActualBalance(symbolMarket: string): Promise<number>;
 

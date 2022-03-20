@@ -1,3 +1,4 @@
+@import "../../../../styles/palette";
 
 .order-inspection {
   display: flex;
@@ -13,6 +14,22 @@
   }
   .order-details-panel {
     flex: 1;
+  }
+
+  .period {
+    padding: 3px;
+    border-radius: 5px;
+    background: #fafafa;
+    width: 50px;
+    text-align: center;
+    cursor: pointer;
+    &:hover, &.active {
+      outline: 2px solid $primary-color;
+    }
+
+    &:not(&:first-child) {
+      margin-left: 10px;
+    }
   }
 
 }

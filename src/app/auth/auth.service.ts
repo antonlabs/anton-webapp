@@ -63,7 +63,8 @@ export class AuthService {
         access_token: response.AuthenticationResult?.AccessToken
     });
     rack.states.user.set({
-      email
+      email,
+      withIdp: false
     });
 
     rack.states.oAuthCredentials.store();
@@ -121,7 +122,9 @@ export class AuthService {
     await this.useRefreshToken(response.refresh_token);
 
     const userPayload: UserDto = jwtToUserDto((response.id_token) as any);
-
+    rack.states.user.set({
+      withIdp: true
+    });
     await this.loginSignal(userPayload);
     this.router.navigate(['/']);
   }

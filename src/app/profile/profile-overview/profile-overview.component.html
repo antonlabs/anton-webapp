@@ -2,7 +2,7 @@
   <h1 i18n>My Profile</h1>
   <div class="flex-row mobile-flex-column between">
     <app-avatar size="100px">
-      <div class="overlay">
+      <div class="overlay" *ngIf="!((user | async)?.withIdp)">
         <button class="anton-button icon file-picker" (click)="filepicker.click()">
           <input type="file" #filepicker (change)="fileChangeEvent($event)" />
           <ng-icon name="jam-pencil"></ng-icon>

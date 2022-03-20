@@ -13,6 +13,7 @@ export class OrderInspectionComponent extends AntiMemLeak implements OnInit {
 
   currentOrders: OcoOrderModel[] | undefined;
   currentKlines: BarData[] = [];
+  currentPeriod: '3m' | '5m' | '1h' = '5m';
 
   @Input()
   set orders(val: OcoOrderModel[] | undefined) {
@@ -31,14 +32,18 @@ export class OrderInspectionComponent extends AntiMemLeak implements OnInit {
   ngOnInit(): void {
   }
 
-  async refreshTicks(): Promise<void> {
+  async refreshTicks(period?: '1h' | '5m' | '3m'): Promise<void> {
+    if(period) {
+      this.currentPeriod = period;
+    }
     if(this.currentOrders && this.currentOrders?.length > 0) {
       const client = await rack.states.exchange.getClient();
       if(client) {
         this.currentKlines = (await client.getHistoricalData(
           this.currentOrders[0].symbol,
           this.currentOrders.slice(-1)[0].orders.slice(-1)[0].transactTime - 33332000,
-            (this.currentOrders.slice(-1)[0].orders.slice(-1)[0].updateTime ?? this.currentOrders.slice(-1)[0].orders.slice(-1)[0].transactTime)+ 33332000
+            (this.currentOrders.slice(-1)[0].orders.slice(-1)[0].updateTime ?? this.currentOrders.slice(-1)[0].orders.slice(-1)[0].transactTime)+ 33332000,
+            period
           )
         ) ?? [];
       }
