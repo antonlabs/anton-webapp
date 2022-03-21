@@ -14,7 +14,7 @@
 </div>
 <div class="body">
   <div class="container flex-row between mobile-flex-column mt-50px mobile-mt-0px">
-    <div class="form">
+    <div class="form" *ngIf="spotNotEnabled === false && bnbFeeDisabled === false">
       <form [formGroup]="form">
         <div class="flex-column">
           <label i18n>API Key</label>
@@ -26,7 +26,21 @@
         </div>
       </form>
     </div>
-    <div class="video">
+    <div *ngIf="spotNotEnabled" class="flex-row between mobile-flex-column">
+      <p style="flex: 1">{{error}}</p>
+      <div style="flex: 1" class="flex-column">
+        <div class="video">
+          <div class="video-container mt-20px">
+            <iframe src="https://www.youtube.com/embed/gs8qCuZ7Xac" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="bnbFeeDisabled">
+      {{error}}
+      <button (click)="connectWallet()" class="anton-button" i18n>Retry</button>
+    </div>
+    <div class="video" *ngIf="spotNotEnabled === false && bnbFeeDisabled === false">
       <h2 i18n>A short tutorial...</h2>
       <div class="video-container mt-20px">
         <iframe src="https://www.youtube.com/embed/gs8qCuZ7Xac" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -35,17 +49,19 @@
   </div>
 </div>
 <div class="footer">
-  <div *ngIf="error" class="alert error mt-20px">
+  <div *ngIf="error && spotNotEnabled === false && bnbFeeDisabled === false" class="alert error mt-20px">
     {{error}}
   </div>
 
   <div class="flex-row mt-30px center buttons" *ngIf="mode === 'page'">
-    <app-button [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Next</app-button>
+    <app-button *ngIf="spotNotEnabled !== false || bnbFeeDisabled !== false" (click)="connectWallet()" class="mr-10px" i18n>Retry</app-button>
+    <app-button *ngIf="spotNotEnabled === false && bnbFeeDisabled === false" [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Next</app-button>
     <button class="anton-button" i18n [routerLink]="['/create-wallet', 'wallet-configuration']">Skip</button>
   </div>
 
   <div class="flex-row mt-30px center buttons" *ngIf="mode === 'modal'">
-    <app-button [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Edit</app-button>
+    <app-button *ngIf="spotNotEnabled !== false || bnbFeeDisabled !== false" (click)="connectWallet()" class="mr-10px" i18n>Retry</app-button>
+    <app-button *ngIf="spotNotEnabled === false && bnbFeeDisabled === false" [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Edit</app-button>
     <button class="anton-button" i18n (click)="modalService.closeModal()">Cancel</button>
   </div>
 </div>

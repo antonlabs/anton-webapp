@@ -53,6 +53,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     this.sub.add(
       rack.states.currentWallet.obs.subscribe(wallet => {
         this.wallet = wallet;
+        this.walletService.getAntonBalance(wallet).then((r) => console.log('res', r));
         if(this.wallet.name) {
           this.refreshExchangeLink();
         }

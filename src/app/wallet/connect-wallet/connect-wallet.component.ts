@@ -4,7 +4,7 @@ import {WalletService} from "../../shared/wallet.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { AntiMemLeak } from 'src/app/shared/anti-mem-leak';
 import {ModalService} from "../../modal.service";
-import {refreshWallets} from "../../shared/helpers";
+import {errorMessages, getErrorMessage, refreshWallets} from "../../shared/helpers";
 
 @Component({
   selector: 'app-connect-wallet',
@@ -16,7 +16,8 @@ export class ConnectWalletComponent extends AntiMemLeak implements OnInit {
   error: string | undefined;
   loading = false;
   mode: 'modal' | 'page' | undefined;
-
+  spotNotEnabled = false;
+  bnbFeeDisabled = false;
   form = new FormGroup({
     accessKey: new FormControl('', Validators.required),
     secretKey: new FormControl('', Validators.required)
@@ -36,7 +37,7 @@ export class ConnectWalletComponent extends AntiMemLeak implements OnInit {
       this.activatedRoute.queryParams.subscribe(params => {
         this.mode = !!params['modal'] ? 'modal' : 'page';
       })
-    )
+    );
   }
 
   async connectWallet() {
@@ -54,8 +55,11 @@ export class ConnectWalletComponent extends AntiMemLeak implements OnInit {
       }else {
         this.modalService.closeModal();
       }
-    }catch(e) {
-      this.error = $localize`Error during wallet keys configuration`
+    }catch(e: any) {
+      const message = JSON.parse(e).reason;
+      this.spotNotEnabled = message === 'SPOT_TRADING_DISABLED';
+      this.bnbFeeDisabled = message === 'BNB_FEE_DISABLED';
+      this.error = getErrorMessage(message);
     }finally {
       this.loading = false;
     }

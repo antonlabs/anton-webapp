@@ -65,6 +65,12 @@ export class WalletService {
     return result;
   }
 
+  async getAntonBalance(wallet: WalletModel): Promise<number> {
+    return (await apiG('wallet/balance/'+wallet.name+'/wallet_balance', {
+      method: 'GET'
+    }));
+  }
+
   async playStrategy(walletName: string): Promise<void> {
     await apiG('wallet/'+walletName+'/start' , {
       method: 'PUT'
