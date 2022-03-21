@@ -30,7 +30,8 @@ export class TransactionCardComponent extends AntiMemLeak implements OnInit {
 
   get imgSrc() {
     if(this.transaction) {
-      return `https://cryptologos.cc/logos/${cryptoMap[this.transaction.symbol.toUpperCase()] ?? ''}-${this.transaction.symbol.toLowerCase()}-logo.svg`;
+      const market = rack.val.currentWallet.val.symbolMarket ?? '';
+      return `https://cryptologos.cc/logos/${cryptoMap[this.transaction.symbol.toUpperCase().replace(market, '')] ?? ''}-${this.transaction.symbol.toUpperCase().replace(market, '').toLowerCase()}-logo.svg`;
     }
     return '';
   }

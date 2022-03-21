@@ -8,8 +8,8 @@
   </div>
 </div>
 <div class="body">
-  <form>
-    <app-symbols-list [currentPageIndex]="currentPageIndex" [search]="symbolSearchFormControl.valueChanges | async" (pagesChange)="pages = $event" [fc]="symbolsFormControl" style="flex:3"></app-symbols-list>
+  <form class="mt-10px">
+    <app-symbols-list [currentPageIndex]="currentPageIndex" (pagesChange)="pages = $event" [fc]="symbolsFormControl" style="flex:3"></app-symbols-list>
     <div class="alert danger mt-50px" i18n *ngIf="error" style="flex:1">
       {{error}}
     </div>

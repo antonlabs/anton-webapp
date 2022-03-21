@@ -71,14 +71,12 @@
       </div>
       <img alt="guard" *ngIf="openTransactions.length === 0" src="/assets/orders-not-found.png">
       <div class="body">
-        <app-symbol-card
-          [selectable]="false"
+        <app-transaction-card
           class="symbol mt-10px"
-          *ngFor="let order of (openTransactions ?? [])"
+          *ngFor="let transaction of (openTransactions ?? [])"
           [routerLink]="['/orders']"
-          [queryParams]="{transaction: order.id}"
-          [symbol]="order.symbol"
-          [remove]="false"></app-symbol-card>
+          [queryParams]="{transaction: transaction.id}"
+          [transaction]="transaction"></app-transaction-card>
       </div>
       <ng-container *ngIf="openTransactions.length === 0">
         <h2 i18n>No openTransactions right now </h2>

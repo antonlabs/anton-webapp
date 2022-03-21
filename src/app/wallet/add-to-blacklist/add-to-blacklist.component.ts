@@ -15,13 +15,11 @@ export class AddToBlacklistComponent extends AntiMemLeak implements OnInit {
   loading = false;
   error: string | undefined;
   currentPageIndex = 0;
+  symbolsSelected = [];
   form = new FormGroup({
     symbols: new FormControl(rack.states.currentWallet.val.blacklist ?? [], Validators.required)
   });
   pages: [][] = [];
-  searchForm = new FormGroup({
-    symbol: new FormControl('', Validators.required)
-  });
 
   constructor(
     public modalService: ModalService,
@@ -32,15 +30,10 @@ export class AddToBlacklistComponent extends AntiMemLeak implements OnInit {
   ngOnInit(): void {
     this.sub.add(
       this.symbolsFormControl.valueChanges.subscribe((values) => {
-        rack.states.currentWallet.set({
-          blacklist: values
-        });
+        console.log(values);
+        this.symbolsSelected = values;
       })
     );
-  }
-
-  get symbolSearchFormControl(): FormControl {
-    return this.searchForm.controls['symbol'] as FormControl;
   }
 
   get symbolsFormControl(): FormControl {
@@ -50,8 +43,7 @@ export class AddToBlacklistComponent extends AntiMemLeak implements OnInit {
   async addToBlacklist() {
     this.loading = true;
     try{
-      const blacklist = rack.states.currentWallet.val.blacklist ?? [];
-      await this.walletService.updateWallet({blacklist});
+      await this.walletService.updateWallet({blacklist: this.symbolsSelected});
       this.modalService.closeModal();
       this.router.navigate(['/overview'], {queryParams: {dialog: $localize`You have update your blacklist!`}})
     }catch(e: any) {

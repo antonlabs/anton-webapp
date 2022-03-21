@@ -16,6 +16,9 @@ export class SymbolsListComponent extends AntiMemLeak implements OnInit {
   pages: string[][] = [];
   keys = Object.keys;
   blacklist: string[] = [];
+  searchSymbol = new FormGroup({
+    symbolName: new FormControl('')
+  });
   private _search: string  = '';
   @Input() currentPageIndex = 0;
   @Input() fc: FormControl | undefined;
@@ -49,6 +52,11 @@ export class SymbolsListComponent extends AntiMemLeak implements OnInit {
         this.blacklist = wallet.blacklist ?? [];
       })
     );
+    this.sub.add(
+      this.searchSymbol.valueChanges.subscribe(() => {
+        this.search = this.searchSymbol.value.symbolName;
+      })
+    );
     rack.states.exchange.refreshState();
   }
 
@@ -59,6 +67,7 @@ export class SymbolsListComponent extends AntiMemLeak implements OnInit {
   pushSymbol(symbol: string) {
     const value = (this.fc?.value ?? []);
     value.push(symbol);
+    console.log(symbol);
     this.fc?.setValue(value);
   }
 

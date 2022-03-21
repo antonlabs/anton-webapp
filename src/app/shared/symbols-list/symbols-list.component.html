@@ -1,4 +1,7 @@
 <div class="symbols-list">
+  <form [formGroup]="searchSymbol">
+    <input formControlName="symbolName" class="anton-input" placeholder="Search your symbol" i18n-placeholder />
+  </form>
   <div class="body">
     <app-symbol-card
       *ngFor="let symbol of pages[currentPageIndex]"

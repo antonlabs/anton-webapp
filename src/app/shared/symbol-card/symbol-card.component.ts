@@ -16,7 +16,7 @@ export class SymbolCardComponent implements OnInit {
   @Input() remove = true;
   @Input() selectable = true;
   @Input() set selected(val: boolean) {
-    this.fc.setValue(!val);
+    this.fc.setValue(val);
   }
 
   @Input()
@@ -37,7 +37,7 @@ export class SymbolCardComponent implements OnInit {
   }
 
   toggle(val: boolean) {
-    if(!val) {
+    if(val) {
       this.select.emit(this._symbol);
     }else {
       this.deSelect.emit(this._symbol);
