@@ -21,5 +21,5 @@ fi
 
 if [[ "$ENV" == "prod" ]]; then
   aws s3 rm s3://prod.anton.webapp.fe --recursive && aws s3 sync ./dist/anton-webapp/ s3://prod.anton.webapp.fe --delete
-  aws cloudfront create-invalidation --distribution-id 	E3MBFSLJ4QSSNO --paths '/*'
+  aws cloudfront create-invalidation --distribution-id E2JO6RD01Z83Z6 --paths '/*'
 fi
