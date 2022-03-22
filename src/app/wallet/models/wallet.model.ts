@@ -5,9 +5,12 @@ import {EarningModel} from "./earning.model";
 export enum StrategyStateType {
   RUNNING = 'RUNNING',
   DEPLOYING = 'DEPLOYING',
+  BNB_FEE_MISSING = 'BNB_FEE_MISSING',
+  KEYS_NOT_VALID = 'KEYS_NOT_VALID',
+  KEY_PERMISSION = 'KEY_PERMISSIONS_MISSING',
   DEPLOY_FAILED = 'DEPLOY_FAILED',
   STOPPED = 'STOPPED',
-  DEPLOYED = 'DEPLOYED',
+  DEPLOYED = 'DEPLOYED'
 }
 
 
@@ -15,6 +18,7 @@ export interface StrategyAssociationModel extends Model {
   id: string;
   name: string;
   installationId: string;
+  description: string;
   state: StrategyStateType;
 }
 

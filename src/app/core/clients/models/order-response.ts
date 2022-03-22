@@ -15,7 +15,7 @@ export interface OrderResponse extends Model {
     orderListId: number, // Unless OCO, value will be -1
     clientOrderId: string,
     updateTime?: number,
-    stopPrice?: string,
+    stopPrice?: number,
     transactTime: number,
     price: string,
     origQty: string,

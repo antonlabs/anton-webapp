@@ -247,3 +247,27 @@ export const errorMessages: {[key: string]: string} = {
 };
 
 export const getErrorMessage = (message: string) => errorMessages[message] ?? $localize`Something went wrong, please retry later`;
+
+const getPriceOrder = (order: OrderModel) => {
+  if (parseFloat(order.price) === 0) {
+    const result = parseFloat(order.cummulativeQuoteQty) / parseFloat(order.executedQty);
+    return isNaN(result) ? parseFloat(order.fills[0].price) : result;
+  }
+  return parseFloat(order.price);
+}
+
+const getFilledQuantity = (order: OrderModel, market: string) => {
+  let filledQuantity = parseFloat(order.origQty);
+  (order.fills ?? []).forEach((transaction) => {
+    if (transaction.commissionAsset === order.symbol.replace(market, '')) {
+      filledQuantity -= parseFloat(transaction.commission);
+    }
+  });
+  return filledQuantity;
+}
+
+export const getVolumeOrder = (order: OrderModel, market: string) => {
+  const qty = getFilledQuantity(order, market);
+  return getPriceOrder(order) * qty;
+}
+

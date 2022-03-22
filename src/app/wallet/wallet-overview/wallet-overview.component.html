@@ -4,6 +4,25 @@
       <img src="/assets/creating-wallet.svg" width="50" style="margin-top: -10px" />
       <h2 i18n>Anton is creating your wallet...</h2>
     </div>
+    <div *ngIf="wallet?.strategy?.state === strategyState.BNB_FEE_MISSING" class="creating-wallet alert danger enable-dropdown text-center">
+      <h2 i18n>BNB fees has been disabled in your Binance's settings</h2>
+      <h3 i18n>Please re-enable it to maximize your earnings!</h3>
+      <app-button [loading]="loadingEnableBnbFee" (click)="enableBnbFees()" i18n>Re-enable</app-button>
+    </div>
+    <div *ngIf="wallet?.strategy?.state === strategyState.KEYS_NOT_VALID" class="creating-wallet alert danger enable-dropdown text-center">
+      <h2 i18n>Your keys are not valid, maybe are expired or removed</h2>
+      <h3 i18n>Please click on "Change Keys" and click play</h3>
+    </div>
+    <div *ngIf="wallet?.strategy?.state === strategyState.KEY_PERMISSION" class="creating-wallet alert danger enable-dropdown text-center">
+      <h2 i18n>Keys permissions are not valid</h2>
+      <h3 i18n>You have to enable permissions in your wallet, watch this video if you don't know how</h3>
+      <div class="video">
+        <div class="video-container mt-20px">
+          <iframe src="https://www.youtube.com/embed/gs8qCuZ7Xac" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <app-button [loading]="loadingReUpdateWallet" (click)="reValidateKeys()" i18n>Done</app-button>
+    </div>
   </div>
   <div class="flex-row between mobile-flex-column">
     <div>

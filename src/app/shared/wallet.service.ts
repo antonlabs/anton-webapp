@@ -71,6 +71,13 @@ export class WalletService {
     }));
   }
 
+  async enableBnbFees(walletName: string) {
+    await apiG('wallet/'+walletName+'/enable_bnb_fees' , {
+      method: 'PUT'
+    });
+    refreshWallets();
+  }
+
   async playStrategy(walletName: string): Promise<void> {
     await apiG('wallet/'+walletName+'/start' , {
       method: 'PUT'

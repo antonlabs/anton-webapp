@@ -135,7 +135,7 @@ export class OrderChartComponent extends AntiMemLeak implements OnInit, AfterVie
             if(order.status === 'NEW') {
               if(order.stopPrice) {
                 const priceLine = this.chartCandles?.createPriceLine({
-                  price: parseFloat(order.stopPrice),
+                  price: order.stopPrice,
                   color: this.getColorByOrder(order),
                   axisLabelVisible: true,
                   title: $localize`Stop`,

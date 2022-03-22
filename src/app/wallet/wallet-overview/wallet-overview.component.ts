@@ -7,7 +7,7 @@ import {rack} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
 import { Router } from '@angular/router';
 import {NotificationService} from "../../shared/notification.service";
-import {getTransactions, refreshEarnings, refreshWallets} from "../../shared/helpers";
+import {getErrorMessage, getTransactions, refreshEarnings, refreshWallets} from "../../shared/helpers";
 import {TransactionModel} from "../../core/clients/models/transaction.model";
 
 @Component({
@@ -28,6 +28,9 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   playLoading = false;
   openTransactions: TransactionModel[] = [];
   strategyState = StrategyStateType;
+  getErrorMessage = getErrorMessage;
+  loadingReUpdateWallet = false;
+  loadingEnableBnbFee = false;
 
   constructor(
     private router: Router,
@@ -74,8 +77,33 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     }
   }
 
+  async reValidateKeys() {
+    this.loadingReUpdateWallet = true;
+    try{
+      await this.walletService.updateWallet(this.wallet ?? {});
+    }catch(e) {
+      throw e;
+    }finally {
+      this.loadingReUpdateWallet = false;
+    }
+  }
+
+
   get walletBalance(): number {
     return ((this.wallet?.budget ?? 0) + (this.wallet?.totalEarnings ?? 0));
+  }
+
+  async enableBnbFees() {
+    if(this.wallet?.name) {
+      this.loadingEnableBnbFee = true;
+      try{
+        await this.walletService.enableBnbFees(this.wallet.name);
+      }catch(e) {
+        throw e;
+      }finally {
+        this.loadingEnableBnbFee = false;
+      }
+    }
   }
 
   async playStrategy() {

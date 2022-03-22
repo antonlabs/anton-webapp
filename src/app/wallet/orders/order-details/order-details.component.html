@@ -38,7 +38,11 @@
          </div>
          <div class="att" *ngIf="currentOrder?.earnings">
            <h4 i18n>Earnings</h4>
-           {{currentOrder?.earnings}}
+           {{number(currentOrder?.earnings)}}$
+         </div>
+         <div class="att" *ngIf="currentOrder?.earnings && currentOrder?.buyPrice">
+           <h4 i18n>Percentage</h4>
+           {{number(((parseFloat(currentOrder?.price!) / currentOrder?.buyPrice!) * 100) - 100)}}%
          </div>
        </div>
      </div>

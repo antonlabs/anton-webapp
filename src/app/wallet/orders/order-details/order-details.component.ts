@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {OcoOrderModel, OrderModel} from "../../models/order.model";
 import {orderStatus, orderTypes} from "../../../shared/helpers";
-import {rack} from "../../../states/app-state";
 
 @Component({
   selector: 'app-order-details',
@@ -14,10 +13,13 @@ export class OrderDetailsComponent implements OnInit {
   selectedIndex: number = 0;
   orderTypes = orderTypes;
   orderStatus = orderStatus;
+  parseFloat = parseFloat;
+  number = (n: any) => parseFloat(n).toFixed(2)
 
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
   get currentOrder(): OrderModel | undefined {

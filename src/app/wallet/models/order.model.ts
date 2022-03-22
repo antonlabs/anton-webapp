@@ -4,6 +4,7 @@ export interface OrderModel extends OrderResponse {
     alreadyIncrement?: boolean;
     parentOrder?: OrderModel;
     earnings?: number;
+    buyPrice?: number;
 }
 
 export interface OcoOrderModel {

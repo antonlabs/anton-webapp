@@ -27,7 +27,10 @@
       </form>
     </div>
     <div *ngIf="spotNotEnabled" class="flex-row between mobile-flex-column">
-      <p style="flex: 1">{{error}}</p>
+      <div class="flex-column">
+        <h1 i18n>Keys not enabled for spot trading</h1>
+        <p style="flex: 1">{{error}}</p>
+      </div>
       <div style="flex: 1" class="flex-column">
         <div class="video">
           <div class="video-container mt-20px">
@@ -37,6 +40,7 @@
       </div>
     </div>
     <div *ngIf="bnbFeeDisabled">
+      <h1 i18n>The transaction fees will be payed with your BNB balance to maximize earnings</h1>
       {{error}}
       <button (click)="connectWallet()" class="anton-button" i18n>Retry</button>
     </div>
@@ -54,13 +58,13 @@
   </div>
 
   <div class="flex-row mt-30px center buttons" *ngIf="mode === 'page'">
-    <app-button *ngIf="spotNotEnabled !== false || bnbFeeDisabled !== false" (click)="connectWallet()" class="mr-10px" i18n>Retry</app-button>
+    <app-button *ngIf="spotNotEnabled !== false || bnbFeeDisabled !== false" [loading]="loading" (click)="connectWallet()" class="mr-10px" i18n>Retry</app-button>
     <app-button *ngIf="spotNotEnabled === false && bnbFeeDisabled === false" [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Next</app-button>
     <button class="anton-button" i18n [routerLink]="['/create-wallet', 'wallet-configuration']">Skip</button>
   </div>
 
   <div class="flex-row mt-30px center buttons" *ngIf="mode === 'modal'">
-    <app-button *ngIf="spotNotEnabled !== false || bnbFeeDisabled !== false" (click)="connectWallet()" class="mr-10px" i18n>Retry</app-button>
+    <app-button *ngIf="spotNotEnabled !== false || bnbFeeDisabled !== false" [loading]="loading" (click)="connectWallet()" class="mr-10px" i18n>Retry</app-button>
     <app-button *ngIf="spotNotEnabled === false && bnbFeeDisabled === false" [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Edit</app-button>
     <button class="anton-button" i18n (click)="modalService.closeModal()">Cancel</button>
   </div>
