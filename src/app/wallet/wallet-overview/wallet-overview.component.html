@@ -6,8 +6,8 @@
     </div>
     <div *ngIf="wallet?.strategy?.state === strategyState.BNB_FEE_MISSING" class="creating-wallet alert danger enable-dropdown text-center">
       <h2 i18n>BNB fees has been disabled in your Binance's settings</h2>
-      <h3 i18n>Please re-enable it to maximize your earnings!</h3>
-      <app-button [loading]="loadingEnableBnbFee" (click)="enableBnbFees()" i18n>Re-enable</app-button>
+      <h3 class="mt-10px" i18n>Please re-enable it to maximize your earnings!</h3>
+      <app-button class="mt-10px" [loading]="loadingEnableBnbFee" (click)="enableBnbFees()" i18n>Re-enable</app-button>
     </div>
     <div *ngIf="wallet?.strategy?.state === strategyState.KEYS_NOT_VALID" class="creating-wallet alert danger enable-dropdown text-center">
       <h2 i18n>Your keys are not valid, maybe are expired or removed</h2>

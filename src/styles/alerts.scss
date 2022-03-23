@@ -11,4 +11,10 @@
     color: $primary-color-dark;
     border: 2px dashed $warn-warning;
   }
+
+  &.danger {
+    background: transparent;
+    color: $primary-color-dark;
+    border: 2px dashed $primary-danger;
+  }
 }
