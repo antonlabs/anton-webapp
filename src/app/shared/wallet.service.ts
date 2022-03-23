@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {apiG, getTransactions, getUserListItem, refreshWallets} from "./helpers";
+import {apiG, getUserListItem, refreshWallets} from "./helpers";
 import {WalletModel} from "../wallet/models/wallet.model";
 import {WalletConverter} from "../wallet/converters/wallet.converter";
 import {OcoOrderModel, OrderModel} from "../wallet/models/order.model";

@@ -3,7 +3,7 @@ import {OcoOrderModel, OrderModel} from "../../models/order.model";
 import {WalletService} from "../../../shared/wallet.service";
 import {AntiMemLeak} from "../../../shared/anti-mem-leak";
 import {ActivatedRoute, Router} from "@angular/router";
-import {orderTypes} from "../../../shared/helpers";
+import {orderTypes, PaginationToken} from "../../../shared/helpers";
 import {rack} from "../../../states/app-state";
 import {TransactionModel} from "../../../core/clients/models/transaction.model";
 import {FormControl} from "@angular/forms";
@@ -22,6 +22,7 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
   values = Object.values;
   mode: 'OPEN' | 'CLOSE' = 'OPEN';
   proSwitch = new FormControl(rack.states.user.val.pro);
+  lastPaginationToken: PaginationToken | undefined;
 
   constructor(
     private walletService: WalletService,
@@ -32,11 +33,22 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(document.getElementById('list'));
+    document.getElementById('list')?.addEventListener('scroll', (event) => {
+      const element: any = event.target;
+      const isAtBottom = ( element.scrollHeight - element.scrollTop <= element.clientHeight + 50 );
+      if(isAtBottom && this.lastPaginationToken) {
+        rack.states.currentWallet.refreshTransactions(this.mode, this.lastPaginationToken).then((res) => {
+          this.lastPaginationToken = res.lastKey;
+        });
+      }
+    })
     this.sub.add(
       rack.states.currentWallet.obs.subscribe((wallet) => {
         if(wallet.transactions) {
           this.transactions = wallet.transactions;
           this.transactionsList = this.sortTransaction(Object.values(wallet.transactions));
+          console.log(this.transactionsList);
           this.refreshCurrentTransaction();
         }
       })
@@ -46,7 +58,13 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
         if(queryParams.mode) {
           this.mode = queryParams.mode;
         }
-        rack.states.currentWallet.refreshTransactions(this.mode);
+        this.lastPaginationToken = undefined;
+        rack.states.currentWallet.set({
+          transactions: {}
+        });
+        rack.states.currentWallet.refreshTransactions(this.mode).then((res) => {
+          this.lastPaginationToken = res.lastKey;
+        });
       }
       this.refreshCurrentTransaction();
     }));

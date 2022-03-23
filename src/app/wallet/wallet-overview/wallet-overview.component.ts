@@ -63,7 +63,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
       })
     );
     getTransactions('OPEN').then(transactions => {
-      this.openTransactions = transactions;
+      this.openTransactions = transactions.data;
     });
   }
 

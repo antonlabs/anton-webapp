@@ -13,6 +13,7 @@ import {OrderConverter} from "../core/clients/converters/order.converter";
 import {TransactionModel} from "../core/clients/models/transaction.model";
 import {TransactionConverter} from "../core/clients/converters/transaction.converter";
 import {EarningModel} from "../wallet/models/earning.model";
+import {NativeAttributeValue} from "@aws-sdk/util-dynamodb";
 
 export const getLiteral = (str: string, obj: any): any => {
   return str.split('.').reduce((o, i) => (o ?? {[str]: undefined})[i], obj);
@@ -180,20 +181,31 @@ export const getOrders = async (transactionId: string): Promise<OcoOrderModel[]>
   return ocoOrders;
 }
 
-export const getTransactions = async (type?: 'OPEN' | 'CLOSE'): Promise<TransactionModel[]> => {
-  if(!rack.states.user.val.identityId) return [];
-  return ((await documentClient().query({
+export type PaginationToken = { [key: string]: NativeAttributeValue};
+
+export const getTransactions = async (type?: 'OPEN' | 'CLOSE', paginationToken?: PaginationToken): Promise<{data: TransactionModel[], lastKey: PaginationToken | undefined}> => {
+  if(!rack.states.user.val.identityId) return {
+    lastKey: undefined,
+    data: [],
+  };
+  const response = (await documentClient().query({
     TableName: transactionTableName,
     KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
     ExpressionAttributeNames: {
       '#sk': 'sk',
       '#pk': 'pk'
     },
+    ExclusiveStartKey: paginationToken,
+    Limit: 20,
     ExpressionAttributeValues: {
       ':sk': `TRANSACTION${type ? '#'+type : ''}`,
       ':pk': rack.states.user.val.identityId
     }
-  })).Items ?? []).map(item => new TransactionConverter().fromDynamoModel(item));
+  }));
+  return {
+    lastKey: response.LastEvaluatedKey,
+    data: (response.Items ?? []).map(item => new TransactionConverter().fromDynamoModel(item))
+  }
 }
 
 

@@ -4,7 +4,7 @@
       <h2 class="mode {{mode === 'OPEN' ? 'active' : ''}}" i18n [routerLink]="['/orders']" [queryParams]="{mode: 'OPEN'}">Open</h2>
       <h2 class="mode  {{mode === 'CLOSE' ? 'active' : ''}}" i18n [routerLink]="['/orders']" [queryParams]="{mode: 'CLOSE'}">Close</h2>
     </div>
-    <div class="list {{currentTransaction ? 'close' : 'open'}}">
+    <div id="list" class="list {{currentTransaction ? 'close' : 'open'}}">
       <app-transaction-card [active]="currentTransaction?.id === transaction.id" *ngFor="let transaction of transactionsList" [transaction]="transaction"></app-transaction-card>
     </div>
   </div>
