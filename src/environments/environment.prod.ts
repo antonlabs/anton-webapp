@@ -2,6 +2,7 @@ export const environment = {
   production: true,
   name: 'prod',
   region: 'eu-west-1',
+  recaptchaV3SiteKey: "6LdTLQsfAAAAANYSrgd4Tb9a1_K8svxdC-KuFJFL",
   binanceEndpoint: 'https://api.binance.com',
   beUrl: 'https://api.anton.finance/v1',
   cognitoAppClientId: '1a2dtr401gg6i0gdsaerr96r7m',

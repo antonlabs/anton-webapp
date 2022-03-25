@@ -13,6 +13,7 @@ import {EmailLoginComponent} from './email-login/email-login.component';
 import {VerifyFallbackComponent} from './verify-fallback/verify-fallback.component';
 import {SendRecoveryMailComponent} from "./send-recovery-mail/send-recovery-mail.component";
 import { EmailPasswordLoginComponent } from './email-password-login/email-password-login.component';
+import { environment } from "../../environments/environment";
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { EmailPasswordLoginComponent } from './email-password-login/email-passwo
         SendRecoveryMailComponent
     ],
     providers: [
-        {provide: RECAPTCHA_V3_SITE_KEY, useValue: "6Ldd2RQeAAAAABidUe7PPYzpYUnwIa599ZatjTf_"}
+        {provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3SiteKey}
     ]
 })
 export class AuthModule { }
