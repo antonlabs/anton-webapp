@@ -8,6 +8,7 @@ import { RecoveryPasswordFallbackComponent } from './recovery-password-fallback/
 import {SharedModule} from "../../shared/shared.module";
 import { AuthChallengesRoutingModule } from './auth-challenges-routing.module';
 import { MfaSetupComponent } from './mfa-setup/mfa-setup.component';
+import { environment } from "../../../environments/environment";
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { MfaSetupComponent } from './mfa-setup/mfa-setup.component';
     FormsModule
   ],
   providers: [
-    { provide: RECAPTCHA_V3_SITE_KEY, useValue: "6Ldd2RQeAAAAABidUe7PPYzpYUnwIa599ZatjTf_" }
+    { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3SiteKey }
   ]
 })
 export class AuthChallengesModule { }

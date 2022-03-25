@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   name: 'dev',
   region: 'eu-west-1',
+  recaptchaV3SiteKey: "6Ldd2RQeAAAAABidUe7PPYzpYUnwIa599ZatjTf_",
   binanceEndpoint: 'https://api.binance.com',
   beUrl: 'https://dev.api.anton.finance/v1',
   cognitoAppClientId: '6s72d0thtqpqn37kqojt0qgfo0',
