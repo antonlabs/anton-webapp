@@ -191,8 +191,10 @@ export const getTransactions = async (type?: 'OPEN' | 'CLOSE', paginationToken?:
   const response = (await documentClient().query({
     TableName: transactionTableName,
     KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
+    IndexName: 'transaction-ordered-date-index',
+    ScanIndexForward: false,
     ExpressionAttributeNames: {
-      '#sk': 'sk',
+      '#sk': 'alternativeSk',
       '#pk': 'pk'
     },
     ExclusiveStartKey: paginationToken,
