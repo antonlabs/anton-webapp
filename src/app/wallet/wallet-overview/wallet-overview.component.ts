@@ -31,6 +31,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   getErrorMessage = getErrorMessage;
   loadingReUpdateWallet = false;
   loadingEnableBnbFee = false;
+  chartMode: 'earnings' | 'balances' = 'earnings'
 
 
   constructor(
@@ -42,14 +43,6 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   }
 
   ngOnInit(): void {
-    this.intervals.push(
-      setInterval(() => {
-        refreshWallets();
-        refreshEarnings();
-        refreshBalances();
-      }, 15000)
-    );
-    refreshEarnings();
     refreshBalances();
     this.sub.add(
       rack.states.user.obs.subscribe(state => {
@@ -59,7 +52,6 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     this.sub.add(
       rack.states.currentWallet.obs.subscribe(wallet => {
         this.wallet = wallet;
-        console.log(wallet);
 
         if(this.wallet.name) {
           this.refreshExchangeLink();
@@ -94,7 +86,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
 
 
   get walletBalance(): number {
-    return ((this.wallet?.budget ?? 0) + (this.wallet?.totalEarnings ?? 0));
+    return (this.wallet?.balances.slice(-1)[0]?.balance ?? 0);
   }
 
   async enableBnbFees() {

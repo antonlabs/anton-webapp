@@ -4,6 +4,7 @@ import {AntiMemLeak} from "../anti-mem-leak";
 import {rack} from "../../states/app-state";
 import {EarningModel} from "../../wallet/models/earning.model";
 import {makeid, themes} from "../order-chart/order-chart.component";
+import {refreshEarnings} from "../helpers";
 
 
 
@@ -36,6 +37,7 @@ export class RevenuesChartComponent extends AntiMemLeak implements OnInit, After
   }
 
   ngOnInit(): void {
+    refreshEarnings();
     this.sub.add(
       rack.states.currentWallet.obs.subscribe((wallet) => {
         this.chart?.timeScale().fitContent();

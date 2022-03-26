@@ -4,6 +4,7 @@ import {EarningModel} from "../../wallet/models/earning.model";
 import {makeid, themes} from "../order-chart/order-chart.component";
 import {rack} from "../../states/app-state";
 import {AntiMemLeak} from "../anti-mem-leak";
+import {refreshBalances} from "../helpers";
 
 @Component({
   selector: 'app-balances-chart',
@@ -34,6 +35,7 @@ export class BalancesChartComponent extends AntiMemLeak implements OnInit, After
   }
 
   ngOnInit(): void {
+    refreshBalances();
     this.sub.add(
       rack.states.currentWallet.obs.subscribe((wallet) => {
         this.chart?.timeScale().fitContent();

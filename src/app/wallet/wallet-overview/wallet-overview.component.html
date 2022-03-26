@@ -79,9 +79,22 @@
   </div>
 
   <div class="card-plain journey mt-10px">
-    <h2 i18n>Revenue chart</h2>
-    <app-revenues-chart></app-revenues-chart>
-    <app-balances-chart></app-balances-chart>
+    <div class="flex-row">
+      <div class="period {{chartMode === 'earnings' ? 'active' : ''}}" (click)="chartMode = 'earnings'">
+        Revenues
+      </div>
+      <div class="period {{chartMode === 'balances' ? 'active' : ''}}" (click)="chartMode = 'balances'">
+        Balances
+      </div>
+    </div>
+    <div class="mt-10px">
+      <ng-container *ngIf="chartMode === 'earnings'">
+        <app-revenues-chart></app-revenues-chart>
+      </ng-container>
+      <ng-container *ngIf="chartMode === 'balances'">
+        <app-balances-chart></app-balances-chart>
+      </ng-container>
+    </div>
   </div>
 
   <div class="flex-row between mt-10px openTransactions mobile-flex-column">
