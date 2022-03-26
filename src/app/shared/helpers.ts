@@ -1,7 +1,7 @@
 import {DynamoDBClient} from "@aws-sdk/client-dynamodb";
 import {AwsClient} from "aws4fetch";
 import {environment} from "../../environments/environment";
-import {WalletModel} from "../wallet/models/wallet.model";
+import {BalanceModel, WalletModel} from "../wallet/models/wallet.model";
 import {DynamoDBDocument} from "@aws-sdk/lib-dynamodb";
 import {UserDto} from "./dto/user.dto";
 import jwtDecode from "jwt-decode";
@@ -128,6 +128,35 @@ export const getUserListItem = async <T>(param: string): Promise<T[] | undefined
     }
   })).Items as T[];
 }
+
+export const refreshBalances = async <T>(): Promise<void> => {
+  const balances: BalanceModel[] = await getWalletBalances();
+
+  rack.states.currentWallet.set({
+    balances
+  });
+}
+
+
+export const getWalletBalances = async (): Promise<BalanceModel[]> => {
+  if(!rack.states.user.val.identityId) return [];
+  return ((await documentClient().query({
+    TableName: tableName,
+    KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
+    ExpressionAttributeNames: {
+      '#sk': 'sk',
+      '#pk': 'pk'
+    },
+    ExpressionAttributeValues: {
+      ':sk': 'BALANCE#'+rack.states.currentWallet.val.name,
+      ':pk': rack.states.user.val.identityId
+    }
+  })).Items ?? []).map(o => ({
+    balance: o['balance'],
+    date: o['sk'].split('#').slice(-1)[0]
+  }))
+}
+
 
 export interface GetTransactionOutput<T> {
     data: T[],

@@ -22,6 +22,7 @@ import { OrderChartComponent } from './order-chart/order-chart.component';
 import {RouterModule} from "@angular/router";
 import { TransactionCardComponent } from './transaction-card/transaction-card.component';
 import { RevenuesChartComponent } from './revenues-chart/revenues-chart.component';
+import { BalancesChartComponent } from './balances-chart/balances-chart.component';
 
 
 
@@ -45,7 +46,8 @@ import { RevenuesChartComponent } from './revenues-chart/revenues-chart.componen
     DeleteWalletMethodsComponent,
     OrderChartComponent,
     TransactionCardComponent,
-    RevenuesChartComponent
+    RevenuesChartComponent,
+    BalancesChartComponent
   ],
     imports: [
         CommonModule,
@@ -60,6 +62,7 @@ import { RevenuesChartComponent } from './revenues-chart/revenues-chart.componen
         ButtonComponent,
         StepperComponent,
         SliderComponent,
+      BalancesChartComponent,
         CashInputComponent,
         AvatarComponent,
         CounterComponent,

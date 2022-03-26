@@ -15,6 +15,7 @@ export class WalletConverter {
       type: dto.type,
       accessKey: dto.accessKey,
       secretKey: dto.secretKey,
+      balances: [],
       blacklist: dto.blacklist
     }
   }

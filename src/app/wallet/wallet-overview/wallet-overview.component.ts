@@ -7,7 +7,7 @@ import {rack} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
 import { Router } from '@angular/router';
 import {NotificationService} from "../../shared/notification.service";
-import {getErrorMessage, getTransactions, refreshEarnings, refreshWallets} from "../../shared/helpers";
+import {getErrorMessage, getTransactions, refreshBalances, refreshEarnings, refreshWallets} from "../../shared/helpers";
 import {TransactionModel} from "../../core/clients/models/transaction.model";
 
 @Component({
@@ -32,6 +32,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   loadingReUpdateWallet = false;
   loadingEnableBnbFee = false;
 
+
   constructor(
     private router: Router,
     private walletService: WalletService,
@@ -45,9 +46,11 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
       setInterval(() => {
         refreshWallets();
         refreshEarnings();
+        refreshBalances();
       }, 15000)
     );
     refreshEarnings();
+    refreshBalances();
     this.sub.add(
       rack.states.user.obs.subscribe(state => {
         this.name = state.name;
@@ -56,7 +59,8 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     this.sub.add(
       rack.states.currentWallet.obs.subscribe(wallet => {
         this.wallet = wallet;
-        this.walletService.getAntonBalance(wallet).then((r) => console.log('res', r));
+        console.log(wallet);
+
         if(this.wallet.name) {
           this.refreshExchangeLink();
         }

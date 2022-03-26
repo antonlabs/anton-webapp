@@ -24,6 +24,12 @@ export interface StrategyAssociationModel extends Model {
 }
 
 
+export interface BalanceModel {
+  date: Date;
+  balance: number;
+}
+
+
 export interface WalletModel {
   name: string;
   symbolMarket?: string;
@@ -37,6 +43,7 @@ export interface WalletModel {
   autoReinvest?: boolean;
   secretKey?: string;
   budget: number;
+  balances: BalanceModel[];
   maxOrderValue: number;
   blacklist?: string[];
 }

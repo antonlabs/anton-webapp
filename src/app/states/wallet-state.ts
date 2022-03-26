@@ -22,6 +22,7 @@ export class WalletState extends State<WalletProperties> {
       secretKey: undefined,
       maxOrderValue: 50,
       budget: 0,
+      balances: [],
       blacklist: [],
       transactions: {}
     };
