@@ -15,7 +15,7 @@ export class RecoveryPasswordFallbackComponent extends AntiMemLeak implements On
   code: string | undefined;
   loading = false;
   error: string | undefined;
-  success = true;
+  success = false;
 
   form: FormGroup = new FormGroup({
     email: new FormControl('', Validators.required),
