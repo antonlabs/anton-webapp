@@ -54,6 +54,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
         this.wallet = wallet;
 
         if(this.wallet.name) {
+          refreshBalances();
           this.refreshExchangeLink();
         }
       })

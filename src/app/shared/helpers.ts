@@ -131,10 +131,20 @@ export const getUserListItem = async <T>(param: string): Promise<T[] | undefined
 
 export const refreshBalances = async <T>(): Promise<void> => {
   const balances: BalanceModel[] = await getWalletBalances();
-
+  const lastBalance = await getAntonBalance(rack.states.currentWallet.val);
+  balances.push({
+    balance: lastBalance,
+    date: new Date()
+  });
   rack.states.currentWallet.set({
     balances
   });
+}
+
+export const getAntonBalance = async (wallet: WalletModel): Promise<number> => {
+  return (await apiG('wallet/balance/'+wallet.name+'/wallet_balance', {
+    method: 'GET'
+  }));
 }
 
 
