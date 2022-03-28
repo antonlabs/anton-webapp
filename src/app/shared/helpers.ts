@@ -295,8 +295,8 @@ export const orderStatus: {[key: string] : string} = {
 
 export const errorMessages: {[key: string]: string} = {
   KEYS_NOT_VALID: $localize`The key that you have selected are not valid, please insert a new one and retry`,
-  SPOT_TRADING_DISABLED: $localize`The keys are correct, but you have not enabled spot wallet trading, if you don't know how to enable, please watch this video and retry`,
-  BNB_FEE_DISABLED: $localize`Your fee payment method is not BNB, we recommend to enable it to maximize your earnings, do you want enable it?`
+  KEY_PERMISSION: $localize`The keys are correct, but you have not enabled spot wallet trading, if you don't know how to enable, please watch this video and retry`,
+  BNB_FEE_MISSING: $localize`Your fee payment method is not BNB, we recommend to enable it to maximize your earnings, do you want enable it?`
 };
 
 export const getErrorMessage = (message: string) => errorMessages[message] ?? $localize`Something went wrong, please retry later`;

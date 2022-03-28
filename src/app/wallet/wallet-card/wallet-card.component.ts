@@ -92,7 +92,12 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
       }
       this.notificationService.success($localize`You successfully updated this wallet!`);
     }catch(e: any) {
-      this.error.emit($localize`Ops there are some errors, retry later`);
+      const error = JSON.parse(e.message);
+      if(error.reason === 'KEY_NOT_VALID') {
+        this.error.emit($localize`You have to put valid keys to confirm wallet creation, if you can't please click on skip, you can do it later`);
+      }else {
+        this.error.emit($localize`Ops there are some errors, retry later`);
+      }
       console.error(e);
     }finally {
       this.loading = false;

@@ -1,10 +1,15 @@
-<div class="not-found" *ngIf="transactionsList && transactionsList.length === 0">
+<div class="not-found" *ngIf="transactionsList && transactionsList.length === 0 && !loading">
   <img src="/assets/no-data-found.svg">
   <h1 i18n>Anton has no any open trades</h1>
 </div>
 
+<div class="loading" *ngIf="loading">
+  <div class="mt-30px" *ngFor="let symbol of loadingElements">
+    <app-symbol-card [symbol]="symbol" [loading]="true" [selectable]="false" [remove]="false"></app-symbol-card>
+  </div>
+</div>
 
-<div class="flex-row mobile-flex-column wallet-orders" *ngIf="transactionsList && transactionsList.length > 0">
+<div class="flex-row mobile-flex-column wallet-orders" *ngIf="transactionsList && transactionsList.length > 0 && !loading">
   <div class="orders-list">
     <div class="flex-row evenly mt-10px">
       <h2 class="mode {{mode === 'OPEN' ? 'active' : ''}}" i18n [routerLink]="['/orders']" [queryParams]="{mode: 'OPEN'}">Open</h2>

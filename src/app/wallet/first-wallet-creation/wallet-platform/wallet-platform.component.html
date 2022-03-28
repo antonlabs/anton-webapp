@@ -5,8 +5,15 @@
     <div class="platform {{currentSelection === walletType.BINANCE ? 'active' : ''}}" (click)="currentSelection = walletType.BINANCE">
       <img src="/assets/binance-logo.png" />
     </div>
-    <div class="platform {{currentSelection === walletType.COINBASE ? 'active' : ''}}" (click)="currentSelection = walletType.COINBASE">
+    <div class="platform coming-soon {{currentSelection === walletType.COINBASE ? 'active' : ''}}">
+      <h2>Coming soon</h2>
       <img src="/assets/coinbase.png" />
+    </div>
+  </div>
+  <div class="flex-row center platforms">
+    <div class="platform coming-soon {{currentSelection === walletType.COINBASE ? 'active' : ''}}">
+      <h2>Coming soon</h2>
+      <img src="/assets/crypto-com-logo.jpg" />
     </div>
   </div>
 

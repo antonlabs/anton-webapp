@@ -1,4 +1,4 @@
-<div class="symbol-card card-plain flex-row between" *ngIf="_symbol">
+<div class="symbol-card card-plain flex-row between {{loading ? 'skeleton' : ''}}" *ngIf="_symbol">
   <img alt="symbol-logo" [src]="imgSrc" onerror="this.src='/assets/unknown-coin.png'">
   <span>{{_symbol | uppercase}}</span>
   <button *ngIf="remove" (click)="deleteItem.emit(true)" class="anton-button icon danger">

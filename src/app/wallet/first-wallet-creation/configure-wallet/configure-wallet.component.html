@@ -1,7 +1,7 @@
 <h1 i18n>How much you wanna invest?</h1>
 
 <div class="w-100 flex-column mt-40px">
-  <div class="flex-row center">
+  <div class="flex-row center" style="width: 100vw">
     <app-wallet-card mode="wizard" (submit)="submit()" (error)="error=$event" [wallet]="wallet"></app-wallet-card>
   </div>
   <div class="alert error" *ngIf="error">{{error}}</div>

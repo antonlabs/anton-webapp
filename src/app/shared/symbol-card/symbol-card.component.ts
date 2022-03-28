@@ -13,6 +13,7 @@ export class SymbolCardComponent implements OnInit {
   imgSrc: string | undefined;
   fc: FormControl = new FormControl(true);
 
+  @Input() loading = false;
   @Input() remove = true;
   @Input() selectable = true;
   @Input() set selected(val: boolean) {

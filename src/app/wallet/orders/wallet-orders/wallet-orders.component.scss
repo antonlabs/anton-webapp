@@ -23,11 +23,16 @@
   }
 }
 
-.not-found {
+.not-found, .loading {
   display: block;
   margin: 0 auto;
   text-align: center;
+  height: 85vh;
 }
+.loading {
+  padding: 10px;
+}
+
 
 
 @media only screen and (max-width: 768px) { //mobile

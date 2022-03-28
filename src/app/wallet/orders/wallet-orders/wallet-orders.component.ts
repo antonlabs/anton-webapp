@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {OcoOrderModel, OrderModel} from "../../models/order.model";
 import {WalletService} from "../../../shared/wallet.service";
 import {AntiMemLeak} from "../../../shared/anti-mem-leak";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -23,6 +22,15 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
   mode: 'OPEN' | 'CLOSE' = 'OPEN';
   proSwitch = new FormControl(rack.states.user.val.pro);
   lastPaginationToken: PaginationToken | undefined;
+  loadingElements = [
+    'BTC',
+    'SHIB',
+    'ETH',
+    'AVAX',
+    'XEC',
+    'MASK'
+  ];
+  loading = false;
 
   constructor(
     private walletService: WalletService,
@@ -48,13 +56,12 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
         if(wallet.transactions) {
           this.transactions = wallet.transactions;
           this.transactionsList = this.sortTransaction(Object.values(wallet.transactions));
-          console.log(this.transactionsList);
           this.refreshCurrentTransaction();
         }
       })
     );
     this.sub.add(this.activatedRoute.queryParams.subscribe((queryParams: any) => {
-      if(this.mode !== queryParams.mode) {
+      if(this.mode !== queryParams.mode || this.transactionsList?.length === 0) {
         if(queryParams.mode) {
           this.mode = queryParams.mode;
         }
@@ -62,15 +69,15 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
         rack.states.currentWallet.set({
           transactions: {}
         });
+        this.loading = true;
         rack.states.currentWallet.refreshTransactions(this.mode).then((res) => {
           this.lastPaginationToken = res.lastKey;
-        });
+        }).finally(() => this.loading = false);
       }
       this.refreshCurrentTransaction();
     }));
     this.sub.add(
       rack.states.user.obs.subscribe(user => {
-        console.log(user.pro);
         if(user.pro !== this.proSwitch.value) {
           this.proSwitch.setValue(user.pro ?? false);
         }

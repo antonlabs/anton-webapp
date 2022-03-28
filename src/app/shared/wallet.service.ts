@@ -65,8 +65,9 @@ export class WalletService {
     return result;
   }
 
-  async enableBnbFees(walletName: string) {
+  async enableBnbFees(walletName: string, credentials?: {accessKey: string, secretKey: string}) {
     await apiG('wallet/'+walletName+'/enable_bnb_fees' , {
+      body: JSON.stringify(credentials ?? {}),
       method: 'PUT'
     });
     refreshWallets();
