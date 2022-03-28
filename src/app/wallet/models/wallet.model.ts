@@ -37,6 +37,7 @@ export interface WalletModel {
   earnings?: number;
   earningsHistory?: EarningModel[];
   totalEarnings?: number;
+  sellStrategyMode?: string;
   type?: WalletType;
   strategy?: StrategyAssociationModel;
   accessKey?: string;

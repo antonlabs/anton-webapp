@@ -6,6 +6,7 @@ export interface WalletDto {
   alias?: string;
   earnings?: number;
   budget: number;
+  sellStrategyMode?: string;
   maxOrderValue: number;
   type?: WalletType;
   accessKey?: string;

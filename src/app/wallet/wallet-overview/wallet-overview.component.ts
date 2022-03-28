@@ -96,6 +96,20 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     return (this.wallet?.balances.slice(-1)[0]?.balance ?? 0);
   }
 
+  get totalPercentage(): number | undefined {
+    if(this.wallet?.totalEarnings !== undefined && this.wallet?.budget !== undefined) {
+      return ((this.wallet.totalEarnings) / (this.wallet.budget)) * 100;
+    }
+    return undefined;
+  }
+
+  get totalEarnings(): number | undefined {
+    if(this.wallet?.totalEarnings !== undefined) {
+      return this.wallet.totalEarnings;
+    }
+    return undefined;
+  }
+
   async enableBnbFees() {
     if(this.wallet?.name) {
       this.loadingEnableBnbFee = true;
