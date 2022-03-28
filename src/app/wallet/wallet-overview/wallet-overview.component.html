@@ -72,8 +72,8 @@
         <app-counter style="flex: 1" sign="$" [value]="actualBalance" image="/assets/binance-icon.png" i18n-description description="Binance balance"></app-counter>
       </div>
       <div class="flex-row mt-10px" style="flex: 1">
-        <app-counter class="mr-10px" sign="$" style="flex: 1" [value]="wallet?.totalEarnings ?? 0" icon="jam-coin" i18n-description description="Revenues"></app-counter>
-        <app-counter style="flex: 1" sign="%" [value]="((wallet?.totalEarnings ?? 0) / (wallet?.budget ?? 0)) * 100" icon="mat-currency-exchange" i18n-description description="Percentage"></app-counter>
+        <app-counter class="mr-10px" sign="$" style="flex: 1" [value]="wallet?.totalEarnings" icon="jam-coin" i18n-description description="Revenues"></app-counter>
+        <app-counter style="flex: 1" sign="%" [value]="((wallet?.totalEarnings) / (wallet?.budget)) * 100" icon="mat-currency-exchange" i18n-description description="Percentage"></app-counter>
       </div>
     </div>
   </div>

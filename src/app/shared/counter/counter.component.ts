@@ -12,7 +12,7 @@ export class CounterComponent implements OnInit {
   @Input() image: string | undefined;
   @Input()
   set value(val: number | undefined) {
-    if(val) {
+    if(val !== undefined) {
       if(val > 999) {
         this.countNumber = Math.floor(val);
       }else {

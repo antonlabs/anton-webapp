@@ -88,7 +88,7 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
         maxOrderValue: 50
       }));
       if(this.mode === 'wizard') {
-        this.router.navigate(['/']);
+        this.router.navigate(['/overview']);
       }
       this.notificationService.success($localize`You successfully updated this wallet!`);
     }catch(e: any) {

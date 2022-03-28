@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {StrategyStateType, WalletModel} from "../models/wallet.model";
 import {rack} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {NotificationService} from "../../shared/notification.service";
-import {getErrorMessage, getTransactions, refreshBalances, refreshEarnings, refreshWallets} from "../../shared/helpers";
+import {getErrorMessage, getTransactions, refreshBalances, refreshWallets} from "../../shared/helpers";
 import {TransactionModel} from "../../core/clients/models/transaction.model";
 
 @Component({
@@ -31,7 +30,8 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   getErrorMessage = getErrorMessage;
   loadingReUpdateWallet = false;
   loadingEnableBnbFee = false;
-  chartMode: 'earnings' | 'balances' = 'earnings'
+  chartMode: 'earnings' | 'balances' = 'earnings';
+  checkingInterval: any;
 
 
   constructor(
@@ -52,7 +52,11 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     this.sub.add(
       rack.states.currentWallet.obs.subscribe(wallet => {
         this.wallet = wallet;
-
+        if(!this.checkingInterval && wallet.strategy?.state === StrategyStateType.DEPLOYING) {
+          this.checkingInterval = setInterval(() => {
+            refreshWallets();
+          }, 10000);
+        }
         if(this.wallet.name) {
           if(wallet.balances.length === 0) {
             refreshBalances();
