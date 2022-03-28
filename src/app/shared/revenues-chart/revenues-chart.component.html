@@ -1,3 +1,7 @@
-<div class="chart" [id]="id">
+<div class="chart" [id]="id" *ngIf="earnings.length > 0">
+</div>
+<div class="not-found" *ngIf="earnings.length === 0">
+  <img src="/assets/no-data-found.svg">
+  <h1 i18n>You have not revenues yet</h1>
 </div>
 

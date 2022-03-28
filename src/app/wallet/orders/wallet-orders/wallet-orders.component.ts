@@ -16,7 +16,7 @@ import {FormControl} from "@angular/forms";
 export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
 
   transactions: {[key: string]: TransactionModel} | undefined;
-  transactionsList: TransactionModel[] = [];
+  transactionsList: TransactionModel[] | undefined;
   currentTransaction: TransactionModel | undefined;
   types = orderTypes;
   values = Object.values;

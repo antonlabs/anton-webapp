@@ -2,9 +2,9 @@
   <div class="header {{walletPlan}}">
     <h4 i18n>How much you wanna invest?</h4>
     <h1>$<input type="text" class="anton-input dashed budget-control" [formControl]="walletBudgetControl" [value]="walletBudgetControl.value"></h1>
-    <button *ngIf="mode === 'page'" class="anton-button icon settings" [routerLink]="['/overview']" [queryParams]="{modal: 'walletSettings'}">
+    <!--button *ngIf="mode === 'page'" class="anton-button icon settings" [routerLink]="['/overview']" [queryParams]="{modal: 'walletSettings'}">
       <ng-icon name="jam-cogs"></ng-icon>
-    </button>
+    </button-->
   </div>
   <div class="body">
     <app-slider class="slider" [fc]="walletBudgetControl" (onChange)="walletBudgetControl.setValue($event)" [min]="50" [max]="walletService.planBudgetInterval['PLATINUM'][1]"></app-slider>

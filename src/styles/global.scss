@@ -298,3 +298,13 @@ $marginsPixels: 0px, 10px, 20px, 30px, 40px, 50px;
     margin-left: 10px;
   }
 }
+
+
+.not-found {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  img {
+    width: 200px;
+  }
+}

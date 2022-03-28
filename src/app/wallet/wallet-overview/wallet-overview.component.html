@@ -80,10 +80,10 @@
 
   <div class="card-plain journey mt-10px">
     <div class="flex-row">
-      <div class="period {{chartMode === 'earnings' ? 'active' : ''}}" (click)="chartMode = 'earnings'">
+      <div i18n *ngIf="(wallet?.earningsHistory ?? []).length > 0" class="period {{chartMode === 'earnings' ? 'active' : ''}}" (click)="chartMode = 'earnings'">
         Revenues
       </div>
-      <div class="period {{chartMode === 'balances' ? 'active' : ''}}" (click)="chartMode = 'balances'">
+      <div i18n *ngIf="(wallet?.balances ?? []).length > 1" class="period {{chartMode === 'balances' ? 'active' : ''}}" (click)="chartMode = 'balances'">
         Balances
       </div>
     </div>
