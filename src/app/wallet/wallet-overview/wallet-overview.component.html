@@ -100,7 +100,7 @@
   <div class="flex-row between mt-10px openTransactions mobile-flex-column">
     <div class="card-plain flex-column {{openTransactions.length === 0 ? 'between' : ''}}" style="flex: 1">
       <div class="flex-row between">
-        <h2 i18n>My active transactions</h2>
+        <h2 i18n>My active trades</h2>
       </div>
       <img alt="guard" *ngIf="openTransactions.length === 0" src="/assets/orders-not-found.png">
       <div class="body">
@@ -112,7 +112,7 @@
           [transaction]="transaction"></app-transaction-card>
       </div>
       <ng-container *ngIf="openTransactions.length === 0">
-        <h2 i18n>No openTransactions right now </h2>
+        <h2 i18n>No open trades right now </h2>
         <div class="alert warn" i18n>
           This list contains all those openTransactions that Anton has just catch
         </div>

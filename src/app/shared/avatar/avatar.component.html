@@ -2,6 +2,6 @@
   <div class="circle-avatar">
     <img referrerpolicy="no-referrer" alt="avatar" *ngIf="avatarImage && !errorLoadingImage" (error)="errorLoadingImage = true" [src]="avatarImage" />
     <ng-content></ng-content>
-    <h5 *ngIf="errorLoadingImage" [ngStyle]="{fontSize}">P</h5>
+    <h5 *ngIf="errorLoadingImage || !avatarImage" [ngStyle]="{fontSize}">{{firstLetter}}</h5>
   </div>
 </div>

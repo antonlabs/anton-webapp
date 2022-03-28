@@ -13,6 +13,7 @@ export class AvatarComponent extends AntiMemLeak implements OnInit {
   @Input() size: string = '50px';
   avatarImage: string | undefined;
   errorLoadingImage = false;
+  firstLetter: string | undefined;
 
   constructor() {
     super();
@@ -20,7 +21,14 @@ export class AvatarComponent extends AntiMemLeak implements OnInit {
 
   ngOnInit(): void {
     this.avatarImage = rack.states.user.val.avatar;
-    this.sub.add(rack.states.user.obs.subscribe(state => this.avatarImage = state?.avatar));
+    this.sub.add(rack.states.user.obs.subscribe(state => {
+      console.log(state.name, state);
+      this.firstLetter = state.email?.charAt(0).toUpperCase();
+      console.log(this.firstLetter);
+      this.avatarImage = state?.avatar;
+    }));
+
   }
+
 
 }

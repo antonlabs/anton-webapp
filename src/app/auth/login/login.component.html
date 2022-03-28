@@ -6,14 +6,14 @@
       <!--app-auth-methods [currentMethod]="currentMethod"></app-auth-methods-->
       <router-outlet (activate)="onMountChild($event)"></router-outlet>
     </div>
-    <div class="google-btn mt-20px">
-      <a [href]="cognitoUrl + '/oauth2/authorize?identity_provider=Google&redirect_uri=' + currentLocation + '/auth/verify-fallback&response_type=code&client_id='+environment.cognitoAppClientId+'&scope=email openid profile'">
+    <a [href]="cognitoUrl + '/oauth2/authorize?identity_provider=Google&redirect_uri=' + currentLocation + '/auth/verify-fallback&response_type=code&client_id='+environment.cognitoAppClientId+'&scope=email openid profile'">
+      <div class="google-btn mt-20px">
         <div class="google-icon-wrapper">
           <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
         </div>
         <p class="btn-text"><b>Sign in with google</b></p>
-      </a>
-    </div>
+      </div>
+    </a>
     <a class="primary mt-10px" [routerLink]="['/auth', 'recover']" [queryParams]="{user: email}" i18n>Forgot password?</a>
     <a class="primary" i18n [routerLink]="['/auth', 'register']">Signup here!</a>
   </div>
