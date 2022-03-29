@@ -2,8 +2,8 @@
   <div class="container">
     <div class="flex-row between">
       <h1 i18n>Sign in</h1>
-      <h3 class="mt-10px">or</h3>
-      <a class="primary mt-10px" i18n [routerLink]="['/auth', 'register']"> Signup here!</a>
+      <h3 class="mt-10px mobile-mt-0px">or</h3>
+      <a class="primary mt-10px mobile-mt-0px" i18n [routerLink]="['/auth', 'register']"> Signup here!</a>
     </div>
     <a [href]="cognitoUrl + '/oauth2/authorize?identity_provider=Google&redirect_uri=' + currentLocation + '/auth/verify-fallback&response_type=code&client_id='+environment.cognitoAppClientId+'&scope=email openid profile'">
       <div class="google-btn mt-20px flex-row between">
