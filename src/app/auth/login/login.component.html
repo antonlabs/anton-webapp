@@ -1,6 +1,10 @@
 <div class="flex-column between" style="height: 80vh">
   <div class="container">
-    <h1 i18n>Sign in</h1>
+    <div class="flex-row between">
+      <h1 i18n>Sign in</h1>
+      <h3 class="mt-10px">or</h3>
+      <a class="primary mt-10px" i18n [routerLink]="['/auth', 'register']"> Signup here!</a>
+    </div>
     <a [href]="cognitoUrl + '/oauth2/authorize?identity_provider=Google&redirect_uri=' + currentLocation + '/auth/verify-fallback&response_type=code&client_id='+environment.cognitoAppClientId+'&scope=email openid profile'">
       <div class="google-btn mt-20px flex-row between">
         <div class="google-icon-wrapper">
@@ -23,6 +27,5 @@
       <router-outlet (activate)="onMountChild($event)"></router-outlet>
     </div>
     <a class="primary mt-10px" [routerLink]="['/auth', 'recover']" [queryParams]="{user: email}" i18n>Forgot password?</a>
-    <a class="primary" i18n [routerLink]="['/auth', 'register']">Signup here!</a>
   </div>
 </div>
