@@ -1,3 +1,11 @@
+.wallet-row {
+  &::ng-deep{
+    .profile-card {
+      width: 100vw;
+    }
+  }
+}
+
 form {
   height: 400px;
   display: flex;
