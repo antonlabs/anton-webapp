@@ -24,7 +24,6 @@ a {
   background-color: $google-blue;
   border-radius: 2px;
   .google-icon-wrapper {
-    position: absolute;
     width: 40px;
     height: 42px;
     border-radius: 2px;
@@ -38,7 +37,6 @@ a {
     height: 18px;
   }
   .btn-text {
-    float: right;
     margin: 11px 11px 0 0;
     color: $white;
     font-size: 14px;
