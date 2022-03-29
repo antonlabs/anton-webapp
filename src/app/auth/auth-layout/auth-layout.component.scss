@@ -18,4 +18,32 @@
   position: relative;
 }
 
+.container {
+  ::ng-deep {
+    .logobar {
+      display: flex;
+      flex-direction: row;
+      color: #fff;
+      position: relative;
+
+      .badge {
+        background: $primary-danger;
+        border-radius: 10px;
+        z-index: 200;
+        position: absolute;
+        padding: 3px;
+        font-size: 10px;
+        bottom: 0;
+        right: 0;
+        transform: translate(15px, 15px);
+      }
+
+      .logo {
+        width: 200px!important;
+        margin-top: 30px;
+      }
+    }
+  }
+}
+
 

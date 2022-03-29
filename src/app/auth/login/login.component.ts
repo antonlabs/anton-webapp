@@ -23,7 +23,6 @@ export class LoginComponent extends AntiMemLeak implements OnInit {
     private authService: AuthService
   ) {
     super();
-    console.log(this.cognitoUrl);
   }
 
   ngOnInit(): void {}
@@ -45,7 +44,6 @@ export class LoginComponent extends AntiMemLeak implements OnInit {
       await this.authService.login(data.email.replace(' ', '+'), data.password);
       location.reload();
     }catch(e: any) {
-      console.log(e);
       if(e.message.indexOf('Incorrect') > -1 || e.message.indexOf('User does not exist') > -1) {
         component.error.emit($localize`Incorrect username or password, please check and retry but not too many times`);
       }else {

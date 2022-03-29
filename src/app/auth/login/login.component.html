@@ -1,19 +1,25 @@
-<div class="flex-column center" style="height: 100%">
+<div class="flex-column between" style="height: 80vh">
   <div class="container">
-    <h1 i18n>Anton wallets login</h1>
-    <h5 i18n>Welcome back colleague! Login with to check your journey’s status</h5>
-    <div class="forms">
-      <!--app-auth-methods [currentMethod]="currentMethod"></app-auth-methods-->
-      <router-outlet (activate)="onMountChild($event)"></router-outlet>
-    </div>
+    <h1 i18n>Sign in</h1>
     <a [href]="cognitoUrl + '/oauth2/authorize?identity_provider=Google&redirect_uri=' + currentLocation + '/auth/verify-fallback&response_type=code&client_id='+environment.cognitoAppClientId+'&scope=email openid profile'">
       <div class="google-btn mt-20px">
         <div class="google-icon-wrapper">
           <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
         </div>
-        <p class="btn-text"><b>Sign in with google</b></p>
+        <p class="btn-text">Sign in with google</p>
       </div>
     </a>
+
+    <div style="width: 100%; height: 15px; border-bottom: 1px solid #9f9f9f; text-align: center; margin-top: 10px;">
+      <span class="or" style="font-size: 20px; padding: 0 15px; margin-top: 20px;" i18n>
+        or
+      </span>
+    </div>
+
+    <div class="forms">
+      <!--app-auth-methods [currentMethod]="currentMethod"></app-auth-methods-->
+      <router-outlet (activate)="onMountChild($event)"></router-outlet>
+    </div>
     <a class="primary mt-10px" [routerLink]="['/auth', 'recover']" [queryParams]="{user: email}" i18n>Forgot password?</a>
     <a class="primary" i18n [routerLink]="['/auth', 'register']">Signup here!</a>
   </div>
