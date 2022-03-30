@@ -5,7 +5,7 @@
   </h2>
   <form class="flex-row" [formGroup]="form" (submit)="setAlias()">
     <input type="text" formControlName="alias" i18n-placeholder placeholder="Wallet Alias" class="anton-input" />
-    <app-button [loading]="loading" i18n>Edit</app-button>
+    <app-button [loading]="loading"><span i18n>Edit</span></app-button>
   </form>
 
   <button i18n class="anton-button danger" (click)="deleteWallet()">Delete wallet</button>

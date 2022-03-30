@@ -7,7 +7,7 @@
     <div *ngIf="wallet?.strategy?.state === strategyState.BNB_FEE_MISSING" class="creating-wallet alert danger enable-dropdown text-center">
       <h2 i18n>BNB fees has been disabled in your Binance's settings</h2>
       <h3 class="mt-10px" i18n>Please re-enable it to maximize your earnings!</h3>
-      <app-button class="mt-10px" [loading]="loadingEnableBnbFee" (click)="enableBnbFees()" i18n>Re-enable</app-button>
+      <app-button class="mt-10px" [loading]="loadingEnableBnbFee" (click)="enableBnbFees()"><span>Re-enable</span></app-button>
     </div>
     <div *ngIf="wallet?.strategy?.state === strategyState.KEYS_NOT_VALID" class="creating-wallet alert danger enable-dropdown text-center">
       <h2 i18n>Your keys are not valid, maybe are expired or removed</h2>
@@ -21,7 +21,7 @@
           <iframe width="560" height="315" src="https://www.youtube.com/embed/XoasulyER7A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
-      <app-button [loading]="loadingReUpdateWallet" (click)="reValidateKeys()" i18n>Done</app-button>
+      <app-button [loading]="loadingReUpdateWallet" (click)="reValidateKeys()"><span i18n>Done</span></app-button>
     </div>
   </div>
   <div class="flex-row between mobile-flex-column">
@@ -44,16 +44,16 @@
             </span>
           </ng-container>
       </app-button>
-      <button *ngIf="linked === false" class="anton-button link-button pulse primary" [routerLink]="['/overview']" [queryParams]="{modal: 'setCredentials'}" i18n>
+      <button *ngIf="linked === false" class="anton-button link-button pulse primary" [routerLink]="['/overview']" [queryParams]="{modal: 'setCredentials'}">
         <ng-icon name="mat-link"></ng-icon>
-        Connect to Binance
+        <span i18n>Connect to Binance</span>
       </button>
-      <button *ngIf="linked === true" class="anton-button link-button change-credentials primary" [routerLink]="['/overview']" [queryParams]="{modal: 'setCredentials'}" i18n>
+      <button *ngIf="linked === true" class="anton-button link-button change-credentials primary" [routerLink]="['/overview']" [queryParams]="{modal: 'setCredentials'}">
         <ng-icon name="jam-pencil"></ng-icon>
-        Change Keys
+        <span i18n>Change Keys</span>
       </button>
-      <app-button *ngIf="linked === undefined" [loading]="true" i18n>
-        Connessione...
+      <app-button *ngIf="linked === undefined" [loading]="true">
+        <span i18n>Connessione...</span>
       </app-button>
       <!--button class="anton-button telegram mobile-ml-10px ml-10px mobile-ml-0px" i18n>
         <ng-icon name="mat-telegram"></ng-icon>
@@ -80,11 +80,11 @@
 
   <div class="card-plain journey mt-10px">
     <div class="flex-row">
-      <div i18n *ngIf="(wallet?.earningsHistory ?? []).length > 0" class="period {{chartMode === 'earnings' ? 'active' : ''}}" (click)="chartMode = 'earnings'">
-        Revenues
+      <div *ngIf="(wallet?.earningsHistory ?? []).length > 0" class="period {{chartMode === 'earnings' ? 'active' : ''}}" (click)="chartMode = 'earnings'">
+        <span i18n>Revenues</span>
       </div>
-      <div i18n *ngIf="(wallet?.balances ?? []).length > 1" class="period {{chartMode === 'balances' ? 'active' : ''}}" (click)="chartMode = 'balances'">
-        Balances
+      <div *ngIf="(wallet?.balances ?? []).length > 1" class="period {{chartMode === 'balances' ? 'active' : ''}}" (click)="chartMode = 'balances'">
+        <span i18n>Balances</span>
       </div>
     </div>
     <div class="mt-10px">

@@ -9,8 +9,8 @@
     <label i18n>Email</label>
     <input type="text" formControlName="user" class="anton-input mt-10px" />
     <div *ngIf="error" class="alert mt-10px">{{error}}</div>
-    <app-button class="mt-10px" [loading]="loading" i18n>
-      Recover
+    <app-button class="mt-10px" [loading]="loading">
+      <span i18n>Recover</span>
     </app-button>
   </form>
 </div>

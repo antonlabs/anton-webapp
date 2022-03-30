@@ -57,16 +57,16 @@
   </div>
 
   <div class="flex-row mt-30px center buttons" *ngIf="mode === 'page'">
-    <app-button *ngIf="spotNotEnabled !== false" [loading]="loading" (click)="connectWallet()" class="mr-10px" i18n>Retry</app-button>
-    <app-button *ngIf="bnbFeeDisabled !== false" [loading]="loading" (click)="enableBnbFees()" class="mr-10px" i18n>Ok</app-button>
-    <app-button *ngIf="spotNotEnabled === false && bnbFeeDisabled === false" [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Next</app-button>
-    <button class="anton-button" i18n [routerLink]="['/create-wallet', 'wallet-configuration']">Skip</button>
+    <app-button *ngIf="spotNotEnabled !== false" [loading]="loading" (click)="connectWallet()" class="mr-10px"><span i18n>Retry</span></app-button>
+    <app-button *ngIf="bnbFeeDisabled !== false" [loading]="loading" (click)="enableBnbFees()" class="mr-10px"><span i18n>Ok</span></app-button>
+    <app-button *ngIf="spotNotEnabled === false && bnbFeeDisabled === false" [loading]="loading" class="mr-10px" (click)="connectWallet()"><span i18n>Next</span></app-button>
+    <button class="anton-button" i18n [routerLink]="['/create-wallet', 'wallet-configuration']"><span i18n>Skip</span></button>
   </div>
 
   <div class="flex-row mt-30px center buttons" *ngIf="mode === 'modal'">
-    <app-button *ngIf="spotNotEnabled !== false || bnbFeeDisabled !== false" [loading]="loading" (click)="connectWallet()" class="mr-10px" i18n>Retry</app-button>
-    <app-button *ngIf="spotNotEnabled === false && bnbFeeDisabled === false" [loading]="loading" i18n class="mr-10px" (click)="connectWallet()">Edit</app-button>
-    <button class="anton-button" i18n (click)="modalService.closeModal()">Cancel</button>
+    <app-button *ngIf="spotNotEnabled !== false || bnbFeeDisabled !== false" [loading]="loading" (click)="connectWallet()" class="mr-10px"><span i18n>Retry</span></app-button>
+    <app-button *ngIf="spotNotEnabled === false && bnbFeeDisabled === false" [loading]="loading" class="mr-10px" (click)="connectWallet()"><span i18n>Edit</span></app-button>
+    <button class="anton-button" (click)="modalService.closeModal()"><span i18n>Cancel</span></button>
   </div>
 </div>
 

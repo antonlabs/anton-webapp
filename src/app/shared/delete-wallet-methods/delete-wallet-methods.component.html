@@ -6,11 +6,14 @@
   </div>
 
   <div class="flex-row mobile-flex-column between mobile-mt-30px">
-    <app-button [loading]="loading" i18n (click)="deleteWallet('SELL_ORDERS')">
+    <app-button [loading]="loading" (click)="deleteWallet('SELL_ORDERS')">
+      <span i18n>
+
       Sell orders to market
+      </span>
     </app-button>
-    <app-button [loading]="loading" i18n (click)="deleteWallet('KEEP_ORDERS')">
-      Keep orders
+    <app-button [loading]="loading" (click)="deleteWallet('KEEP_ORDERS')">
+      <span>Keep orders</span>
     </app-button>
   </div>
   <div class="flex-row center">
