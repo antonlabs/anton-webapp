@@ -84,9 +84,9 @@ const updateTerms = async () => {
   PROJECT_ID = secretObj.project;
   const languages = await getCurrentLanguageCodes();
   console.log('LANGUAGE founds: ' + languages.join(', '));
-  try{
+  try {
     await Promise.all(languages.map(async (lang) => await updateLocalLanguage(lang)));
-  }catch (e) {
+  } catch (e) {
     console.error(e);
   }
   executeSync('ng extract-i18n --output-path ' + localeFolder); //extract messages

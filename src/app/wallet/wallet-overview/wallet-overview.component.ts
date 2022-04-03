@@ -91,9 +91,8 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     }
   }
 
-
-  get walletBalance(): number {
-    return (this.wallet?.balances.slice(-1)[0]?.balance ?? 0);
+  get walletBalance(): number | undefined {
+    return this.wallet?.balances.slice(-1)[0]?.balance;
   }
 
   get totalPercentage(): number | undefined {
