@@ -9,23 +9,11 @@ import {Router} from "@angular/router";
 })
 export class LanguageSelectorComponent implements OnInit {
 
-  currentLang: 'it' | 'en' = rack.states.user.val.lang;
+  currentLang: 'it' | 'en' = location.pathname.split('/')[1] as any;
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
-    rack.states.user.obs.subscribe(user => {
-      if(this.currentLang !== user.lang) {
-        this.currentLang = user.lang;
-        location.href = '/'+user.lang
-      }
-    })
-  }
-
-  switchLang(lang: 'it' | 'en') {
-    rack.states.user.set({
-      lang: lang
-    });
   }
 
 }

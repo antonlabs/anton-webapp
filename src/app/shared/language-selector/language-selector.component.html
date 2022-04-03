@@ -1,8 +1,12 @@
 <div class="lang-selector flex-row between">
-  <div class="lang-button {{currentLang === 'en' ? 'active' : ''}}" (click)="switchLang('en')">
-    <img src="/assets/flags/en.svg" />
-  </div>
-  <div class="lang-button {{currentLang === 'it' ? 'active' : ''}}" (click)="switchLang('it')">
-    <img src="/assets/flags/it.svg" />
-  </div>
+  <a href="/en">
+    <div class="lang-button {{currentLang === 'en' ? 'active' : ''}}">
+      <img src="/assets/flags/en.svg" />
+    </div>
+  </a>
+  <a href="/it">
+    <div class="lang-button {{currentLang === 'it' ? 'active' : ''}}">
+      <img src="/assets/flags/it.svg" />
+    </div>
+  </a>
 </div>
