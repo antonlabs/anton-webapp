@@ -23,6 +23,7 @@ import {RouterModule} from "@angular/router";
 import { TransactionCardComponent } from './transaction-card/transaction-card.component';
 import { RevenuesChartComponent } from './revenues-chart/revenues-chart.component';
 import { BalancesChartComponent } from './balances-chart/balances-chart.component';
+import { LanguageSelectorComponent } from './language-selector/language-selector.component';
 
 
 
@@ -47,7 +48,8 @@ import { BalancesChartComponent } from './balances-chart/balances-chart.componen
     OrderChartComponent,
     TransactionCardComponent,
     RevenuesChartComponent,
-    BalancesChartComponent
+    BalancesChartComponent,
+    LanguageSelectorComponent
   ],
     imports: [
         CommonModule,
@@ -62,7 +64,7 @@ import { BalancesChartComponent } from './balances-chart/balances-chart.componen
         ButtonComponent,
         StepperComponent,
         SliderComponent,
-      BalancesChartComponent,
+        BalancesChartComponent,
         CashInputComponent,
         AvatarComponent,
         CounterComponent,
@@ -75,7 +77,8 @@ import { BalancesChartComponent } from './balances-chart/balances-chart.componen
         DeleteWalletMethodsComponent,
         OrderChartComponent,
         TransactionCardComponent,
-        RevenuesChartComponent
+        RevenuesChartComponent,
+        LanguageSelectorComponent
     ]
 })
 export class SharedModule { }

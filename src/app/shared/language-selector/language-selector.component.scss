@@ -1,0 +1,17 @@
+.lang-selector {
+  width: 60px;
+  .lang-button {
+    overflow: hidden;
+    width: 25px;
+    height: 20px;
+    border-radius: 3px;
+    opacity: .3;
+    cursor: pointer;
+    img {
+      width: 100%;
+    }
+    &.active {
+      opacity: 1;
+    }
+  }
+}

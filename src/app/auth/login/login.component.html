@@ -26,6 +26,11 @@
       <!--app-auth-methods [currentMethod]="currentMethod"></app-auth-methods-->
       <router-outlet (activate)="onMountChild($event)"></router-outlet>
     </div>
-    <a class="primary mt-10px" [routerLink]="['/auth', 'recover']" [queryParams]="{user: email}" i18n>Forgot password?</a>
+    <div class="flex-row between">
+      <a class="primary mt-10px" [routerLink]="['/auth', 'recover']" [queryParams]="{user: email}" i18n>Forgot password?</a>
+      <div class="mt-10px">
+        <app-language-selector></app-language-selector>
+      </div>
+    </div>
   </div>
 </div>
