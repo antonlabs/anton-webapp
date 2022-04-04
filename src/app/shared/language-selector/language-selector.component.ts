@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {rack} from "../../states/app-state";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-language-selector',
