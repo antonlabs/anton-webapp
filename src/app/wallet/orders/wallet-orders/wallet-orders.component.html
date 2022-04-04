@@ -22,7 +22,7 @@
   </div>
   <div class="order-inspect" *ngIf="currentTransaction">
     <div class="flex-row between">
-      <h2 i18n class="mt-10px ml-10px">{{currentTransaction?.symbol}} - {{getTransactTime(currentTransaction)}}</h2>
+      <h2 class="mt-10px ml-10px">{{currentTransaction?.symbol}} - {{getTransactTime(currentTransaction)}}</h2>
       <div class="flex-column">
         <label i18n>Lite mode</label>
         <app-switch (toggle)="togglePro()" [control]="proSwitch"></app-switch>
