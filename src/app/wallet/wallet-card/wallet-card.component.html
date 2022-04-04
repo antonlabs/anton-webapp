@@ -14,10 +14,6 @@
         <app-switch class="mt-20px" [control]="autoReinvestControl"></app-switch>
       </div-->
       <div class="control">
-        <label i18n>Anton's fee</label>
-        <h1>${{walletService.planFees[walletPlan]}}</h1>
-      </div>
-      <div class="control">
         <label i18n>Market</label>
         <select class="anton-select" [value]="'BUSD'" disabled>
           <option *ngFor="let market of walletService.markets" [value]="market">{{market}}</option>
