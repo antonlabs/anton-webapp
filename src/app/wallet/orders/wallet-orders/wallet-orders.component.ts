@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {WalletService} from "../../../shared/wallet.service";
 import {AntiMemLeak} from "../../../shared/anti-mem-leak";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -12,7 +12,7 @@ import {FormControl} from "@angular/forms";
   templateUrl: './wallet-orders.component.html',
   styleUrls: ['./wallet-orders.component.scss']
 })
-export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
+export class WalletOrdersComponent extends AntiMemLeak implements OnInit, AfterViewInit {
 
   transactions: {[key: string]: TransactionModel} | undefined;
   transactionsList: TransactionModel[] | undefined;
@@ -40,17 +40,21 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit {
     super();
   }
 
-  ngOnInit(): void {
-    console.log(document.getElementById('list'));
+  ngAfterViewInit(): void {
     document.getElementById('list')?.addEventListener('scroll', (event) => {
       const element: any = event.target;
       const isAtBottom = ( element.scrollHeight - element.scrollTop <= element.clientHeight + 50 );
+      console.log(isAtBottom);
       if(isAtBottom && this.lastPaginationToken) {
         rack.states.currentWallet.refreshTransactions(this.mode, this.lastPaginationToken).then((res) => {
           this.lastPaginationToken = res.lastKey;
         });
       }
     })
+  }
+
+  ngOnInit(): void {
+    console.log(document.getElementById('list'));
     this.sub.add(
       rack.states.currentWallet.obs.subscribe((wallet) => {
         if(wallet.transactions) {

@@ -237,7 +237,7 @@ export const getTransactions = async (type?: 'OPEN' | 'CLOSE', paginationToken?:
       '#pk': 'pk'
     },
     ExclusiveStartKey: paginationToken,
-    Limit: 20,
+    Limit: 40,
     ExpressionAttributeValues: {
       ':sk': `TRANSACTION${type ? '#'+type : ''}`,
       ':pk': rack.states.user.val.identityId
