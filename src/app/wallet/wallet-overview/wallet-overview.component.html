@@ -30,7 +30,7 @@
       <h5 i18n>Take a look of your journey status in the crypto world</h5>
     </div>
     <div class="mobile-flex-row flex-row mobile-mt-20px">
-      <app-button *ngIf="wallet?.strategy?.state === strategyState.DEPLOYED || wallet?.strategy?.state === strategyState.STOPPED || wallet?.strategy?.state === strategyState.RUNNING" (click)="playStrategy()" [loading]="playLoading" class="mr-10px" [type]="wallet?.strategy?.state === strategyState.RUNNING ? '' : 'active'">
+      <app-button *ngIf="wallet?.strategy?.state === strategyState.DEPLOYED || wallet?.strategy?.state === strategyState.STOPPED || wallet?.strategy?.state === strategyState.RUNNING" (click)="playStrategy()" [loading]="playLoading" class="mr-10px" [type]="wallet?.strategy?.state === strategyState.RUNNING ? '' : 'active pulse'">
           <ng-container *ngIf="wallet?.strategy?.state === strategyState.STOPPED || wallet?.strategy?.state === strategyState.DEPLOYED">
             <ng-icon name="jam-play"></ng-icon>
             <span i18n>

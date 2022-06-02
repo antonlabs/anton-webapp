@@ -62,7 +62,7 @@ export class ConnectWalletComponent extends AntiMemLeak implements OnInit {
       return;
     }
     try {
-      await this.walletService.updateWallet(this.form.value);
+      await this.walletService.setWalletCredentials(this.form.value);
       refreshWallets();
       if(this.mode === 'page') {
         this.router.navigate(['/create-wallet', 'wallet-configuration']);

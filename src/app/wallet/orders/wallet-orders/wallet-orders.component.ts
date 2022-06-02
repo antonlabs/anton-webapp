@@ -44,7 +44,6 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit, AfterV
     document.getElementById('list')?.addEventListener('scroll', (event) => {
       const element: any = event.target;
       const isAtBottom = ( element.scrollHeight - element.scrollTop <= element.clientHeight + 50 );
-      console.log(isAtBottom);
       if(isAtBottom && this.lastPaginationToken) {
         rack.states.currentWallet.refreshTransactions(this.mode, this.lastPaginationToken).then((res) => {
           this.lastPaginationToken = res.lastKey;
@@ -54,7 +53,6 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit, AfterV
   }
 
   ngOnInit(): void {
-    console.log(document.getElementById('list'));
     this.sub.add(
       rack.states.currentWallet.obs.subscribe((wallet) => {
         if(wallet.transactions) {
@@ -109,6 +107,8 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit, AfterV
           (orders) => this.currentTransaction!.orders = orders
         );
       }
+    }else if(!transaction && this.transactions) {
+      this.router.navigate(['/orders'], {queryParams: {transaction: Object.keys(this.transactions)[0]}})
     }
   }
 

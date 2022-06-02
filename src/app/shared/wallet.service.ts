@@ -65,6 +65,17 @@ export class WalletService {
     return result;
   }
 
+  async setWalletCredentials(wallet: Partial<WalletModel>): Promise<string> {
+    const walletPayload = {...rack.states.currentWallet.val, ...wallet};
+    console.log(walletPayload);
+    const result = await (await apiG('wallet/'+walletPayload['name']+'/set_credentials', {
+      method: 'PUT',
+      body: JSON.stringify(WalletConverter.toDto(walletPayload as WalletModel))
+    }));
+    await refreshWallets();
+    return result;
+  }
+
   async enableBnbFees(walletName: string, credentials?: {accessKey: string, secretKey: string}) {
     await apiG('wallet/'+walletName+'/enable_bnb_fees' , {
       body: JSON.stringify(credentials ?? {}),
