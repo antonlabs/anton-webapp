@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WalletService} from "../../shared/wallet.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -17,7 +17,7 @@ export class ConnectWalletComponent extends AntiMemLeak implements OnInit {
 
   error: string | StrategyStateType | undefined;
   loading = false;
-  mode: 'modal' | 'page' | undefined;
+  @Input() mode: 'modal' | 'page' | undefined;
   spotNotEnabled = false;
   bnbFeeDisabled = false;
   form = new FormGroup({
@@ -37,7 +37,9 @@ export class ConnectWalletComponent extends AntiMemLeak implements OnInit {
   ngOnInit(): void {
     this.sub.add(
       this.activatedRoute.queryParams.subscribe(params => {
-        this.mode = !!params['modal'] ? 'modal' : 'page';
+        if(!this.mode) {
+          this.mode = !!params['modal'] ? 'modal' : 'page';
+        }
       })
     );
   }

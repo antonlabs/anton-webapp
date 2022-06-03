@@ -25,7 +25,8 @@ import { DeleteBlacklistSymbolComponent } from './delete-blacklist-symbol/delete
         DeleteBlacklistSymbolComponent
     ],
     exports: [
-        WalletCardComponent
+        WalletCardComponent,
+        ConnectWalletComponent
     ],
     imports: [
         CommonModule,

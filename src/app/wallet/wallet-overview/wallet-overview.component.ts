@@ -19,11 +19,6 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   wallet: WalletModel | undefined;
   actualBalance: number | undefined;
   linked: boolean | undefined;
-  blacklistLoading = false;
-  addBlackListForm = new FormGroup({
-    symbol: new FormControl('', Validators.required)
-  });
-  blacklistError: string | undefined;
   playLoading = false;
   openTransactions: TransactionModel[] = [];
   strategyState = StrategyStateType;
@@ -139,20 +134,6 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     }
   }
 
-  async deleteBlacklistItem(symbol: string): Promise<void> {
-    if(rack.states.preferences.val.blacklistDeleteConfirmation) {
-      this.router.navigate(['/overview'], {queryParams: {modal: 'deleteBlacklistSymbol', symbol}})
-    }else {
-      this.blacklistLoading = true;
-      try{
-        await this.walletService.deleteBlacklistSymbol(symbol);
-      }catch(e) {
-        this.blacklistError = $localize`Ops...there are some errors during blacklist update, retry later`;
-      }finally {
-        this.blacklistLoading = false;
-      }
-    }
-  }
 
 
 }

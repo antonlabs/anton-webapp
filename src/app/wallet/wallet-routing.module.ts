@@ -51,6 +51,10 @@ const routes: Routes = [
         component: WalletOverviewComponent
       },
       {
+        path: 'settings',
+        loadChildren: () => import('../settings/settings.module').then( m => m.SettingsModule )
+      },
+      {
         path: 'profile',
         component: ProfileLayoutComponent,
         loadChildren: () => import('../profile/profile.module').then(
