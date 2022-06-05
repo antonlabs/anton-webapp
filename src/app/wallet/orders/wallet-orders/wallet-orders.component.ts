@@ -16,11 +16,9 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit, AfterV
 
   transactions: {[key: string]: TransactionModel} | undefined;
   transactionsList: TransactionModel[] | undefined;
-  currentTransaction: TransactionModel | undefined;
   types = orderTypes;
   values = Object.values;
   mode: 'OPEN' | 'CLOSE' = 'OPEN';
-  proSwitch = new FormControl(rack.states.user.val.pro);
   lastPaginationToken: PaginationToken | undefined;
   loadingElements = [
     'BTC',
@@ -58,7 +56,6 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit, AfterV
         if(wallet.transactions) {
           this.transactions = wallet.transactions;
           this.transactionsList = this.sortTransaction(Object.values(wallet.transactions));
-          this.refreshCurrentTransaction();
         }
       })
     );
@@ -76,44 +73,12 @@ export class WalletOrdersComponent extends AntiMemLeak implements OnInit, AfterV
           this.lastPaginationToken = res.lastKey;
         }).finally(() => this.loading = false);
       }
-      this.refreshCurrentTransaction();
     }));
-    this.sub.add(
-      rack.states.user.obs.subscribe(user => {
-        if(user.pro !== this.proSwitch.value) {
-          this.proSwitch.setValue(user.pro ?? false);
-        }
-      })
-    );
-  }
-
-  togglePro() {
-    rack.states.user.set({
-      pro: this.proSwitch.value
-    });
-    rack.states.user.store();
   }
 
   sortTransaction(transactions: TransactionModel[]) {
     return (transactions ?? []).sort((b, a) => new Date(a.time).getTime() - new Date(b.time).getTime());
   }
 
-  refreshCurrentTransaction() {
-    const transaction = this.activatedRoute.snapshot.queryParams['transaction'];
-    if (transaction && this.transactions) {
-      this.currentTransaction = this.transactions[transaction];
-      if(this.currentTransaction) {
-        rack.states.currentWallet.getTransactionOrders(transaction).then(
-          (orders) => this.currentTransaction!.orders = orders
-        );
-      }
-    }else if(!transaction && this.transactions) {
-      this.router.navigate(['/orders'], {queryParams: {transaction: Object.keys(this.transactions)[0]}})
-    }
-  }
-
-  getTransactTime(transactionModel: TransactionModel): string {
-    return new Date(transactionModel.time).toLocaleString();
-  }
 
 }

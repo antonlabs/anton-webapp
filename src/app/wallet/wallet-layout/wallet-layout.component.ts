@@ -52,7 +52,6 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
       this.router.events.subscribe(() => {
         this.endpoint = this.router.url.split('?')[0].split('/').splice(-1)[0];
         this.currentModal = this.modalsRoutes[this.activatedRoute.snapshot.queryParams['modal']];
-        console.log(this.currentModal);
         this.currentDialog = this.activatedRoute.snapshot.queryParams['dialog'];
         if(this.currentDialog) {
           this.handleDialogTimeout();

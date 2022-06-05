@@ -16,18 +16,8 @@
       <img src="/assets/no-data-found.png">
       <h1 i18n>Anton has no any open trades</h1>
     </div>
-    <div id="list" class="list {{currentTransaction ? 'close' : 'open'}}" [ngStyle]="{display: transactionsList && transactionsList.length > 0 && !loading ? 'block' : 'none'}">
-      <app-transaction-card [active]="currentTransaction?.id === transaction.id" *ngFor="let transaction of transactionsList" [transaction]="transaction"></app-transaction-card>
+    <div id="list" class="list" [ngStyle]="{display: transactionsList && transactionsList.length > 0 && !loading ? 'block' : 'none'}">
+      <app-transaction-card *ngFor="let transaction of transactionsList" [transaction]="transaction"></app-transaction-card>
     </div>
-  </div>
-  <div class="order-inspect" *ngIf="currentTransaction">
-    <div class="flex-row between">
-      <h2 class="mt-10px ml-10px">{{currentTransaction?.symbol}} - {{getTransactTime(currentTransaction)}}</h2>
-      <div class="flex-column">
-        <label i18n>Lite mode</label>
-        <app-switch (toggle)="togglePro()" [control]="proSwitch"></app-switch>
-      </div>
-    </div>
-    <app-order-inspection [pro]="!proSwitch.value" [orders]="currentTransaction.orders"></app-order-inspection>
   </div>
 </div>
