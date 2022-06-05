@@ -48,7 +48,6 @@
         <ng-icon name="mat-link"></ng-icon>
         <span i18n>Connect to Binance</span>
       </button>
-      <div class="led {{linked === undefined ? 'loading' : linked ? 'on' : 'off'}}"></div>
       <!--button class="anton-button telegram mobile-ml-10px ml-10px mobile-ml-0px" i18n>
         <ng-icon name="mat-telegram"></ng-icon>
         Connect to Telegram
@@ -71,44 +70,33 @@
       </div>
     </div>
   </div>
-
-  <div class="card-plain journey mt-10px">
-    <div class="flex-row">
-      <div *ngIf="(wallet?.earningsHistory ?? []).length > 0" class="period {{chartMode === 'earnings' ? 'active' : ''}}" (click)="chartMode = 'earnings'">
-        <span i18n>Revenues</span>
-      </div>
-    </div>
+  <div class="mt-10px">
+    <h1>My earnings</h1>
+    <h5 i18n>This is what Anton have earned from his transactions</h5>
+  </div>
+  <div class="card-plain mt-10px">
     <div class="mt-10px">
       <ng-container *ngIf="chartMode === 'earnings'">
         <app-revenues-chart></app-revenues-chart>
       </ng-container>
-      <ng-container *ngIf="chartMode === 'balances'">
-        <app-balances-chart></app-balances-chart>
-      </ng-container>
     </div>
   </div>
-
-  <div class="flex-row between mt-10px openTransactions mobile-flex-column">
-    <div class="card-plain flex-column {{openTransactions.length === 0 ? 'between' : ''}}" style="flex: 1">
-      <div class="flex-row between">
-        <h2 i18n>My active trades</h2>
-      </div>
-      <img alt="guard" *ngIf="openTransactions.length === 0" src="/assets/orders-not-found.png">
-      <div class="body">
-        <app-transaction-card
-          class="symbol mt-10px"
-          *ngFor="let transaction of (openTransactions ?? [])"
-          [routerLink]="['/orders']"
-          [queryParams]="{transaction: transaction.id}"
-          [transaction]="transaction"></app-transaction-card>
-      </div>
-      <ng-container *ngIf="openTransactions.length === 0">
-        <h2 i18n>No open trades right now </h2>
-        <div class="alert warn" i18n>
-          This list contains all those openTransactions that Anton has just catch
-        </div>
-      </ng-container>
-    </div>
+  <div class="mt-10px">
+    <h1>Trades</h1>
+    <h5 i18n>What trades have done recently</h5>
   </div>
+  <img alt="guard" *ngIf="closedTransactions.length === 0" src="/assets/no-data-found.png">
+  <div class="body">
+    <app-transaction-card
+      class="symbol mt-10px"
+      *ngFor="let transaction of slice((closedTransactions ?? []))"
+      [transaction]="transaction"></app-transaction-card>
+  </div>
+  <ng-container *ngIf="closedTransactions.length === 0">
+    <h2 i18n>No closed trades right now </h2>
+    <div class="alert warn" i18n>
+      This list contains all those openTransactions that Anton has just catch
+    </div>
+  </ng-container>
 
 </div>

@@ -42,6 +42,10 @@
   <div class="backdrop" (click)="closeModal()"></div>
 </div>
 
+<ng-template #inspectOrder>
+  <app-transaction-details-modal></app-transaction-details-modal>
+</ng-template>
+
 <ng-template #setExchangeKeys>
   <app-connect-wallet></app-connect-wallet>
 </ng-template>
@@ -52,14 +56,6 @@
 
 <ng-template #deleteBlacklistSymbol>
   <app-delete-blacklist-symbol></app-delete-blacklist-symbol>
-</ng-template>
-
-<ng-template #deleteWalletMethods>
-  <app-delete-wallet-methods></app-delete-wallet-methods>
-</ng-template>
-
-<ng-template #walletSettings>
-  <app-wallet-settings></app-wallet-settings>
 </ng-template>
 
 <div class="notification {{currentDialog ? 'active' : ''}}">

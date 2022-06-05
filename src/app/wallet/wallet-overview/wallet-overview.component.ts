@@ -20,7 +20,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   actualBalance: number | undefined;
   linked: boolean | undefined;
   playLoading = false;
-  openTransactions: TransactionModel[] = [];
+  closedTransactions: TransactionModel[] = [];
   strategyState = StrategyStateType;
   getErrorMessage = getErrorMessage;
   loadingReUpdateWallet = false;
@@ -38,7 +38,6 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   }
 
   ngOnInit(): void {
-    refreshBalances();
     this.sub.add(
       rack.states.user.obs.subscribe(state => {
         this.name = state.name;
@@ -48,9 +47,9 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
       rack.states.currentWallet.obs.subscribe(wallet => {
         this.wallet = wallet;
         if(!this.checkingInterval && wallet.strategy?.state === StrategyStateType.DEPLOYING) {
-          this.checkingInterval = setInterval(() => {
+          /*this.checkingInterval = setInterval(() => {
             refreshWallets();
-          }, 10000);
+          }, 10000);*/
         }
         if(this.wallet.name) {
           if(wallet.balances.length === 0) {
@@ -60,9 +59,13 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
         }
       })
     );
-    getTransactions('OPEN').then(transactions => {
-      this.openTransactions = transactions.data;
+    getTransactions('CLOSE').then(transactions => {
+      this.closedTransactions = transactions.data.filter(o => o.earnings !== undefined);
     });
+  }
+
+  slice(elements: any[]) {
+    return elements.slice(0, 10);
   }
 
   async refreshExchangeLink() {

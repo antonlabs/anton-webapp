@@ -1,11 +1,13 @@
 import {WalletModel} from "../wallet/models/wallet.model";
 import {State} from "@antonlabs/rack";
 import {OcoOrderModel} from "../wallet/models/order.model";
-import {getOrders, getTransactions, PaginationToken} from "../shared/helpers";
+import {apiG, getOrders, getTransactions, PaginationToken} from "../shared/helpers";
 import {TransactionModel} from "../core/clients/models/transaction.model";
+import {rack} from "./app-state";
 
 export interface WalletProperties extends WalletModel {
-  transactions: {[key: string]: TransactionModel}
+  transactions: {[key: string]: TransactionModel},
+  stableAmount: {[key: string] : number}
 }
 
 export class WalletState extends State<WalletProperties> {
@@ -24,7 +26,8 @@ export class WalletState extends State<WalletProperties> {
       budget: 0,
       balances: [],
       blacklist: [],
-      transactions: {}
+      transactions: {},
+      stableAmount: {}
     };
   }
 
@@ -43,13 +46,24 @@ export class WalletState extends State<WalletProperties> {
     return response;
   }
 
+  async refreshStableAvailable() {
+    this.set({
+      stableAmount: {
+        BUSD: (await this.getSymbolQty('BUSD'))
+      },
+    })
+  }
+
+  async getSymbolQty(symbol: string): Promise<number> {
+    return (await apiG(`wallet/balance/${rack.states.currentWallet.val.name}/qty/${symbol}`, {
+      method: 'GET'
+    }));
+  }
+
   async getTransactionOrders(transactionId: string): Promise<OcoOrderModel[]> {
-    const transactions = this.val.transactions;
-    const transaction = transactions[transactionId];
-    if(transaction) {
-      return (await getOrders(transactionId)).sort((a, b) => b.orders.slice(-1)[0].transactTime - a.orders.slice(-1)[0].transactTime);
-    }
-    return [];
+    transactionId = transactionId.replace("TRANSACTION#CLOSE#", "");
+    transactionId = transactionId.replace("TRANSACTION#OPEN#", "");
+    return (await getOrders(transactionId)).sort((a, b) => b.orders.slice(-1)[0].transactTime - a.orders.slice(-1)[0].transactTime) ?? [];
   }
 
 

@@ -1,8 +1,21 @@
-<div class="transaction-card card-plain flex-row between {{active ? 'selected' : ''}}" *ngIf="transaction"
-     [routerLink]="['/orders']"
-     queryParamsHandling="merge"
-     [queryParams]="{transaction: transaction.id}">
-  <img alt="symbol-logo" [src]="imgSrc" onerror="this.src='/assets/unknown-coin.png'">
-  <h4>{{transaction.symbol}}</h4>
+<div class="transaction-card flex-row between {{active ? 'selected' : ''}}" *ngIf="transaction">
+  <div class="flex-row">
+    <img alt="symbol-logo" [src]="imgSrc" onerror="this.src='/assets/unknown-coin.png'">
+    <h4 class="ml-10px">{{transaction.symbol}}</h4>
+  </div>
+  <div class="flex-row between" style="width: 200px;">
+    <div class="flex-column">
+      <span>{{transaction.time.toLocaleDateString()}} {{transaction.time.toLocaleTimeString()}}</span>
+      <h2 *ngIf="transaction.earnings" [ngStyle]="{color: transaction.earnings < 0 ? '#e53935' : '#4caf50'}">{{round(transaction.earnings)}} $</h2>
+    </div>
+    <div class="icon-btn" [routerLink]="['/']" [queryParams]="{
+        modal: 'inspectOrder',
+        transaction: 'TRANSACTION#' + (transaction.closed ? 'CLOSE' : 'OPEN') + '#' + transaction.id
+      }">
+      <ng-icon name="jam-search"></ng-icon>
+    </div>
+
+  </div>
+
 </div>
 

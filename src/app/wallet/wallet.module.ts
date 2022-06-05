@@ -12,6 +12,8 @@ import { WalletCreateLayoutComponent } from './wallet-create-layout/wallet-creat
 import { WalletCardComponent } from './wallet-card/wallet-card.component';
 import { AddToBlacklistComponent } from './add-to-blacklist/add-to-blacklist.component';
 import { DeleteBlacklistSymbolComponent } from './delete-blacklist-symbol/delete-blacklist-symbol.component';
+import {OrdersModule} from "./orders/orders.module";
+import { TransactionDetailsModalComponent } from './transaction-details-modal/transaction-details-modal.component';
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { DeleteBlacklistSymbolComponent } from './delete-blacklist-symbol/delete
         WalletCreateLayoutComponent,
         WalletCardComponent,
         AddToBlacklistComponent,
-        DeleteBlacklistSymbolComponent
+        DeleteBlacklistSymbolComponent,
+        TransactionDetailsModalComponent
     ],
     exports: [
         WalletCardComponent,
@@ -33,7 +36,8 @@ import { DeleteBlacklistSymbolComponent } from './delete-blacklist-symbol/delete
         WalletRoutingModule,
         SharedModule,
         ReactiveFormsModule,
-        NgIconsModule
+        NgIconsModule,
+        OrdersModule
     ]
 })
 export class WalletModule { }

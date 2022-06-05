@@ -7,6 +7,7 @@ import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import { Subscription } from 'rxjs';
 import {NotificationService} from "../../shared/notification.service";
 import {Router} from "@angular/router";
+import {rack} from "../../states/app-state";
 
 @Component({
   selector: 'app-wallet-card',
@@ -18,6 +19,9 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
   private _wallet: WalletModel | undefined;
   walletPlan: WalletPlan = 'FREE';
   walletBudgetSubscription = new Subscription();
+  limitMax: number | undefined = undefined;
+  walletName: string | undefined;
+
 
   @Input() mode: 'wizard' | 'page' = 'page';
 
@@ -46,6 +50,16 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
   }
 
   ngOnInit(): void {
+    this.sub.add(
+      rack.states.currentWallet.obs.subscribe(wallet => {
+        if(this.walletName !== wallet.name) {
+          this.walletName = wallet.name;
+          rack.states.currentWallet.refreshStableAvailable();
+        }
+        this.limitMax = wallet.stableAmount['BUSD'];
+        console.log(this.limitMax);
+      })
+    );
   }
 
   getMaxOrderValueByBudget(val: number) {

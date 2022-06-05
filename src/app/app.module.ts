@@ -14,7 +14,7 @@ import {
   JamPause,
   JamPencil,
   JamPlay,
-  JamPlusCircleF, JamTwitterCircle,
+  JamPlusCircleF, JamSearch, JamTwitterCircle,
   JamUserCircle
 } from '@ng-icons/jam-icons';
 import { HttpClientModule } from '@angular/common/http';
@@ -47,6 +47,7 @@ import { HttpClientModule } from '@angular/common/http';
         JamFacebookCircle,
         JamPencil,
         MatLink,
+        JamSearch,
         JamPlusCircleF,
         JamBell,
         JamCoin

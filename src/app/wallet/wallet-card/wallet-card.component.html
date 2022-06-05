@@ -1,27 +1,16 @@
-<div class="profile-card card-plain flex-column">
-  <div class="header {{walletPlan}}">
-    <h4 i18n>How much you wanna invest?</h4>
-    <h1>$<input type="text" class="anton-input dashed budget-control" [formControl]="walletBudgetControl" [value]="walletBudgetControl.value"></h1>
-    <!--button *ngIf="mode === 'page'" class="anton-button icon settings" [routerLink]="['/overview']" [queryParams]="{modal: 'walletSettings'}">
-      <ng-icon name="jam-cogs"></ng-icon>
-    </button-->
-  </div>
-  <div class="body">
-    <app-slider class="slider" [fc]="walletBudgetControl" (onChange)="walletBudgetControl.setValue($event)" [min]="50" [max]="walletService.planBudgetInterval['PLATINUM'][1]"></app-slider>
-    <div class="flex-row controls evenly mt-10px">
-      <!--div class="control">
-        <label i18n>Auto reinvest</label>
-        <app-switch class="mt-20px" [control]="autoReinvestControl"></app-switch>
-      </div-->
-      <div class="control">
-        <label i18n>Market</label>
-        <select class="anton-select" [value]="'BUSD'" disabled>
-          <option *ngFor="let market of walletService.markets" [value]="market">{{market}}</option>
-        </select>
-      </div>
+<div class="profile-card card-plain flex-column {{limitMax ? '' : 'skeleton'}}">
+  <div class="header {{walletPlan}}" *ngIf="limitMax !== undefined">
+    <div class="flex-row between">
+      <h4 i18n>How much BUSD you wanna invest?</h4>
+      <a target="_blank" href="https://www.anton.finance/blog/fiat-stable-coin" i18n>What is BUSD?</a>
     </div>
-
-    <div *ngIf="walletBudgetControl.value > 500" class="alert warn mt-20px" i18n>
+    <div class="flex-row center">
+      <h1><input type="text" class="anton-input dashed budget-control" [formControl]="walletBudgetControl" [value]="walletBudgetControl.value"></h1>
+    </div>
+  </div>
+  <div class="body flex-column between">
+    <app-slider *ngIf="limitMax !== undefined" class="slider" [fc]="walletBudgetControl" (onChange)="walletBudgetControl.setValue($event)" [min]="50" [max]="limitMax"></app-slider>
+    <div *ngIf="walletBudgetControl.value > 500" class="alert warn" i18n>
       This is the beta version, you can invest up to 500$
     </div>
     <div *ngIf="walletBudgetControl.value <= 500" class="flex-row center mt-20px">

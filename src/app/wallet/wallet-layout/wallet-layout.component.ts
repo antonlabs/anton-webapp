@@ -20,8 +20,7 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
   endpoint: string | undefined;
   @ViewChild('setExchangeKeys') setCredentials: TemplateRef<any> | undefined;
   @ViewChild('addToBlacklist') addToBlacklist: TemplateRef<any> | undefined;
-  @ViewChild('walletSettings') walletSettings: TemplateRef<any> | undefined;
-  @ViewChild('deleteWalletMethods') deleteWalletMethods: TemplateRef<any> | undefined;
+  @ViewChild('inspectOrder') inspectOrder: TemplateRef<any> | undefined;
   @ViewChild('deleteBlacklistSymbol') deleteBlacklistSymbol: TemplateRef<any> | undefined;
 
   modalsRoutes: {[key: string]: TemplateRef<any> | undefined} = {};
@@ -45,8 +44,7 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
     this.modalsRoutes = {
       setCredentials: this.setCredentials,
       addToBlacklist: this.addToBlacklist,
-      walletSettings: this.walletSettings,
-      deleteWalletMethods: this.deleteWalletMethods,
+      inspectOrder: this.inspectOrder,
       deleteBlacklistSymbol: this.deleteBlacklistSymbol
     };
     this.endpoint = this.router.url.split('?')[0].split('/').splice(-1)[0];
@@ -54,6 +52,7 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
       this.router.events.subscribe(() => {
         this.endpoint = this.router.url.split('?')[0].split('/').splice(-1)[0];
         this.currentModal = this.modalsRoutes[this.activatedRoute.snapshot.queryParams['modal']];
+        console.log(this.currentModal);
         this.currentDialog = this.activatedRoute.snapshot.queryParams['dialog'];
         if(this.currentDialog) {
           this.handleDialogTimeout();
@@ -95,6 +94,7 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
     }
     this.currentTimeout = setTimeout(() => {
       this.notificationService.closeNotification();
+      clearTimeout(this.currentTimeout);
     }, 5000);
   }
 

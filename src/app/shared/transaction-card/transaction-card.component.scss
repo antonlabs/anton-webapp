@@ -3,17 +3,18 @@
 .transaction-card {
   padding: 10px;
   margin-top: 10px;
-  cursor: pointer;
   position: relative;
-  &.selected, &:hover {
-    outline: 2px solid $primary-color;
-  }
+  border-bottom: 1px solid $primary-field-background;
   img {
-    width: 30px;
+    width: 40px;
+    height: 40px;
   }
   h4 {
     padding: 0;
     margin-top: 8px;
+  }
+  .icon-btn {
+    cursor: pointer;
   }
   .status, .price {
     border-radius: 5px;

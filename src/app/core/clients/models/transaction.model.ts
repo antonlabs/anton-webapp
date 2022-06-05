@@ -5,5 +5,6 @@ export interface TransactionModel {
   id: string,
   symbol: string,
   closed: boolean,
+  earnings: number,
   orders?: OcoOrderModel[]
 }

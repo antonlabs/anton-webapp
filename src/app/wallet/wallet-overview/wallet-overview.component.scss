@@ -67,7 +67,7 @@
     position: relative;
   }
 
-  .openTransactions {
+  .closedTransactions {
     .body {
       padding: 5px;
       max-height: 300px;
@@ -75,7 +75,7 @@
     }
   }
 
-  .openTransactions {
+  .closedTransactions {
     .card-plain {
       .symbol {
         cursor: pointer;

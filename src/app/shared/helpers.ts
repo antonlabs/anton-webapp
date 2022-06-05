@@ -222,6 +222,17 @@ export const getOrders = async (transactionId: string): Promise<OcoOrderModel[]>
 
 export type PaginationToken = { [key: string]: NativeAttributeValue};
 
+export const getTransaction = async (transactionId: string): Promise<TransactionModel> => {
+  console.log(transactionId);
+  return new TransactionConverter().fromDynamoModel((await documentClient().get({
+    TableName: transactionTableName,
+    Key: {
+      pk: rack.states.user.val.identityId,
+      sk: transactionId
+    }
+  })).Item);
+}
+
 export const getTransactions = async (type?: 'OPEN' | 'CLOSE', paginationToken?: PaginationToken): Promise<{data: TransactionModel[], lastKey: PaginationToken | undefined}> => {
   if(!rack.states.user.val.identityId) return {
     lastKey: undefined,

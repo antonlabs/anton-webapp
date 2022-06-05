@@ -84,6 +84,10 @@ export class WalletService {
     refreshWallets();
   }
 
+  async getSymbolQty(symbol: string): Promise<number> {
+    return 2000;
+  }
+
   async playStrategy(walletName: string): Promise<void> {
     await apiG('wallet/'+walletName+'/start' , {
       method: 'PUT'

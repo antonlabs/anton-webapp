@@ -33,7 +33,7 @@
     h1 {
       font-size: 40px;
     }
-    background-image: linear-gradient(-37deg, $primary-active 0%, $primary-active 19%,  40%, $primary-active 66%, $primary-active 100%);
+    background-image: linear-gradient(-37deg, #ffccbc 0%, #ff7043 19%,  40%, #ff8a65 66%, #ffab91 100%);
     &.BRONZE {
       background-image: linear-gradient(-37deg, #A67F66 0%, #C49A7F 19%, #A2795E 40%, #A47C62 66%, #EBC5A4 100%);
     }
@@ -60,9 +60,7 @@
     padding: 10px;
     ::ng-deep {
       .range-slider {
-        margin-top: -20px;
-        position: absolute;
-        width: 95%;
+        transform: translateY(-100%);
       }
     }
     .controls {

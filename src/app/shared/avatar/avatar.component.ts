@@ -22,9 +22,7 @@ export class AvatarComponent extends AntiMemLeak implements OnInit {
   ngOnInit(): void {
     this.avatarImage = rack.states.user.val.avatar;
     this.sub.add(rack.states.user.obs.subscribe(state => {
-      console.log(state.name, state);
       this.firstLetter = state.email?.charAt(0).toUpperCase();
-      console.log(this.firstLetter);
       this.avatarImage = state?.avatar;
     }));
 

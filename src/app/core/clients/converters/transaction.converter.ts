@@ -24,7 +24,8 @@ export class TransactionConverter {
           time: new Date(order.sk.split('#')[3]),
           symbol: order.sk.split('#')[2],
           id: order.sk.split('#').slice(2).join('#'),
-          closed: order.sk.split('#')[1] === 'CLOSE'
+          closed: order.sk.split('#')[1] === 'CLOSE',
+          earnings: order.earnings
         };
     }
 

@@ -28,12 +28,23 @@ export class TransactionCardComponent extends AntiMemLeak implements OnInit {
 
   ngOnInit(): void {}
 
+  round(n: number) {
+    if(n) {
+      return n.toFixed(2);
+    }
+    return "";
+  }
+
   get imgSrc() {
     if(this.transaction) {
       const market = rack.val.currentWallet.val.symbolMarket ?? '';
       return `https://cryptologos.cc/logos/${cryptoMap[this.transaction.symbol.toUpperCase().replace(market, '')] ?? ''}-${this.transaction.symbol.toUpperCase().replace(market, '').toLowerCase()}-logo.svg`;
     }
     return '';
+  }
+
+  openInspectOrder() {
+
   }
 
 }

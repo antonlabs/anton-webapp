@@ -10,16 +10,19 @@ import {NgIconsModule} from "@ng-icons/core";
 
 
 @NgModule({
-  declarations: [
-    WalletOrdersComponent,
-    OrderInspectionComponent,
-    OrderDetailsComponent
-  ],
-  imports: [
-    CommonModule,
-    OrdersRoutingModule,
-    SharedModule,
-    NgIconsModule
-  ]
+    declarations: [
+        WalletOrdersComponent,
+        OrderInspectionComponent,
+        OrderDetailsComponent
+    ],
+    exports: [
+        OrderInspectionComponent
+    ],
+    imports: [
+        CommonModule,
+        OrdersRoutingModule,
+        SharedModule,
+        NgIconsModule
+    ]
 })
 export class OrdersModule { }
