@@ -28,24 +28,24 @@
 
       <div class="order-recap" *ngIf="!pro">
         <h3>Transaction's Info</h3>
-        <div class="card-plain flex-row between mt-10px">
-          <div class="flex-column">
+        <div class="card-plain flex-row between mt-10px detail">
+          <div class="att">
             <h4>Buy price</h4>
             {{currentOrders.slice(-1)[0].orders[0].price}}
           </div>
-          <div class="flex-column">
+          <div class="att">
             <h4>Buy date</h4>
             {{getLocalTime(currentOrders.slice(-1)[0].orders[0].transactTime)}}
           </div>
-          <div class="flex-column">
+          <div class="att">
             <h4>Sell price</h4>
             {{currentOrders[0].orders[0].price}}
           </div>
-          <div class="flex-column">
+          <div class="att">
             <h4>Sell date</h4>
             {{getLocalTime(currentOrders[0].orders[0].transactTime)}}
           </div>
-          <div class="flex-column">
+          <div class="att">
             <h4>Earnings</h4>
             {{number(((parseFloat(currentOrders[0].orders[0].price) / parseFloat(currentOrders.slice(-1)[0].orders[0].price)) * 100) - 100)}}%
           </div>

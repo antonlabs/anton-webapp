@@ -16,4 +16,15 @@
     flex: 1;
   }
 
+  .detail {
+    background: #fff;
+    border-top-left-radius: 0;
+    float: left;
+    .att {
+      display: inline-block;
+      margin: 10px;
+    }
+
+  }
+
 }
