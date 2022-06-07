@@ -14,6 +14,8 @@ export class OrderInspectionComponent extends AntiMemLeak implements OnInit {
   currentOrders: OcoOrderModel[] | undefined;
   currentKlines: BarData[] = [];
   currentPeriod: '3m' | '5m' | '1h' = '5m';
+  number = (n: any) => parseFloat(n).toFixed(2)
+  parseFloat = parseFloat;
 
   @Input()
   set orders(val: OcoOrderModel[] | undefined) {
@@ -49,5 +51,10 @@ export class OrderInspectionComponent extends AntiMemLeak implements OnInit {
       }
     }
   }
+
+  getLocalTime(time: number) {
+    return new Date(time).toLocaleString();
+  }
+
 
 }

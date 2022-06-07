@@ -30,9 +30,12 @@ export class SymbolsListComponent extends AntiMemLeak implements OnInit {
 
   @Output() pagesChange = new EventEmitter();
 
-  constructor() { super(); }
+  constructor() {
+    super();
+  }
 
   set symbolsFiltered(val: string[]) {
+    console.log(val);
     if(val.length > 0) {
       this.pages = [];
     }
@@ -45,6 +48,7 @@ export class SymbolsListComponent extends AntiMemLeak implements OnInit {
   ngOnInit(): void {
     this.sub.add(rack.states.exchange.obs.subscribe((state) => {
       this.symbols = state.titles;
+      console.log(this.symbols);
       this.symbolsFiltered = Object.keys(this.symbols ?? {}).filter(key => (this._search ?? '') !== '' ? this._search.indexOf(key) > -1 : true);
     }));
     this.sub.add(

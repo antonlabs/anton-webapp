@@ -1,10 +1,14 @@
-<div class="order-inspect" *ngIf="currentTransaction">
+<div class="header">
   <div class="flex-row between">
-    <h2 class="mt-10px ml-10px">{{currentTransaction?.symbol}} - {{getTransactTime(currentTransaction)}}</h2>
+    <h2 class="mt-10px ml-10px" *ngIf="currentTransaction">{{currentTransaction?.symbol}} - {{getTransactTime(currentTransaction)}}</h2>
     <div class="flex-column">
       <label i18n>Lite mode</label>
       <app-switch (toggle)="togglePro()" [control]="proSwitch"></app-switch>
     </div>
   </div>
-  <app-order-inspection [pro]="!proSwitch.value" [orders]="currentTransaction.orders"></app-order-inspection>
+</div>
+<div class="body">
+  <div class="order-inspect" *ngIf="currentTransaction">
+    <app-order-inspection [pro]="!proSwitch.value" [orders]="currentTransaction.orders"></app-order-inspection>
+  </div>
 </div>

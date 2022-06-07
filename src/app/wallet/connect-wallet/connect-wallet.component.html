@@ -50,8 +50,6 @@
       </div>
     </div>
   </div>
-</div>
-<div class="footer">
   <div *ngIf="error && spotNotEnabled === false && bnbFeeDisabled === false" class="alert error mt-20px">
     {{error}}
   </div>
@@ -68,5 +66,6 @@
     <app-button *ngIf="spotNotEnabled === false && bnbFeeDisabled === false" [loading]="loading" class="mr-10px" (click)="connectWallet()"><span i18n>Edit</span></app-button>
     <button class="anton-button" (click)="modalService.closeModal()"><span i18n>Cancel</span></button>
   </div>
+
 </div>
 

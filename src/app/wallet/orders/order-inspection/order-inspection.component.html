@@ -24,13 +24,41 @@
     <div *ngIf="currentOrders" class="card-plain chart-container {{currentKlines ? '' : 'skeleton'}} mt-20px">
       <app-order-chart [data]="{orders: currentOrders, dataSeries: currentKlines, pro}"></app-order-chart>
     </div>
-    <div class="order-details-panel mt-20px flex-column" *ngIf="pro">
-      <div class="arrow-container flex-column" *ngFor="let oco of currentOrders; let i = index">
-        <div class="flex-row center mt-10px" style="font-size: 50px">
-          <ng-icon *ngIf="i > 0" name="jam-arrow-up"></ng-icon>
+    <div class="order-details-panel mt-20px flex-column">
+
+      <div class="order-recap" *ngIf="!pro">
+        <h3>Transaction's Info</h3>
+        <div class="card-plain flex-row between mt-10px">
+          <div class="flex-column">
+            <h4>Buy price</h4>
+            {{currentOrders.slice(-1)[0].orders[0].price}}
+          </div>
+          <div class="flex-column">
+            <h4>Buy date</h4>
+            {{getLocalTime(currentOrders.slice(-1)[0].orders[0].transactTime)}}
+          </div>
+          <div class="flex-column">
+            <h4>Sell price</h4>
+            {{currentOrders[0].orders[0].price}}
+          </div>
+          <div class="flex-column">
+            <h4>Sell date</h4>
+            {{getLocalTime(currentOrders[0].orders[0].transactTime)}}
+          </div>
+          <div class="flex-column">
+            <h4>Earnings</h4>
+            {{number(((parseFloat(currentOrders[0].orders[0].price) / parseFloat(currentOrders.slice(-1)[0].orders[0].price)) * 100) - 100)}}%
+          </div>
         </div>
-        <app-order-details [oco]="oco" ></app-order-details>
       </div>
+      <ng-container *ngIf="pro">
+        <div class="arrow-container flex-column" *ngFor="let oco of currentOrders; let i = index">
+          <div class="flex-row center mt-10px" style="font-size: 50px">
+            <ng-icon *ngIf="i > 0" name="jam-arrow-up"></ng-icon>
+          </div>
+          <app-order-details [oco]="oco" ></app-order-details>
+        </div>
+      </ng-container>
     </div>
   </div>
 

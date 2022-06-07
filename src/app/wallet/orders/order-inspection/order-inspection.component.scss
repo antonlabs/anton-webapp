@@ -3,14 +3,14 @@
 .order-inspection {
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 80vw;
+
   .chart-container {
     min-height: 400px;
     width: 100%;
     overflow: hidden;
     flex: 1;
     padding:0;
-    max-width: 800px;
   }
   .order-details-panel {
     flex: 1;
