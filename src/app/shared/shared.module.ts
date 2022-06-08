@@ -24,6 +24,7 @@ import { TransactionCardComponent } from './transaction-card/transaction-card.co
 import { RevenuesChartComponent } from './revenues-chart/revenues-chart.component';
 import { BalancesChartComponent } from './balances-chart/balances-chart.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
+import {NgxSliderModule} from "@angular-slider/ngx-slider";
 
 
 
@@ -52,10 +53,11 @@ import { LanguageSelectorComponent } from './language-selector/language-selector
     LanguageSelectorComponent
   ],
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        NgIconsModule,
-        RouterModule
+      CommonModule,
+      ReactiveFormsModule,
+      NgxSliderModule,
+      NgIconsModule,
+      RouterModule
     ],
     exports: [
         LogoComponent,

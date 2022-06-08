@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import {NotificationService} from "../../shared/notification.service";
 import {Router} from "@angular/router";
 import {rack} from "../../states/app-state";
+import {UserService} from "../../shared/user.service";
 
 @Component({
   selector: 'app-wallet-card',
@@ -21,6 +22,7 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
   walletBudgetSubscription = new Subscription();
   limitMax: number | undefined = undefined;
   walletName: string | undefined;
+  isPremium: boolean | undefined;
 
 
   @Input() mode: 'wizard' | 'page' = 'page';
@@ -44,12 +46,14 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
   constructor(
     public walletService: WalletService,
     private router: Router,
+    private userService: UserService,
     private notificationService: NotificationService
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.userService.premiumActive().then(premium => this.isPremium = premium);
     this.sub.add(
       rack.states.currentWallet.obs.subscribe(wallet => {
         if(this.walletName !== wallet.name) {
@@ -57,12 +61,24 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
           rack.states.currentWallet.refreshStableAvailable();
         }
         this.limitMax = wallet.stableAmount['BUSD'];
-        console.log(this.limitMax);
       })
     );
   }
 
-  getMaxOrderValueByBudget(val: number) {
+  async checkout() {
+    this.loading = true;
+    try{
+      const url = await this.userService.checkout();
+      location.href = url;
+    }catch(e) {
+      console.log(e);
+    }finally {
+      this.loading = false;
+    }
+  }
+
+  get limitExceeded() {
+    return this.isPremium != true && this.limitMax !== undefined && this.walletBudgetControl.value > 500;
   }
 
   subscribeToBudgetChange() {

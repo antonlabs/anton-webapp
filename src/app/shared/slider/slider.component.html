@@ -1,4 +1,5 @@
 <div class="range-slider">
-  <input [formControl]="fc" [step]="50" class="range-style" type="range" [min]="min" [max]="max">
+  <!--input [formControl]="fc" [step]="50" class="range-style" type="range" [min]="min" [max]="max"-->
+  <ngx-slider (valueChange)="formControl.setValue($event)" [value]="formControl.value" [options]="options"></ngx-slider>
 </div>
 

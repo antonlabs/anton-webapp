@@ -55,6 +55,10 @@ const routes: Routes = [
         loadChildren: () => import('../settings/settings.module').then( m => m.SettingsModule )
       },
       {
+        path: 'checkout',
+        loadChildren: () => import('../checkout/checkout.module').then( m => m.CheckoutModule)
+      },
+      {
         path: 'profile',
         component: ProfileLayoutComponent,
         loadChildren: () => import('../profile/profile.module').then(

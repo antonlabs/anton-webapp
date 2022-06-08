@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TransactionModel} from "../../core/clients/models/transaction.model";
 import {orderStatus, orderTypes} from "../helpers";
-import {ActivatedRoute, Router} from "@angular/router";
 import {AntiMemLeak} from "../anti-mem-leak";
 import {rack} from "../../states/app-state";
 import {cryptoMap} from "../../crypto-map";
@@ -19,10 +18,7 @@ export class TransactionCardComponent extends AntiMemLeak implements OnInit {
   status = orderStatus;
   selectedTransaction: string | undefined;
 
-  constructor(
-    private router: Router,
-    private activatedRouter: ActivatedRoute
-  ) {
+  constructor() {
     super();
   }
 

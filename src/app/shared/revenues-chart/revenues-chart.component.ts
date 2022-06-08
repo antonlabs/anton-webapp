@@ -16,7 +16,7 @@ import {refreshEarnings} from "../helpers";
 export class RevenuesChartComponent extends AntiMemLeak implements OnInit, AfterViewInit {
   chart: IChartApi | undefined;
   chartLines: ISeriesApi<'Line'> | undefined;
-  earnings: EarningModel[] = [];
+  earnings: EarningModel[] | undefined;
   id: string = makeid(10);
   lastSize: any = {};
 

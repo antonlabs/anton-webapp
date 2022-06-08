@@ -5,6 +5,7 @@
   padding: 0;
   max-width: 500px;
   min-width: 400px;
+  min-height: 200px;
 
   .header {
     display: flex;
@@ -60,6 +61,15 @@
     padding: 10px;
     ::ng-deep {
       .range-slider {
+      }
+    }
+    .unlock-message {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+
+      h4 {
+        white-space: normal;
       }
     }
     .controls {

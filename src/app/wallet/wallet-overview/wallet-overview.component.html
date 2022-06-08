@@ -62,7 +62,7 @@
     <div class="flex-column profile-counters ml-10px mobile-ml-0px mobile-mt-10px">
       <div class="flex-row">
         <app-counter class="mr-10px" sign="$" style="flex: 1" [value]="walletBalance" image="/assets/wallet.png"  i18n-description description="Wallet balance"></app-counter>
-        <app-counter style="flex: 1" sign="$" [value]="actualBalance" image="/assets/binance-icon.png" i18n-description description="Binance balance"></app-counter>
+        <app-counter style="flex: 1" sign="$" [value]="actualBalance" image="/assets/binance-icon.png" i18n-description description="Bitcoin value"></app-counter>
       </div>
       <div class="flex-row mt-10px" style="flex: 1">
         <app-counter class="mr-10px" sign="$" style="flex: 1" [value]="totalEarnings" icon="jam-coin" i18n-description description="Revenues"></app-counter>
@@ -74,7 +74,7 @@
     <h1>My earnings</h1>
     <h5 i18n>This is what Anton have earned from his transactions</h5>
   </div>
-  <div class="card-plain mt-10px">
+  <div class="card-plain mt-10px earnings">
     <div class="mt-10px">
       <ng-container *ngIf="chartMode === 'earnings'">
         <app-revenues-chart></app-revenues-chart>

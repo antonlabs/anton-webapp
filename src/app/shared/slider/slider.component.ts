@@ -2,16 +2,35 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { tap } from 'rxjs';
 
+
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.scss']
 })
 export class SliderComponent implements OnInit {
-  @Input() min: number = 0;
-  @Input() max: number = 0;
+  @Input()
+  set min(val: number) {
+    this.options.floor = val;
+  }
+  @Input()
+  set max(val: number) {
+    this.options.ceil = Math.floor(val);
+  }
   @Output() onChange: EventEmitter<string> = new EventEmitter<string>();
-  @Input() fc = new FormControl(0);
+  @Input()
+  set fc(val: FormControl) {
+    this.formControl = val;
+
+  }
+
+  formControl: FormControl = new FormControl(0);
+
+  options = {
+    floor: this.min,
+    ceil: this.max,
+    showSelectionBar: true
+  };
 
   constructor() { }
 
@@ -19,6 +38,7 @@ export class SliderComponent implements OnInit {
     this.fc.valueChanges.pipe(
       tap((val) => this.onChange.next(val))
     ).subscribe();
+
   }
 
 }

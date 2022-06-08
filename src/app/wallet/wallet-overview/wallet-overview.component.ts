@@ -27,6 +27,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   loadingEnableBnbFee = false;
   chartMode: 'earnings' | 'balances' = 'earnings';
   checkingInterval: any;
+  bitcoinCandles = [];
 
 
   constructor(

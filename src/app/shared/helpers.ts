@@ -109,7 +109,7 @@ export const refreshEarnings = async <T>(): Promise<void> => {
   const earnings: EarningModel[] | undefined = await getUserListItem<EarningModel>('EARNINGS');
 
   rack.states.currentWallet.set({
-    earningsHistory: earnings
+    earningsHistory: []
   });
 }
 
