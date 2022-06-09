@@ -1,31 +1,44 @@
-<div class="flex-row mt-10px mobile-flex-column">
 
-  <div class="card-plain">
-    <h2>Access Key: </h2><span>{{obfuscate(wallet?.accessKey)}}</span>
-    <h2>Secret Key: </h2><span>{{obfuscate(wallet?.secretKey)}}</span>
-    <button class="anton-button link-button change-credentials primary" [routerLink]="['/settings']" [queryParams]="{modal: 'setCredentials'}">
-      <ng-icon name="jam-pencil"></ng-icon>
-      <span i18n>Change Keys</span>
-    </button>
+<div class="flex-column between container">
+
+  <div class="flex-row between mt-20px">
+    <h2>{{user?.email}}</h2>
+    <div class="a1">
+      <ng-icon class="crown" name="jam-crown"></ng-icon>
+      <div class="a2">Premium</div>
+    </div>
   </div>
-
-  <div style="flex: 2" class="card-plain flex-column ml-10px blacklist mobile-ml-0px mobile-mt-10px {{wallet?.blacklist?.length === 0 ? 'between' : ''}}">
-    <div class="flex-row between ">
-      <h2 i18n>My blacklist</h2>
-      <button class="anton-button icon primary" [routerLink]="['/settings']" [queryParams]="{modal: 'addToBlacklist'}">
+  <div class="flex-row mt-10px mobile-flex-column" >
+    <div class="card-plain">
+      <h2 i18n>Access Key: </h2><span>{{obfuscate(wallet?.accessKey)}}</span>
+      <h2 i18n>Secret Key: </h2><span>{{obfuscate(wallet?.secretKey)}}</span>
+      <button class="anton-button link-button change-credentials primary" [routerLink]="['/settings']" [queryParams]="{modal: 'setCredentials'}">
         <ng-icon name="jam-pencil"></ng-icon>
+        <span i18n>Change Keys</span>
       </button>
     </div>
-    <div class="body">
-      <app-symbol-card [selectable]="false" *ngFor="let symbol of (wallet?.blacklist ?? [])" [symbol]="symbol" (deleteItem)="deleteBlacklistItem(symbol)"></app-symbol-card>
-      <ng-container *ngIf="wallet?.blacklist?.length === 0">
-        <img alt="guard" src="/assets/guard.png">
-        <h2 i18n>No symbols in blacklist</h2>
-        <div class="alert warn" i18n>
-          This list contains all those symbols that are ignored by Anton algorithm.
-        </div>
-      </ng-container>
+
+    <div style="flex: 2" class="card-plain flex-column ml-10px blacklist mobile-ml-0px mobile-mt-10px {{wallet?.blacklist?.length === 0 ? 'between' : ''}}">
+      <div class="flex-row between ">
+        <h2 i18n>My blacklist</h2>
+        <button class="anton-button icon primary" [routerLink]="['/settings']" [queryParams]="{modal: 'addToBlacklist'}">
+          <ng-icon name="jam-pencil"></ng-icon>
+        </button>
+      </div>
+      <div class="body">
+        <app-symbol-card [selectable]="false" *ngFor="let symbol of (wallet?.blacklist ?? [])" [symbol]="symbol" (deleteItem)="deleteBlacklistItem(symbol)"></app-symbol-card>
+        <ng-container *ngIf="wallet?.blacklist?.length === 0">
+          <img alt="guard" src="/assets/guard.png">
+          <h2 i18n>No symbols in blacklist</h2>
+          <div class="alert warn" i18n>
+            This list contains all those symbols that are ignored by Anton algorithm.
+          </div>
+        </ng-container>
+      </div>
     </div>
   </div>
 
+  <div class="alert danger text-center">
+    <h4 i18n>If you want to cancel your subscription, please write use at: info@anton.finance</h4>
+  </div>
 </div>

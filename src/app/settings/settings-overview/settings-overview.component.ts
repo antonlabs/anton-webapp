@@ -5,6 +5,8 @@ import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {WalletService} from "../../shared/wallet.service";
+import {User} from "../../core/clients/models/user.model";
+import {UserStateProperties} from "../../states/user-state";
 
 @Component({
   selector: 'app-settings-overview',
@@ -16,6 +18,7 @@ export class SettingsOverviewComponent extends AntiMemLeak implements OnInit {
   addBlackListForm = new FormGroup({
     symbol: new FormControl('', Validators.required)
   });
+  user: UserStateProperties | undefined;
   blacklistLoading = false;
   blacklistError: string | undefined;
 
@@ -32,6 +35,11 @@ export class SettingsOverviewComponent extends AntiMemLeak implements OnInit {
         this.wallet = wallet;
       })
     );
+    this.sub.add(
+      rack.states.user.obs.subscribe(user => {
+        this.user = user;
+      })
+    )
   }
 
   obfuscate(key: string | undefined) {

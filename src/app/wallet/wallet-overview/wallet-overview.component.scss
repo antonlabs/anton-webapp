@@ -105,6 +105,10 @@
   width: 200px;
 }
 
+.guard {
+  width: 200px;
+}
+
 @media only screen and (max-width: 768px) { //mobile
   .wallet-overview {
     flex-direction: column;

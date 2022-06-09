@@ -85,7 +85,7 @@
     <h1 i18n>Last trades</h1>
     <h5 i18n>What trades have done recently</h5>
   </div>
-  <img alt="guard" *ngIf="closedTransactions.length === 0" src="/assets/no-data-found.png">
+  <img class="guard" alt="guard" *ngIf="closedTransactions.length === 0" src="/assets/no-data-found.png">
   <div class="body">
     <app-transaction-card
       class="symbol mt-10px"
