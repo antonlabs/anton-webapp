@@ -35,7 +35,7 @@ export class SliderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.fc.valueChanges.pipe(
+    this.formControl.valueChanges.pipe(
       tap((val) => this.onChange.next(val))
     ).subscribe();
 
