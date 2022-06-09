@@ -40,7 +40,6 @@
     height: 100vh;
     .orders-list {
       .list {
-        height: auto;
         &.open {
           max-height: calc(100vh - 11px);
         }
