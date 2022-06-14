@@ -62,7 +62,7 @@
     <div class="flex-column profile-counters ml-10px mobile-ml-0px mobile-mt-10px">
       <div class="flex-row">
         <app-counter class="mr-10px" sign="$" style="flex: 1" [value]="walletBalance" image="/assets/wallet.png"  i18n-description description="Wallet balance"></app-counter>
-        <app-counter style="flex: 1" sign="$" [value]="actualBalance" image="/assets/binance-icon.png" i18n-description description="Bitcoin value"></app-counter>
+        <app-counter style="flex: 1" sign="%" [value]="btcValue?.priceChangePercent" image="/assets/btc.png" i18n-description description="Daily Bitcoin value"></app-counter>
       </div>
       <div class="flex-row mt-10px" style="flex: 1">
         <app-counter class="mr-10px" sign="$" style="flex: 1" [value]="totalEarnings" icon="jam-coin" i18n-description description="Revenues"></app-counter>

@@ -1,4 +1,4 @@
-<div class="profile-card card-plain flex-column {{limitMax ? '' : 'skeleton'}}">
+<div class="profile-card card-plain flex-column {{limitMax !== undefined && isPremium !== undefined ? '' : 'skeleton'}}">
   <ng-container *ngIf="limitMax && limitMax >= 100">
     <div class="header {{walletPlan}}" >
       <div class="flex-row between">
@@ -14,7 +14,7 @@
       <!--div *ngIf="limitMax !== undefined && walletBudgetControl.value > 500" class="alert warn text-center" i18n>
         This is the beta version, you can invest up to 500$
       </div-->
-      <div class="unlock-message" *ngIf="limitExceeded">
+      <div class="unlock-message" *ngIf="limitExceeded && isPremium !== undefined">
         <h4 i18n>The limit for trial version is 500 BUSD, you can increase it in a few clicks!</h4>
         <app-button (click)="checkout()" [loading]="loading">
           <span i18n>Unlock</span>

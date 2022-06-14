@@ -1,0 +1,89 @@
+<div class="container">
+  <h1 i18n>Strategy will start when you will click Play</h1>
+  <div class="alert warn mt-10px" i18n>
+    This strategy doesn't guarantee earnings and can cause money loss.
+  </div>
+  <h4 class="mt-10px" i18n>Transactions volume</h4>
+  <p>
+    Each trade volume will be equivalent to your budget / 2.
+  </p>
+  <h4 i18n>Candle period</h4>
+  <p>
+    The strategy use only 5 minutes candles
+  </p>
+  <div *ngIf="showStrategy">
+    <h4 i18n>Buy Strategy (in pseudo code)</h4>
+    <pre>
+    Current Price > EMA(close, 200)[2] and
+		Current Price < EMA(close, 50)[2] and
+		Rsi Mfi > 0 and
+    (EMA(close, 34) < EMA(close, 11))[1] and (EMA(close, 34) < EMA(close, 11))[0] and
+		Wave Trend [2] < 0 and
+		Bull Signal [2] > 0 and
+  </pre>
+
+    <h4 i18n>Sell Strategy (in pseudo code)</h4>
+    <pre>
+    Bear Signals[2] > 0 and scoreBoard.waveTrend[2] > 0) or
+    Rsi Mfi < 0 or
+    Current Price <= 1% ||
+    CurrentPrice >= 3%
+  </pre>
+
+    <h4 i18n>Wave Trend</h4>
+    <pre>
+    tfsrc = hlc3
+    esa = ema(tfsrc, 9)
+    de = ema(abs(tfsrc - esa), 9)
+    ci = (tfsrc - esa) / (0.015 * de)
+    WaveTrend = ema(ci, 12)
+    wt2 = security(syminfo.tickerid, tf, sma(wt1, 3))
+    wtVwap = wt1 - wt2
+    wtOversold = wt2 <= osLevel
+    wtOverbought = wt2 >= obLevel
+    wtCross = cross(wt1, wt2)
+    wtCrossUp = wt2 - wt1 <= 0
+    wtCrossDown = wt2 - wt1 >= 0
+    wtCrosslast = cross(wt1[2], wt2[2])
+    wtCrossUplast = wt2[2] - wt1[2] <= 0
+    wtCrossDownlast = wt2[2] - wt1[2] >= 0
+  </pre>
+
+    <h4 i18n>Bull Signal</h4>
+    <pre>
+    buySignal = wtCross and wtCrossUp and wtOversold
+
+    buySignalDiv = wtBullDiv or
+               wtBullDiv_add or
+               stochBullDiv or
+               rsiBullDiv
+
+    Bull Signal = buySignal or buySignalDiv
+  </pre>
+
+    <h4 i18n>Bear Signal</h4>
+    <pre>
+    sellSignal = wtCross and wtCrossDown and wtOverbought
+
+    sellSignalDiv = wtBearDiv or
+               wtBearDiv_add or
+               stochBearDiv or
+               rsiBearDiv
+
+    Bear Signal = sellSignal or sellSignalDiv
+  </pre>
+  </div>
+  <div class="flex-row">
+    <app-switch [control]="accepted" (toggle)="changeAccepted($event)" ></app-switch>
+    <h5 class="ml-10px">I have read strategy and i understand the risks of launch this strategy on my account</h5>
+  </div>
+  <div class="flex-row between mt-10px">
+    <button *ngIf="!showStrategy" class="anton-button" (click)="showStrategy = true">Show strategy description</button>
+    <button *ngIf="showStrategy" class="anton-button" (click)="showStrategy = false">Hide strategy description</button>
+    <app-button [loading]="loading"  (click)="runStrategyMarket()" class="mr-10px" [type]="'active'" [disabled]="!accepted.value">
+        <ng-icon name="jam-play"></ng-icon>
+        <span i18n>Play</span>
+    </app-button>
+  </div>
+
+</div>

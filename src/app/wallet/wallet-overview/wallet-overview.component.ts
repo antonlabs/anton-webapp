@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {NotificationService} from "../../shared/notification.service";
 import {getErrorMessage, getTransactions, refreshBalances, refreshWallets} from "../../shared/helpers";
 import {TransactionModel} from "../../core/clients/models/transaction.model";
+import {DailyTickerModel} from "../../core/clients/models/daily-ticker.model";
 
 @Component({
   selector: 'app-wallet-overview',
@@ -28,7 +29,8 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   chartMode: 'earnings' | 'balances' = 'earnings';
   checkingInterval: any;
   bitcoinCandles = [];
-
+  btcValue: DailyTickerModel | undefined;
+  float = parseFloat;
 
   constructor(
     private router: Router,
@@ -60,6 +62,10 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
         }
       })
     );
+    rack.states.exchange.getClient()?.getDailyTicker('BTCBUSD').then((v) => {
+      this.btcValue = v;
+      console.log(v);
+    });
     getTransactions('CLOSE').then(transactions => {
       this.closedTransactions = transactions.data.filter(o => o.earnings !== undefined);
     });
@@ -125,8 +131,9 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     this.playLoading = true;
     try {
       if(this.wallet?.strategy?.state === StrategyStateType.STOPPED || this.wallet?.strategy?.state === StrategyStateType.DEPLOYED) {
-        await this.walletService.playStrategy(rack.states.currentWallet.val.name);
-        this.notificationService.success($localize`You have successful play your wallet strategy`);
+        this.router.navigate(['/'], {queryParams: {
+          modal: 'runStrategyDescription'
+        }})
       }else {
         await this.walletService.stopStrategy(rack.states.currentWallet.val.name);
         this.notificationService.success($localize`You have successful stop your wallet strategy`);

@@ -11,8 +11,11 @@ export class CounterComponent implements OnInit {
   @Input() icon: string | undefined;
   @Input() image: string | undefined;
   @Input()
-  set value(val: number | undefined) {
+  set value(val: number | undefined | string) {
     if(val !== undefined) {
+      if(typeof val === 'string') {
+        val = parseFloat(val);
+      }
       if(val > 999) {
         this.countNumber = Math.floor(val);
       }else {

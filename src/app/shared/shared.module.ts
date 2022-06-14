@@ -22,7 +22,6 @@ import { OrderChartComponent } from './order-chart/order-chart.component';
 import {RouterModule} from "@angular/router";
 import { TransactionCardComponent } from './transaction-card/transaction-card.component';
 import { RevenuesChartComponent } from './revenues-chart/revenues-chart.component';
-import { BalancesChartComponent } from './balances-chart/balances-chart.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
 import {NgxSliderModule} from "@angular-slider/ngx-slider";
 
@@ -49,7 +48,6 @@ import {NgxSliderModule} from "@angular-slider/ngx-slider";
     OrderChartComponent,
     TransactionCardComponent,
     RevenuesChartComponent,
-    BalancesChartComponent,
     LanguageSelectorComponent
   ],
     imports: [
@@ -66,7 +64,6 @@ import {NgxSliderModule} from "@angular-slider/ngx-slider";
         ButtonComponent,
         StepperComponent,
         SliderComponent,
-        BalancesChartComponent,
         CashInputComponent,
         AvatarComponent,
         CounterComponent,
