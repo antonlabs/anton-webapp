@@ -32,9 +32,7 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
     if(val) {
       this._wallet = val;
       this.settingsForm = new FormGroup({
-        walletBudget: new FormControl(val.budget, Validators.required),
-        symbolMarket: new FormControl(val.symbolMarket, Validators.required),
-        autoReinvest: new FormControl(val.autoReinvest)
+        walletBudget: new FormControl(val.budget, Validators.required)
       });
       this.subscribeToBudgetChange();
     }
@@ -65,6 +63,13 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
     );
   }
 
+  get sliderMaxValue(): number | undefined {
+    if(this.limitMax !== undefined && this._wallet?.budget !== undefined) {
+      return this.limitMax > this._wallet?.budget ? this.limitMax : this._wallet?.budget;
+    }
+    return undefined;
+  }
+
   async checkout() {
     this.loading = true;
     try{
@@ -81,6 +86,10 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
     return this.isPremium != true && this.limitMax !== undefined && this.walletBudgetControl.value > 500;
   }
 
+  get youHaveNoBudget(): boolean {
+    return this.walletBudgetControl.value !== this._wallet?.budget && this.limitMax !== undefined && this.walletBudgetControl.value > this.limitMax;
+  }
+
   subscribeToBudgetChange() {
     this.walletBudgetSubscription.unsubscribe();
     this.walletBudgetSubscription = new Subscription();
@@ -93,9 +102,7 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
   }
 
   settingsForm = new FormGroup({
-    walletBudget: new FormControl(50, [Validators.min(50), Validators.max(50000)]),
-    symbolMarket: new FormControl('EUR'),
-    autoReinvest: new FormControl(false)
+    walletBudget: new FormControl(50, [Validators.min(50), Validators.max(50000)])
   });
 
   symbols = marketsAvailable;
@@ -104,12 +111,11 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
     return this.settingsForm.controls['walletBudget'] as FormControl;
   }
 
-  get autoReinvestControl(): FormControl {
-    return this.settingsForm.controls['autoReinvest'] as FormControl;
-  }
-
   async submitWallet() {
     this.loading = true;
+    if(this.mode === 'page' && this.sliderMaxValue) {
+
+    }
     try {
       this.submit.emit(await this.walletService.updateWallet({
         autoReinvest: this.settingsForm.value.autoReinvest,

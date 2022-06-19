@@ -15,6 +15,7 @@ import { DeleteBlacklistSymbolComponent } from './delete-blacklist-symbol/delete
 import {OrdersModule} from "./orders/orders.module";
 import { TransactionDetailsModalComponent } from './transaction-details-modal/transaction-details-modal.component';
 import { RunStrategyDescriptionComponent } from './run-strategy-description/run-strategy-description.component';
+import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { RunStrategyDescriptionComponent } from './run-strategy-description/run-
         AddToBlacklistComponent,
         DeleteBlacklistSymbolComponent,
         TransactionDetailsModalComponent,
-        RunStrategyDescriptionComponent
+        RunStrategyDescriptionComponent,
+        ResetDialogComponent
     ],
     exports: [
         WalletCardComponent,

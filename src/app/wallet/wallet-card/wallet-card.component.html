@@ -10,7 +10,10 @@
       </div>
     </div>
     <div class="body flex-column between">
-      <app-slider *ngIf="limitMax !== undefined" class="slider" [fc]="walletBudgetControl" (onChange)="walletBudgetControl.setValue($event)" [min]="0" [max]="limitMax"></app-slider>
+      <app-slider *ngIf="sliderMaxValue !== undefined" class="slider" [fc]="walletBudgetControl" (onChange)="walletBudgetControl.setValue($event)" [min]="0" [max]="sliderMaxValue"></app-slider>
+      <div class="alert warn text-center" *ngIf="youHaveNoBudget">
+        <h3 i18n>You don't have enough BUSD</h3>
+      </div>
       <!--div *ngIf="limitMax !== undefined && walletBudgetControl.value > 500" class="alert warn text-center" i18n>
         This is the beta version, you can invest up to 500$
       </div-->
