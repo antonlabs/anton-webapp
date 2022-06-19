@@ -112,33 +112,33 @@ export class WalletCardComponent extends AntiMemLeak implements OnInit {
   }
 
   async submitWallet() {
-    this.loading = true;
-    if(this.mode === 'page' && this.sliderMaxValue) {
-
-    }
-    try {
-      this.submit.emit(await this.walletService.updateWallet({
-        autoReinvest: this.settingsForm.value.autoReinvest,
-        symbolMarket: this.settingsForm.value.symbolMarket,
-        budget: this.settingsForm.value.walletBudget,
-        maxOrderValue: 50
-      }));
-      if(this.mode === 'wizard') {
-        location.href = '/';
+    if(this.mode === 'page' && this.limitMax && this.settingsForm.value.walletBudget < this.limitMax) {
+      this.router.navigate([''], {queryParams: { modal: 'resetDialog', budget: this.settingsForm.value.walletBudget }});
+    } else {
+      this.loading = true;
+      try {
+        this.submit.emit(await this.walletService.updateWallet({
+          autoReinvest: this.settingsForm.value.autoReinvest,
+          symbolMarket: this.settingsForm.value.symbolMarket,
+          budget: this.settingsForm.value.walletBudget,
+          maxOrderValue: 50
+        }));
+        if(this.mode === 'wizard') {
+          location.href = '/';
+        }
+        this.notificationService.success($localize`You successfully updated this wallet!`);
+      }catch(e: any) {
+        const error = JSON.parse(e.message);
+        if(error.reason === 'KEY_NOT_VALID') {
+          this.error.emit($localize`You have to put valid keys to confirm wallet creation, if you can't please click on skip, you can do it later`);
+        }else {
+          this.error.emit($localize`Ops there are some errors, retry later`);
+        }
+        console.error(e);
+      }finally {
+        this.loading = false;
       }
-      this.notificationService.success($localize`You successfully updated this wallet!`);
-    }catch(e: any) {
-      const error = JSON.parse(e.message);
-      if(error.reason === 'KEY_NOT_VALID') {
-        this.error.emit($localize`You have to put valid keys to confirm wallet creation, if you can't please click on skip, you can do it later`);
-      }else {
-        this.error.emit($localize`Ops there are some errors, retry later`);
-      }
-      console.error(e);
-    }finally {
-      this.loading = false;
     }
-
   }
 
 

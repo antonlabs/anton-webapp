@@ -24,6 +24,7 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
   @ViewChild('runStrategyDescription') runStrategyDescription: TemplateRef<any> | undefined;
   @ViewChild('unlockBudget') unlockBudget: TemplateRef<any> | undefined;
   @ViewChild('deleteBlacklistSymbol') deleteBlacklistSymbol: TemplateRef<any> | undefined;
+  @ViewChild('resetDialog') resetDialog: TemplateRef<any> | undefined;
 
   modalsRoutes: {[key: string]: TemplateRef<any> | undefined} = {};
   currentModal: TemplateRef<any> | undefined;
@@ -47,6 +48,7 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
       setCredentials: this.setCredentials,
       addToBlacklist: this.addToBlacklist,
       inspectOrder: this.inspectOrder,
+      resetDialog: this.resetDialog,
       runStrategyDescription: this.runStrategyDescription,
       unlockBudget: this.unlockBudget,
       deleteBlacklistSymbol: this.deleteBlacklistSymbol
