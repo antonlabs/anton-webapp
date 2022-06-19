@@ -55,6 +55,14 @@
     }
   }
 
+  _::-webkit-full-page-media, _:future, :root .safari_only {
+    .dialog {
+      position: absolute;
+      overflow: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
   @media only screen and (max-width: 768px) { //mobile
     .dialog {
       width: 95%;

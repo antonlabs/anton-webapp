@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {StrategyStateType, WalletModel} from "../models/wallet.model";
 import {rack} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
 import {NotificationService} from "../../shared/notification.service";
