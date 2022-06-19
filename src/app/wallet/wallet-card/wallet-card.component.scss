@@ -97,7 +97,12 @@
       justify-content: end;
     }
   }
+}
 
+::ng-deep {
+  .anton-button.disabled {
+    width: auto!important;
+  }
 }
 
 

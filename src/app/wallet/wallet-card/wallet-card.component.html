@@ -11,9 +11,6 @@
     </div>
     <div class="body flex-column between">
       <app-slider *ngIf="sliderMaxValue !== undefined" class="slider" [fc]="walletBudgetControl" (onChange)="walletBudgetControl.setValue($event)" [min]="0" [max]="sliderMaxValue"></app-slider>
-      <div class="alert warn text-center" *ngIf="youHaveNoBudget">
-        <h3 i18n>You don't have enough BUSD</h3>
-      </div>
       <!--div *ngIf="limitMax !== undefined && walletBudgetControl.value > 500" class="alert warn text-center" i18n>
         This is the beta version, you can invest up to 500$
       </div-->
@@ -25,10 +22,13 @@
       </div>
 
       <div *ngIf="!limitExceeded" class="flex-row center mt-20px">
-        <app-button *ngIf="mode === 'page'" (click)="submitWallet()" [loading]="loading">
+        <app-button *ngIf="youHaveNoBudget" [disabled]="true" type="disabled">
+          <span i18n>You don't have enough BUSD</span>
+        </app-button>
+        <app-button *ngIf="mode === 'page' && !youHaveNoBudget" (click)="submitWallet()" [loading]="loading">
           <span i18n>Save</span>
         </app-button>
-        <app-button *ngIf="mode === 'wizard'" (click)="submitWallet()" [loading]="loading">
+        <app-button *ngIf="mode === 'wizard' && !youHaveNoBudget" (click)="submitWallet()" [loading]="loading">
           <span i18n>Finish</span>
         </app-button>
       </div>
