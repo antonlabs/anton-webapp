@@ -33,7 +33,7 @@
     position: relative;
     top: 0;
     margin: 0 auto;
-    z-index: 99;
+    z-index: 999;
     padding: 10px;
     background: #fff;
     max-width: 90%;
@@ -73,6 +73,12 @@
 @media only screen and (max-width: 768px) { //mobile
   .anton-modal {
     justify-content: normal;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .anton-modal {
+    position: static;
   }
 }
 
