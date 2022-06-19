@@ -55,7 +55,7 @@
     }
   }
 
-  _::-webkit-full-page-media, _:future, :root .safari_only {
+  @supports (-webkit-touch-callout: none) {
     .dialog {
       position: absolute;
       overflow: hidden;
