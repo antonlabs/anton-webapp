@@ -25,10 +25,10 @@
       <app-order-chart [data]="{orders: currentOrders, dataSeries: currentKlines, pro}"></app-order-chart>
     </div>
     <div class="order-details-panel mt-20px flex-column">
-
       <div class="order-recap" *ngIf="!pro">
         <h3>Transaction's Info</h3>
-        <div class="card-plain flex-row between mt-10px detail">
+
+        <div class="card-plain mt-10px detail">
           <div class="att">
             <h4>Buy price</h4>
             {{currentOrders.slice(-1)[0].orders[0].price}}
