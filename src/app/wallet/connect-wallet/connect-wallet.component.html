@@ -58,7 +58,6 @@
     <app-button *ngIf="spotNotEnabled !== false" [loading]="loading" (click)="connectWallet()" class="mr-10px"><span i18n>Retry</span></app-button>
     <app-button *ngIf="bnbFeeDisabled !== false" [loading]="loading" (click)="enableBnbFees()" class="mr-10px"><span i18n>Ok</span></app-button>
     <app-button *ngIf="spotNotEnabled === false && bnbFeeDisabled === false" [loading]="loading" class="mr-10px" (click)="connectWallet()"><span i18n>Next</span></app-button>
-    <button class="anton-button" [routerLink]="['/create-wallet', 'wallet-configuration']"><span i18n>Skip</span></button>
   </div>
 
   <div class="flex-row mt-30px center buttons" *ngIf="mode === 'modal'">
