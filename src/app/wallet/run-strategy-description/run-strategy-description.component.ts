@@ -5,6 +5,8 @@ import {NotificationService} from "../../shared/notification.service";
 import {Router} from "@angular/router";
 import {FormControl} from "@angular/forms";
 
+
+
 @Component({
   selector: 'app-run-strategy-description',
   templateUrl: './run-strategy-description.component.html',
@@ -15,6 +17,20 @@ export class RunStrategyDescriptionComponent implements OnInit {
   showStrategy = false;
   loading = false;
   accepted = new FormControl(false);
+  currentIndex = 0;
+  cryptos = [
+    'ADABUSD',
+    'BNBBUSD',
+    'BTCBUSD',
+    'ETHBUSD',
+    'GALABUSD',
+    'LTCBUSD',
+    'MATICBUSD',
+    'SOLBUSD',
+    'XECBUSD',
+    'XRPBUSD'
+  ];
+  fullscreen = false;
 
   constructor(
     private router: Router,
@@ -41,6 +57,20 @@ export class RunStrategyDescriptionComponent implements OnInit {
       console.log(e);
     }finally {
       this.loading = false;
+    }
+  }
+
+  next() {
+    this.currentIndex++;
+    if(this.currentIndex > this.cryptos.length - 1) {
+      this.currentIndex = 0;
+    }
+  }
+
+  prev() {
+    this.currentIndex--;
+    if(this.currentIndex < 0) {
+      this.currentIndex = this.cryptos.length - 1;
     }
   }
 

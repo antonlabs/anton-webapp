@@ -1,0 +1,33 @@
+.gallery {
+  width: 100%;
+
+  .slide {
+    flex: 5;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+
+    &.fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index:9999;
+    }
+    img {
+      width: 200%;
+      cursor: zoom-in;
+    }
+  }
+
+  .arrow-left, .arrow-right {
+    flex: 1;
+    cursor: pointer;
+  }
+  ng-icon {
+    svg {
+      font-size: 20px;
+    }
+  }
+}
