@@ -1,0 +1,68 @@
+<div class="sidebar">
+  <app-logo></app-logo>
+  <nav>
+    <div class="flex-row item">
+      <ng-icon size="30" name="jam-home-f"></ng-icon>
+      <h2 i18n>Home</h2>
+    </div>
+    <div class="flex-row item">
+      <ng-icon size="30" name="jam-home-f"></ng-icon>
+      <h2 i18n>Market</h2>
+    </div>
+  </nav>
+  <div></div>
+</div>
+<div class="workspace">
+  <div class="card-plain content">
+    <div class="header flex-row between">
+      <div class=""></div>
+    </div>
+    <div class="body">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+
+<div class="anton-modal" *ngIf="currentModal">
+
+  <div class="dialog">
+    <button class="anton-button icon close" (click)="closeModal()">
+      <ng-icon name="jam-close"></ng-icon>
+    </button>
+    <ng-template [ngTemplateOutlet]="currentModal"></ng-template>
+  </div>
+  <div class="backdrop" (click)="closeModal()"></div>
+</div>
+
+<ng-template #inspectOrder>
+  <app-transaction-details-modal></app-transaction-details-modal>
+</ng-template>
+
+<ng-template #resetDialog>
+  <app-reset-dialog></app-reset-dialog>
+</ng-template>
+
+<ng-template #runStrategyDescription>
+  <app-run-strategy-description></app-run-strategy-description>
+</ng-template>
+
+<ng-template #setExchangeKeys>
+  <app-connect-wallet></app-connect-wallet>
+</ng-template>
+
+
+<ng-template #addToBlacklist>
+  <app-add-to-blacklist></app-add-to-blacklist>
+</ng-template>
+
+<ng-template #deleteBlacklistSymbol>
+  <app-delete-blacklist-symbol></app-delete-blacklist-symbol>
+</ng-template>
+
+<div class="notification {{currentDialog ? 'active' : ''}}">
+  <div class="speech-bubble">
+    {{currentDialog}}
+  </div>
+  <img src="assets/success.png">
+</div>

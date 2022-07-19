@@ -41,6 +41,10 @@ export class BinanceClient extends ExchangeClient {
         return (await this.prepareRequest('/api/v3/ticker/24hr', 'GET', false, {symbol}));
     }
 
+    async getAllDailyTicker(): Promise<DailyTickerModel[]> {
+      return (await this.prepareRequest('/api/v3/ticker/24hr', 'GET', false));
+    }
+
     async getFeeInfo(symbol: string): Promise<TradeInfoModel[]> {
         return (await this.prepareRequest('/sapi/v1/asset/tradeFee', 'GET', true, {symbol, timestamp: new Date().toISOString()}));
     }
@@ -373,6 +377,10 @@ export class BinanceClient extends ExchangeClient {
 
     async getSymbols(market: string): Promise<string[]> {
         return (await this.getExchangeInfo()).symbols.filter((item: any) => item.status === 'TRADING' && item.quoteAsset === market).map((item: any) => item.symbol);
+    }
+
+    async getSymbolsWithExtraInfo(market: string): Promise<any[]> {
+      return (await this.getExchangeInfo()).symbols.filter((item: any) => item.status === 'TRADING' && item.quoteAsset === market);
     }
 
     async getAccountInformation(): Promise<AccountInformationModel> {

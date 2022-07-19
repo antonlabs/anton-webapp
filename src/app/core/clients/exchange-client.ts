@@ -47,6 +47,7 @@ export abstract class ExchangeClient {
     abstract getExchangeInfo(): Promise<any>;
 
     abstract getDailyTicker(symbol: string): Promise<DailyTickerModel>;
+    abstract getAllDailyTicker(): Promise<DailyTickerModel[]>;
 
     abstract getFeeInfo(symbol: string): Promise<TradeInfoModel[]>;
 
@@ -79,6 +80,7 @@ export abstract class ExchangeClient {
     abstract sellTitle(symbol: string, price: number, quantity: number, currentPrice: number): Promise<OrderModel>;
 
     abstract getSymbols(market: string): Promise<string[]>;
+    abstract getSymbolsWithExtraInfo(market: string): Promise<any[]>;
 
     abstract getHistoricalData(symbol: string, startTime?: number, endTime?: number, period?: '1h' | '5m' | '3m'): Promise<BarData[]>;
 

@@ -1,0 +1,23 @@
+@import "../../../styles/palette";
+
+.symbols {
+  .header {
+    background: $background-color-secondary;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  .crypto-logo {
+    width: 25px;
+  }
+
+  .symbol {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .col {
+      flex: 1;
+      text-align: right;
+    }
+  }
+
+}

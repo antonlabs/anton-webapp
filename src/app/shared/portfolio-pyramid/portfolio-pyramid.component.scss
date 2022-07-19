@@ -1,0 +1,33 @@
+@import "../../../styles/palette";
+
+.pyramid {
+  width: 100%;
+  max-height: 300px;
+  display: flex;
+  flex-direction: column;
+  height: 280px;
+  -webkit-clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.pyramid__section {
+  flex: 1 1 100%;
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+
+.low-risk {
+  background-color: green;
+}
+
+.mid-risk {
+  background-color: $warn-warning;
+}
+
+.high-risk {
+  background-color: $primary-danger;
+}
+
+.pyramid__section:hover {
+  background-color: $primary-color;
+}

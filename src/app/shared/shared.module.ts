@@ -23,6 +23,8 @@ import { TransactionCardComponent } from './transaction-card/transaction-card.co
 import { RevenuesChartComponent } from './revenues-chart/revenues-chart.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
 import {NgxSliderModule} from "@angular-slider/ngx-slider";
+import { PortfolioPyramidComponent } from './portfolio-pyramid/portfolio-pyramid.component';
+import { PriceChangeComponent } from './price-change/price-change.component';
 
 
 
@@ -46,7 +48,9 @@ import {NgxSliderModule} from "@angular-slider/ngx-slider";
     OrderChartComponent,
     TransactionCardComponent,
     RevenuesChartComponent,
-    LanguageSelectorComponent
+    LanguageSelectorComponent,
+    PortfolioPyramidComponent,
+    PriceChangeComponent
   ],
     imports: [
       CommonModule,
@@ -74,7 +78,9 @@ import {NgxSliderModule} from "@angular-slider/ngx-slider";
         OrderChartComponent,
         TransactionCardComponent,
         RevenuesChartComponent,
-        LanguageSelectorComponent
+        LanguageSelectorComponent,
+        PortfolioPyramidComponent,
+        PriceChangeComponent
     ]
 })
 export class SharedModule { }

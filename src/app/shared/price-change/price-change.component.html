@@ -1,0 +1,5 @@
+<div *ngIf="priceN !== undefined" class="price-box {{priceN > 0 ? 'green' : 'red'}}">
+  {{priceN > 0 ? '+' : ''}}
+  {{priceN}}
+  {{symbolSuffix}}
+</div>

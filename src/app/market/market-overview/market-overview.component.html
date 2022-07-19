@@ -1,0 +1,15 @@
+<div class="symbols">
+  <div class="flex-row between header">
+    <h2>Symbol</h2>
+    <h2>Percent change</h2>
+    <h2>Price</h2>
+  </div>
+  <div *ngFor="let symbol of symbols" class="symbol flex-row between">
+    <div class="flex-row col">
+      <img class="crypto-logo" src="https://cryptologos.cc/logos/{{cryptoMap[symbol.symbol.toUpperCase().replace(market, '')] ?? ''}}-{{symbol.symbol.toLowerCase().replace(market.toLowerCase(), '')}}-logo.svg" onerror="this.src='/assets/unknown-coin.png'" />
+      <h3 class="ml-10px mt-10px">{{symbol.symbol}}</h3>
+    </div>
+    <h4 class="text-center col flex-row center"><app-price-change [price]="symbol.percentChange" symbolSuffix="%"></app-price-change></h4>
+    <h4 class="col">{{symbol.price}}</h4>
+  </div>
+</div>

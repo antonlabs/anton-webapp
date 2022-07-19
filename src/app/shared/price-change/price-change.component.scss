@@ -1,0 +1,14 @@
+@import "../../../styles/palette";
+
+.price-box {
+  color: #fff;
+  max-width: 80px;
+  padding: 2px;
+  border-radius: 5px;
+  &.green {
+    background: $primary-active;
+  }
+  &.red {
+    background: $primary-danger;
+  }
+}

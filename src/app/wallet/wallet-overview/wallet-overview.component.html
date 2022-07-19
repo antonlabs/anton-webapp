@@ -26,39 +26,15 @@
   </div>
   <div class="flex-row between mobile-flex-column">
     <div>
-      <h1 i18n>Your wallet</h1>
+      <h1 i18n>Hello! 👋</h1>
       <h5 i18n>Take a look of your journey status in the crypto world</h5>
-    </div>
-    <div class="mobile-flex-row flex-row mobile-mt-20px">
-      <app-button *ngIf="wallet?.strategy?.state === strategyState.DEPLOYED || wallet?.strategy?.state === strategyState.STOPPED || wallet?.strategy?.state === strategyState.RUNNING" (click)="playStrategy()" [loading]="playLoading" class="mr-10px" [type]="wallet?.strategy?.state === strategyState.RUNNING ? '' : 'active pulse'">
-          <ng-container *ngIf="wallet?.strategy?.state === strategyState.STOPPED || wallet?.strategy?.state === strategyState.DEPLOYED">
-            <ng-icon name="jam-play"></ng-icon>
-            <span i18n>
-              Play
-            </span>
-          </ng-container>
-          <ng-container *ngIf="wallet?.strategy?.state === strategyState.RUNNING">
-            <ng-icon name="jam-pause"></ng-icon>
-            <span i18n>
-              Pause
-            </span>
-          </ng-container>
-      </app-button>
-      <button *ngIf="linked === false" class="anton-button link-button pulse primary" [routerLink]="['/overview']" [queryParams]="{modal: 'setCredentials'}">
-        <ng-icon name="mat-link"></ng-icon>
-        <span i18n>Connect to Binance</span>
-      </button>
-      <!--button class="anton-button telegram mobile-ml-10px ml-10px mobile-ml-0px" i18n>
-        <ng-icon name="mat-telegram"></ng-icon>
-        Connect to Telegram
-      </button-->
-
     </div>
 
   </div>
 
+  <!--app-portfolio-pyramid></app-portfolio-pyramid --->
+
   <div class="profile flex-row mt-30px mobile-flex-column">
-    <app-wallet-card [wallet]="wallet" style="flex: 1; width: 100%"></app-wallet-card>
     <div class="flex-column profile-counters ml-10px mobile-ml-0px mobile-mt-10px">
       <div class="flex-row">
         <app-counter class="mr-10px" sign="$" style="flex: 1" [value]="walletBalance" image="/assets/wallet.png"  i18n-description description="Wallet balance"></app-counter>

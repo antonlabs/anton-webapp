@@ -23,15 +23,11 @@ $max-width-layout: 1000px;
 
     .menu-bar-wrapper {
       padding: 15px 25px 15px 15px;
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      flex: 1;
+      background: $background-color-secondary;
       .menu-bar {
         display: flex;
-        max-width: $max-width-layout;
         justify-content: space-between;
-
+        max-width: 1000px;
         .wallets {
           margin-right: 15px;
           img {

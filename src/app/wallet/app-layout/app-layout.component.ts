@@ -1,22 +1,21 @@
 import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {AntiMemLeak} from "../../shared/anti-mem-leak";
-import {AuthService} from "../../auth/auth.service";
-import {UserService} from "../../shared/user.service";
-import {refreshWallets} from "../../shared/helpers";
-import { ModalService } from 'src/app/modal.service';
-import {rack} from 'src/app/states/app-state';
-import {WalletStateProps} from "../../states/wallets-state";
-import {NotificationService} from "../../shared/notification.service";
-import {getRightMarginFromElement} from "../../core/elements-helper";
-
+import {AuthService} from "../auth/auth.service";
+import {UserService} from "../shared/user.service";
+import {NotificationService} from "../shared/notification.service";
+import {ModalService} from "../modal.service";
+import {getRightMarginFromElement} from "../core/elements-helper";
+import {refreshWallets} from "../shared/helpers";
+import {rack} from "../states/app-state";
+import {WalletStateProps} from "../states/wallets-state";
+import {AntiMemLeak} from "../shared/anti-mem-leak";
 
 @Component({
-  selector: 'app-wallet-layout',
-  templateUrl: './wallet-layout.component.html',
-  styleUrls: ['./wallet-layout.component.scss']
+  selector: 'app-app-layout',
+  templateUrl: './app-layout.component.html',
+  styleUrls: ['./app-layout.component.scss']
 })
-export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterViewInit {
+export class AppLayoutComponent extends AntiMemLeak implements OnInit, AfterViewInit {
   endpoint: string | undefined;
   @ViewChild('setExchangeKeys') setCredentials: TemplateRef<any> | undefined;
   @ViewChild('addToBlacklist') addToBlacklist: TemplateRef<any> | undefined;
@@ -124,5 +123,6 @@ export class WalletLayoutComponent extends AntiMemLeak implements OnInit, AfterV
     this.authService.logout();
     location.reload();
   }
+
 
 }

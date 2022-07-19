@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {WalletLayoutComponent} from "./wallet-layout/wallet-layout.component";
 import {WalletOverviewComponent} from "./wallet-overview/wallet-overview.component";
 import {WalletCreateLayoutComponent} from "./wallet-create-layout/wallet-create-layout.component";
 import { ProfileLayoutComponent } from '../profile/profile-layout/profile-layout.component';
+import {AppLayoutComponent} from "./app-layout/app-layout.component";
 
 const routes: Routes = [
   {
@@ -39,7 +39,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: WalletLayoutComponent,
+    component: AppLayoutComponent,
     children: [
       {
         path: '',
@@ -49,6 +49,10 @@ const routes: Routes = [
       {
         path: 'overview',
         component: WalletOverviewComponent
+      },
+      {
+        path: 'market',
+        loadChildren: () => import('../market/market.module').then( m => m.MarketModule)
       },
       {
         path: 'settings',

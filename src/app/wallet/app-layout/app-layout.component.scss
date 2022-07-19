@@ -1,0 +1,46 @@
+@import "../../styles/palette";
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 100px;
+  background: rgba(95,94,94,0.1);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 200px);
+  justify-content: space-between;
+  app-logo {
+    flex: 1;
+  }
+  nav {
+    flex: 4;
+    .item {
+      width: 100%;
+      text-align: left;
+      margin-top: 25px;
+      h2 {
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
+.workspace {
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  .content {
+    min-height: 50vh;
+    padding: 0;
+    .header {
+      border-bottom: 1px solid $secondary-color-light;
+      padding-top: 150px;
+    }
+    .body {
+      padding-left: 300px;
+      padding-right: 10px;
+    }
+  }
+}

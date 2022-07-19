@@ -1,12 +1,12 @@
 <div class="wallet-layout">
   <div class="content-wrapper">
-    <div class="menu-bar-wrapper">
+    <div class="menu-bar-wrapper flex-row center">
       <div class="menu-bar">
         <div class="flex-row">
           <app-logo></app-logo>
           <nav class="flex-row mobile-ml-0px ml-50px between mobile-flex-row mobile-end">
-            <h3 id="overview-menu" [routerLink]="['/']" [class]="liClass('overview') + ' mobile-mr-10px'" i18n>Home</h3>
-            <h3 id="orders-menu" [routerLink]="['/orders']" [class]="liClass('orders')" i18n>Trades</h3>
+            <h3 id="overview-menu" [routerLink]="['/']" [class]="liClass('overview') + ' mobile-mr-10px'" i18n>Wallet</h3>
+            <h3 id="orders-menu" [routerLink]="['/market']" [class]="liClass('market')" i18n>Market</h3>
           </nav>
         </div>
         <div class="flex-row">

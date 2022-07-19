@@ -10,7 +10,7 @@ import {
   JamArrowCircleRightF, JamArrowUp,
   JamBell,
   JamClose, JamCogs,
-  JamCoin, JamCrown, JamFacebookCircle, JamGithubCircle, JamInstagram,
+  JamCoin, JamCrown, JamFacebookCircle, JamGithubCircle, JamHomeF, JamInstagram,
   JamPause,
   JamPencil,
   JamPlay,
@@ -18,6 +18,7 @@ import {
   JamUserCircle
 } from '@ng-icons/jam-icons';
 import { HttpClientModule } from '@angular/common/http';
+import {SharedModule} from "./shared/shared.module";
 
 
 
@@ -26,34 +27,36 @@ import { HttpClientModule } from '@angular/common/http';
       AppComponent
     ],
     imports: [
-      BrowserModule,
-      HttpClientModule,
-      NgIconsModule.withIcons({
-        MatTelegram,
-        JamArrowCircleLeftF,
-        JamArrowCircleDownF,
-        JamArrowCircleRightF,
-        JamUserCircle,
-        MatCurrencyExchange,
-        JamPause,
-        JamPlay,
-        MatLinkOff,
-        JamClose,
-        JamCrown,
-        JamArrowUp,
-        JamInstagram,
-        JamTwitterCircle,
-        JamGithubCircle,
-        JamCogs,
-        JamFacebookCircle,
-        JamPencil,
-        MatLink,
-        JamSearch,
-        JamPlusCircleF,
-        JamBell,
-        JamCoin
-      }),
-      AppRoutingModule
+        BrowserModule,
+        HttpClientModule,
+        NgIconsModule.withIcons({
+            MatTelegram,
+            JamArrowCircleLeftF,
+            JamArrowCircleDownF,
+            JamHomeF,
+            JamArrowCircleRightF,
+            JamUserCircle,
+            MatCurrencyExchange,
+            JamPause,
+            JamPlay,
+            MatLinkOff,
+            JamClose,
+            JamCrown,
+            JamArrowUp,
+            JamInstagram,
+            JamTwitterCircle,
+            JamGithubCircle,
+            JamCogs,
+            JamFacebookCircle,
+            JamPencil,
+            MatLink,
+            JamSearch,
+            JamPlusCircleF,
+            JamBell,
+            JamCoin
+        }),
+        AppRoutingModule,
+        SharedModule
     ],
     providers: [],
     exports: [],
