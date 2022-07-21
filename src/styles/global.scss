@@ -262,11 +262,10 @@ $marginsPixels: 0px, 10px, 20px, 30px, 40px, 50px;
         rgba(#fff, 0),
         rgba(#fff, 0.5),
         rgba(#fff, 0)
-    );
-  background-size: 40px 100%; // width of the shine
-  background-repeat: no-repeat; // No need to repeat the shine effect
-  background-position: left -40px top 0; // Place shine on the left side, with offset on the left based on the width of the shine - see background-size
-  animation: shine 1s ease infinite; // increase animation time to see effect in 'slow-mo'
+    )!important;
+  background-size: 40px 100% !important; // width of the shine
+  background-repeat: no-repeat !important; // No need to repeat the shine effect
+  animation: shine 1s ease infinite !important; // increase animation time to see effect in 'slow-mo'
 }
 
 @keyframes shine {

@@ -35,17 +35,18 @@
   <!--app-portfolio-pyramid></app-portfolio-pyramid --->
 
   <div class="flex-row between mobile-flex-column mt-10px" style="gap: 10px;">
-    <div class="card-plain wallet-card">
-      <div class="flex-column">
-        <div>
+    <div class="card-plain wallet-card {{walletBalance === undefined || totalEarnings === undefined ? 'skeleton' : ''}}">
+      <div class="flex-column content">
+        <div *ngIf="walletBalance !== undefined">
           <h3 i18n>Wallet balance</h3>
           <h1>{{walletBalance | currency}}</h1>
         </div>
-        <div class="mt-20px">
+        <div class="mt-20px" *ngIf="totalEarnings !== undefined">
           <h3 i18n>Revenues</h3>
           <h1>{{totalEarnings | currency}}</h1>
         </div>
       </div>
+      <img src="/assets/waves.png" />
     </div>
     <div class="earnings-container">
       <div class="card-plain earnings">
