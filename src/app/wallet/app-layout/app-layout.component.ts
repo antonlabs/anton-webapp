@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService} from "../auth/auth.service";
-import {UserService} from "../shared/user.service";
-import {NotificationService} from "../shared/notification.service";
-import {ModalService} from "../modal.service";
-import {getRightMarginFromElement} from "../core/elements-helper";
-import {refreshWallets} from "../shared/helpers";
-import {rack} from "../states/app-state";
-import {WalletStateProps} from "../states/wallets-state";
-import {AntiMemLeak} from "../shared/anti-mem-leak";
+import {AntiMemLeak} from "../../shared/anti-mem-leak";
+import {AuthService} from "../../auth/auth.service";
+import {UserService} from "../../shared/user.service";
+import {NotificationService} from "../../shared/notification.service";
+import {refreshWallets} from "../../shared/helpers";
+import {rack} from "../../states/app-state";
+import {WalletStateProps} from "../../states/wallets-state";
+import {getRightMarginFromElement} from "../../core/elements-helper";
+import {ModalService} from "../../modal.service";
 
 @Component({
   selector: 'app-app-layout',

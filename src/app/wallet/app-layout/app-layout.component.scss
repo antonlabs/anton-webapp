@@ -1,4 +1,4 @@
-@import "../../styles/palette";
+@import "../../../styles/palette";
 
 .sidebar {
   position: absolute;
@@ -19,8 +19,18 @@
       width: 100%;
       text-align: left;
       margin-top: 25px;
+      cursor: pointer;
+      &:before {
+        transition: .3s ease all;
+      }
       h2 {
         margin-left: 20px;
+      }
+      &:hover, &.active {
+        color: $primary-color;
+        h2 {
+          color: $primary-color;
+        }
       }
     }
   }
@@ -31,16 +41,57 @@
   padding-left: 50px;
   padding-right: 50px;
   padding-bottom: 50px;
+  .search-input {
+    border-radius: 15px;
+    border: none;
+    background-color: $background-color;
+  }
   .content {
     min-height: 50vh;
     padding: 0;
     .header {
       border-bottom: 1px solid $secondary-color-light;
-      padding-top: 150px;
+      padding-top: 50px;
+      padding-bottom: 100px;
+      padding-right: 50px;
     }
     .body {
       padding-left: 300px;
       padding-right: 10px;
+      padding-bottom: 10px;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 768px) { //mobile
+  .sidebar {
+    width: 100%;
+    bottom: 0;
+    height: 100px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+    }
+  }
+  .workspace {
+    padding: 15px;
+    padding-top: 150px;
+    .content {
+      .body {
+        padding-left: 10px;
+        .wallet-overview {
+          .wallet-card {
+            width: 100%!important;
+          }
+        }
+      }
     }
   }
 }

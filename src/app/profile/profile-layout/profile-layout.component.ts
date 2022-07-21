@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ModalService} from "../../modal.service";
-import {ImageCroppedEvent, LoadedImage} from "ngx-image-cropper";
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {ActivatedRoute} from "@angular/router";
 
@@ -44,12 +43,6 @@ export class ProfileLayoutComponent extends AntiMemLeak implements OnInit, After
     this.modalService.closeModal();
   }
 
-  imageCropped(event: ImageCroppedEvent) {
-    this.croppedImage = event.base64;
-  }
-  imageLoaded(image: LoadedImage) {
-    // show cropper
-  }
   cropperReady() {
     // cropper ready
   }

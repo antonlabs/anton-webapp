@@ -2,22 +2,36 @@
 
 .symbols {
   .header {
-    background: $background-color-secondary;
+    background: $background-color;
     padding: 10px;
     border-radius: 10px;
     margin-top: 10px;
   }
   .crypto-logo {
-    width: 25px;
+    width: 40px;
+    max-width: 40px;
+    max-height: 40px;
   }
 
   .symbol {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 10px;
+
+    &:hover {
+      background: $background-color;
+    }
     .col {
       flex: 1;
       text-align: right;
     }
+  }
+
+  .bar {
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    margin-top: 10px;
   }
 
 }

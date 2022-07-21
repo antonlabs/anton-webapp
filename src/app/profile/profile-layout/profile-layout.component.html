@@ -12,16 +12,6 @@
 
 <ng-template #cropImage>
   <div class="image-cropper-container">
-    <image-cropper
-      [imageBase64]="imageToCropBase64"
-      [maintainAspectRatio]="true"
-      [roundCropper]="true"
-      [imageQuality]="100"
-      (imageCropped)="imageCropped($event)"
-      (imageLoaded)="imageLoaded($event)"
-      (cropperReady)="cropperReady()"
-      (loadImageFailed)="loadImageFailed()"
-    ></image-cropper>
   </div>
   <div class="flex-row">
     <app-button>

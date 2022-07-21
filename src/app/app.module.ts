@@ -13,7 +13,7 @@ import {
   JamCoin, JamCrown, JamFacebookCircle, JamGithubCircle, JamHomeF, JamInstagram,
   JamPause,
   JamPencil,
-  JamPlay,
+  JamPlay, JamPlus,
   JamPlusCircleF, JamSearch, JamTwitterCircle,
   JamUserCircle
 } from '@ng-icons/jam-icons';
@@ -42,6 +42,7 @@ import {SharedModule} from "./shared/shared.module";
             MatLinkOff,
             JamClose,
             JamCrown,
+          JamPlus,
             JamArrowUp,
             JamInstagram,
             JamTwitterCircle,

@@ -1,24 +1,45 @@
 <div class="sidebar">
   <app-logo></app-logo>
   <nav>
-    <div class="flex-row item">
+    <div class="flex-row item {{liClass('overview') + ' mobile-mr-10px'}}" [routerLink]="['/']">
       <ng-icon size="30" name="jam-home-f"></ng-icon>
       <h2 i18n>Home</h2>
     </div>
-    <div class="flex-row item">
-      <ng-icon size="30" name="jam-home-f"></ng-icon>
+    <div class="flex-row item {{liClass('market') + ' mobile-mr-10px'}}" [routerLink]="['/market']" >
+      <ng-icon size="30" name="jam-coin"></ng-icon>
       <h2 i18n>Market</h2>
+    </div>
+    <div class="flex-row item {{liClass('settings') + ' mobile-mr-10px'}}" [routerLink]="['/settings']" >
+      <ng-icon size="30" name="jam-cogs"></ng-icon>
+      <h2 i18n>Settings</h2>
     </div>
   </nav>
   <div></div>
 </div>
 <div class="workspace">
   <div class="card-plain content">
-    <div class="header flex-row between">
-      <div class=""></div>
-    </div>
-    <div class="body">
-      <router-outlet></router-outlet>
+    <div style="max-width: 100em; display: block; margin: 0 auto;">
+      <div class="header flex-row between">
+        <div></div>
+        <input class="anton-input search-input ml-50px" type="text" i18n-placeholder placeholder="🔍 Search...">
+        <div class="flex-row" style="gap: 15px;">
+          <div class="mt-10px">
+            <app-language-selector></app-language-selector>
+          </div>
+          <div class="anton-button icon">
+            <ng-icon name="jam-bell"></ng-icon>
+          </div>
+          <div class="anton-button icon">
+            <ng-icon name="jam-cogs"></ng-icon>
+          </div>
+          <div class="anton-button icon">
+            <ng-icon name="jam-close"></ng-icon>
+          </div>
+        </div>
+      </div>
+      <div class="body">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
 </div>

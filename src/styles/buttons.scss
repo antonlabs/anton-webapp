@@ -2,7 +2,7 @@
 
 .anton-button {
   padding: 10px;
-  border-radius: 3px;
+  border-radius: 10px;
   box-shadow: rgba(17, 17, 26, 0.1) 0 1px 0;
   border: none;
   font-size: 20px;
@@ -10,6 +10,25 @@
   display: flex;
   height: 43px;
   justify-content: space-evenly;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  font-weight: 600;
+  background-size: 300% 100%;
+
+
+  &:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+  }
+
+  &:focus {
+    outline: none;
+  }
 
   .spinner {
     flex: 1;
@@ -20,11 +39,12 @@
   }
 
   &.icon {
-    background: transparent!important;
+    background: $background-color;
     color: $primary-color-dark;
-    box-shadow: none;
-    padding: 0;
-    height: 0;
+    border-radius: 100%;
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
 
     &.primary {
       color: $primary-color;
@@ -78,7 +98,7 @@
   }
 
   &.primary {
-    background-color: $primary-color;
+    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
     color: $primary-color-text;
 
     .spinner > div {
@@ -89,10 +109,12 @@
   &.skeleton {
     color: $primary-color;
   }
+
   &.danger {
     background-color: $primary-danger;
     color: $primary-danger-text;
   }
+
   &.active {
     background-color: $primary-active;
     color: $primary-active-text;

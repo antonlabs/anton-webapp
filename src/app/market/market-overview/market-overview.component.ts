@@ -18,7 +18,6 @@ export class MarketOverviewComponent implements OnInit {
   symbols: SymbolMarket[] | undefined;
   cryptoMap = cryptoMap;
   market = 'BUSD';
-
   constructor() { }
 
   ngOnInit(): void {

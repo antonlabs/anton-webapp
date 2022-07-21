@@ -1,31 +1,31 @@
+@import "../../../styles/palette";
+
 .container {
   height: 100%;
   min-height: 85vh;
   padding: 25px;
 
-  .blacklist {
-    .body {
-      padding: 5px;
-      max-height: 300px;
-      overflow: auto;
-      text-align: center;
-    }
+}
+.card-plain {
+  background: $background-color;
+  flex: 1;
+}
+
+ng-icon.settings-icon {
+  font-size: 30px;
+}
+
+.wallet {
+  background-color: $background-color;
+  background-position: center;
+  background-size: 100% 100%;
+  height: 400px;
+  width: 350px;
+  flex: 1;
+  &.binance {
+    background-image: url("/assets/waves-binance.png");
   }
-  .a1{display: flex;
-    text-align: center;
-    justify-content: center;}
-
-  .a2{background-color: #808080;
-    border-radius: 0px 6px 6px 0px;
-    margin: 14.8px 0px 0px -1px;
-    color: white;
-    letter-spacing: 1px;
-    padding: 2.5px 5px 0px 5px;
-    height: 21.5px;
-    transform: skew(170deg);}
-
-  .crown {
-    font-size: 50px;
-    color: #FFD114;
+  &.new {
+    background-image: url("/assets/waves-new-wallet.png");
   }
 }
