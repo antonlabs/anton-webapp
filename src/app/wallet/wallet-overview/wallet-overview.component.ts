@@ -10,6 +10,8 @@ import {getErrorMessage, getTransactions, refreshBalances, refreshWallets} from 
 import {TransactionModel} from "../../core/clients/models/transaction.model";
 import {DailyTickerModel} from "../../core/clients/models/daily-ticker.model";
 
+
+
 @Component({
   selector: 'app-wallet-overview',
   templateUrl: './wallet-overview.component.html',
@@ -28,9 +30,8 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   loadingEnableBnbFee = false;
   chartMode: 'earnings' | 'balances' = 'earnings';
   checkingInterval: any;
-  bitcoinCandles = [];
   btcValue: DailyTickerModel | undefined;
-  float = parseFloat;
+
 
   constructor(
     private router: Router,

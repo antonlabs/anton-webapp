@@ -27,6 +27,23 @@
     }
   }
 
+  .risk {
+    padding: 5px;
+    text-align: right;
+    &.HIGH {
+      color: $primary-danger;
+    }
+    &.LOW {
+      color: $primary-active;
+    }
+    &.STABLE {
+      color: $primary-color-light-dark;
+    }
+    &.MEDIUM {
+      color: $light-color;
+    }
+  }
+
   .bar {
     width: 100%;
     height: 50px;

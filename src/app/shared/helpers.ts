@@ -167,6 +167,26 @@ export const getWalletBalances = async (): Promise<BalanceModel[]> => {
   }))
 }
 
+export const getRisks = async (): Promise<{symbol: string, risk: string}[]> => {
+  if(!rack.states.user.val.identityId) return [];
+  return ((await documentClient().query({
+    TableName: tableName,
+    KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :sk)',
+    ExpressionAttributeNames: {
+      '#sk': 'sk',
+      '#pk': 'pk'
+    },
+    ExpressionAttributeValues: {
+      ':sk': 'RISK',
+      ':pk': 'GLOBALS'
+    }
+  })).Items ?? []).map(o => ({
+    symbol: o['sk'].split("#")[1],
+    risk: o['risk']
+  }))
+}
+
+
 
 export interface GetTransactionOutput<T> {
     data: T[],

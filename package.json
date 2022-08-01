@@ -16,6 +16,7 @@
   },
   "private": true,
   "dependencies": {
+    "@amcharts/amcharts5": "^5.2.14",
     "@angular-slider/ngx-slider": "^2.0.4",
     "@angular/animations": "~13.1.0",
     "@angular/common": "~13.1.0",

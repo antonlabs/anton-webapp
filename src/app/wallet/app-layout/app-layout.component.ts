@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, HostListener, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {AuthService} from "../../auth/auth.service";
@@ -9,6 +9,9 @@ import {rack} from "../../states/app-state";
 import {WalletStateProps} from "../../states/wallets-state";
 import {getRightMarginFromElement} from "../../core/elements-helper";
 import {ModalService} from "../../modal.service";
+
+export const scrollPosition = new EventEmitter();
+
 
 @Component({
   selector: 'app-app-layout',
@@ -40,6 +43,7 @@ export class AppLayoutComponent extends AntiMemLeak implements OnInit, AfterView
   ) {
     super();
   }
+
 
   ngAfterViewInit(): void {
     this.modalsRoutes = {

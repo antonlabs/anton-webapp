@@ -1,8 +1,10 @@
 <div class="symbols">
   <div class="flex-row between header">
-    <h2>Symbol</h2>
-    <h2>Percent change</h2>
-    <h2>Price</h2>
+    <h2 i18n>Symbol</h2>
+    <h2 i18n>Percent change</h2>
+    <h2 i18n>Risk</h2>
+    <h2 i18n>Indicator</h2>
+    <h2 i18n>Price</h2>
   </div>
   <div *ngIf="!symbols">
     <div *ngFor="let bar of [].constructor(5)" class="bar skeleton"></div>
@@ -13,6 +15,9 @@
       <h2 class="ml-10px mt-10px">{{symbol.symbol}}</h2>
     </div>
     <h3 class="text-center col flex-row center"><app-price-change [price]="symbol.percentChange" symbolSuffix="%"></app-price-change></h3>
+    <h3 class="col flex-row center risk {{symbol.risk}}" *ngIf="symbol.risk">{{symbol.risk}}</h3>
+    <div class="col">
+    </div>
     <h2 class="col">{{symbol.price | currency}}</h2>
   </div>
 </div>

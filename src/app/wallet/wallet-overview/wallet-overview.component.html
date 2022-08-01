@@ -48,15 +48,28 @@
       </div>
       <img src="/assets/waves.png" />
     </div>
-    <div class="earnings-container">
-      <div class="card-plain earnings">
-          <ng-container *ngIf="chartMode === 'earnings'">
-            <app-revenues-chart></app-revenues-chart>
-          </ng-container>
+    <div class="portfolio balanced-risk card-plain">
+      <div class="flex-row">
+        <h2 style="flex: 1" i18n>My Cryptos</h2>
+        <div class="flex-column" style="flex: 2; text-align: center">
+          <h4 i18n>Risk level</h4>
+          <div class="bar" style="margin-top: 3px;">
+            <div class="progress"></div>
+          </div>
+        </div>
       </div>
+
+      <app-pie-chart [values]="[10, 50, 40]"></app-pie-chart>
     </div>
   </div>
-  <div class="card-plain">
+  <div class="earnings-container mt-10px">
+    <div class="card-plain earnings">
+      <ng-container *ngIf="chartMode === 'earnings'">
+        <app-revenues-chart></app-revenues-chart>
+      </ng-container>
+    </div>
+  </div>
+  <div class="card-plain mt-10px">
     <div class="flex-row center">
       <div class="text-center">
         <div class="mt-10px">

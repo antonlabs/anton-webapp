@@ -2,8 +2,9 @@
 
 .price-box {
   color: #fff;
-  max-width: 80px;
-  padding: 2px;
+  padding: 5px;
+  border: none;
+  font-size: 25px;
   border-radius: 5px;
   &.green {
     background: $primary-active;

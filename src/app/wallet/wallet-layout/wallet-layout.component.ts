@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {AuthService} from "../../auth/auth.service";
@@ -9,6 +9,8 @@ import {rack} from 'src/app/states/app-state';
 import {WalletStateProps} from "../../states/wallets-state";
 import {NotificationService} from "../../shared/notification.service";
 import {getRightMarginFromElement} from "../../core/elements-helper";
+
+
 
 
 @Component({

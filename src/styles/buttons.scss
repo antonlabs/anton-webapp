@@ -111,12 +111,17 @@
   }
 
   &.danger {
-    background-color: $primary-danger;
+    background-image: linear-gradient(to right, $primary-danger, #c07867, $primary-danger, #c07867);
+    color: $primary-danger-text;
+  }
+
+  &.warning {
+    background-image: linear-gradient(to right, $light-color, #b9b111, $light-color, #b9b111);
     color: $primary-danger-text;
   }
 
   &.active {
-    background-color: $primary-active;
+    background-image: linear-gradient(to right, $primary-active, #16c54c, $primary-active, #16c54c);
     color: $primary-active-text;
   }
 

@@ -25,6 +25,7 @@ import { LanguageSelectorComponent } from './language-selector/language-selector
 import {NgxSliderModule} from "@angular-slider/ngx-slider";
 import { PortfolioPyramidComponent } from './portfolio-pyramid/portfolio-pyramid.component';
 import { PriceChangeComponent } from './price-change/price-change.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 
 
@@ -50,7 +51,8 @@ import { PriceChangeComponent } from './price-change/price-change.component';
     RevenuesChartComponent,
     LanguageSelectorComponent,
     PortfolioPyramidComponent,
-    PriceChangeComponent
+    PriceChangeComponent,
+    PieChartComponent
   ],
     imports: [
       CommonModule,
@@ -80,7 +82,8 @@ import { PriceChangeComponent } from './price-change/price-change.component';
         RevenuesChartComponent,
         LanguageSelectorComponent,
         PortfolioPyramidComponent,
-        PriceChangeComponent
+        PriceChangeComponent,
+        PieChartComponent
     ]
 })
 export class SharedModule { }

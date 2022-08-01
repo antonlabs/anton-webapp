@@ -5,11 +5,11 @@
 html, body {
   margin: 0;
   overflow-x: hidden;
-  font-family: 'IBM Plex Sans', sans-serif !important;
   background: $background-color;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $primary-color-dark;
+  font-family: 'arial-rounded-regular', sans-serif;
 }
 
 h1, h2, h3, h4, h5 {
@@ -350,4 +350,11 @@ $marginsPixels: 0px, 10px, 20px, 30px, 40px, 50px;
 a {
   color: #fff;
   text-decoration: underline;
+}
+
+.bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 10px;
+  background-color: #fff;
 }
