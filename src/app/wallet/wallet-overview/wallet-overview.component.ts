@@ -6,9 +6,11 @@ import {rack} from "../../states/app-state";
 import {WalletService} from "../../shared/wallet.service";
 import {Router} from '@angular/router';
 import {NotificationService} from "../../shared/notification.service";
-import {getErrorMessage, getTransactions, refreshBalances, refreshWallets} from "../../shared/helpers";
+import {getTransactions, refreshBalances} from "../../shared/helpers";
 import {TransactionModel} from "../../core/clients/models/transaction.model";
 import {DailyTickerModel} from "../../core/clients/models/daily-ticker.model";
+import {SymbolMarket} from "../../market/models/market.model";
+import {Balance} from "../../core/clients/models/account/Balance";
 
 
 
@@ -23,9 +25,7 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
   actualBalance: number | undefined;
   linked: boolean | undefined;
   playLoading = false;
-  closedTransactions: TransactionModel[] = [];
   strategyState = StrategyStateType;
-  getErrorMessage = getErrorMessage;
   loadingReUpdateWallet = false;
   loadingEnableBnbFee = false;
   chartMode: 'earnings' | 'balances' = 'earnings';
@@ -47,30 +47,9 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
         this.name = state.name;
       })
     );
-    this.sub.add(
-      rack.states.currentWallet.obs.subscribe(wallet => {
-        this.wallet = wallet;
-        if(!this.checkingInterval && wallet.strategy?.state === StrategyStateType.DEPLOYING) {
-          /*this.checkingInterval = setInterval(() => {
-            refreshWallets();
-          }, 10000);*/
-        }
-        if(this.wallet.name) {
-          if(wallet.balances.length === 0) {
-            refreshBalances();
-          }
-          this.refreshExchangeLink();
-        }
-      })
-    );
-    rack.states.exchange.getClient()?.getDailyTicker('BTCBUSD').then((v) => {
-      this.btcValue = v;
-      console.log(v);
-    });
-    getTransactions('CLOSE').then(transactions => {
-      this.closedTransactions = transactions.data.filter(o => o.earnings !== undefined);
-    });
   }
+
+
 
   slice(elements: any[]) {
     return elements.slice(0, 10);
@@ -97,23 +76,6 @@ export class WalletOverviewComponent extends AntiMemLeak implements OnInit {
     }
   }
 
-  get walletBalance(): number | undefined {
-    return this.wallet?.balances.slice(-1)[0]?.balance;
-  }
-
-  get totalPercentage(): number | undefined {
-    if(this.wallet?.totalEarnings !== undefined && this.wallet?.budget !== undefined) {
-      return ((this.wallet.totalEarnings) / (this.wallet.budget)) * 100;
-    }
-    return undefined;
-  }
-
-  get totalEarnings(): number | undefined {
-    if(this.wallet?.totalEarnings !== undefined) {
-      return this.wallet.totalEarnings;
-    }
-    return undefined;
-  }
 
   async enableBnbFees() {
     if(this.wallet?.name) {

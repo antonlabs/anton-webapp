@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from '@angular/router';
 import {rack} from 'src/app/states/app-state';
 import {WalletService} from "../../../shared/wallet.service";

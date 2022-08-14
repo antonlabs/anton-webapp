@@ -29,27 +29,6 @@
   }
 
 
-  .wallet-card {
-    height: 400px;
-    position: relative;
-    width: 350px;
-    flex: 1;
-    overflow: hidden;
-    .content {
-      position: relative;
-      z-index: 10;
-    }
-    img {
-      z-index: 1;
-      position: absolute;
-      min-width: 100%;
-      min-height: 100%;
-      top: 0;
-      left: 0;
-    }
-  }
-
-
   .profile {
     .profile-counters {
       flex: 1;
@@ -58,37 +37,6 @@
       .profile-card {
         height: 100%;
       }
-    }
-  }
-
-  .orders {
-    flex: 2;
-    text-align: center;
-    .body {
-      padding: 2px;
-      .symbol {
-        cursor: pointer;
-        border-radius: 3px;
-        margin-top: 10px;
-        &:hover {
-          outline: 2px solid $primary-color;
-        }
-      }
-    }
-
-  }
-
-  .portfolio {
-    flex: 1;
-    min-height: 300px;
-
-  }
-
-  .closedTransactions {
-    .body {
-      padding: 5px;
-      max-height: 300px;
-      overflow: auto;
     }
   }
 
@@ -101,26 +49,7 @@
   }
 
 
-  .closedTransactions {
-    .card-plain {
-      .symbol {
-        cursor: pointer;
-        &:hover {
-          ::ng-deep {
-            .symbol-card {
-              outline: 2px solid $primary-color;
-            }
-          }
-        }
-      }
-      ::ng-deep {
-        .symbol-card {
-          margin-top: 15px;
-        }
-      }
-    }
 
-  }
 }
 
 .period {
@@ -138,6 +67,9 @@
     .wallet-card {
       width: auto;
       flex: none;
+    }
+    .out-panels {
+      transform: translateX(0);
     }
   }
 }

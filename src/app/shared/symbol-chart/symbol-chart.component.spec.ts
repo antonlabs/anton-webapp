@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WalletLayoutComponent } from './wallet-layout.component';
+import { SymbolChartComponent } from './symbol-chart.component';
 
-describe('WalletLayoutComponent', () => {
-  let component: WalletLayoutComponent;
-  let fixture: ComponentFixture<WalletLayoutComponent>;
+describe('SymbolChartComponent', () => {
+  let component: SymbolChartComponent;
+  let fixture: ComponentFixture<SymbolChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WalletLayoutComponent ]
+      declarations: [ SymbolChartComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WalletLayoutComponent);
+    fixture = TestBed.createComponent(SymbolChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

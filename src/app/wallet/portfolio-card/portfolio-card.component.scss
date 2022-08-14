@@ -1,0 +1,42 @@
+@import "../../../styles/palette";
+
+
+.card-plain {
+  img {
+    max-width: 200px;
+    display: block;
+    margin: 0 auto;
+  }
+  background: $background-color;
+}
+
+.wallet-card {
+  position: relative;
+  min-height: 500px;
+  overflow: hidden;
+
+  .content {
+    position: relative;
+    z-index: 10;
+  }
+  .risk {
+    text-align: center;
+  }
+  .wallet-balance {
+    h1 {
+      font-size: 40px;
+    }
+  }
+  img {
+    z-index: 1;
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    top: 0;
+    left: 0;
+  }
+  app-pie-chart {
+    position: relative;
+    z-index: 999;
+  }
+}

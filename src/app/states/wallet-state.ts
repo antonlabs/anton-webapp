@@ -4,10 +4,11 @@ import {OcoOrderModel} from "../wallet/models/order.model";
 import {apiG, getOrders, getTransactions, PaginationToken} from "../shared/helpers";
 import {TransactionModel} from "../core/clients/models/transaction.model";
 import {rack} from "./app-state";
+import {AccountData} from "../core/clients/models/account/AccountData";
 
 export interface WalletProperties extends WalletModel {
   transactions: {[key: string]: TransactionModel},
-  stableAmount: {[key: string] : number}
+  account: AccountData | undefined
 }
 
 export class WalletState extends State<WalletProperties> {
@@ -27,11 +28,14 @@ export class WalletState extends State<WalletProperties> {
       balances: [],
       blacklist: [],
       transactions: {},
-      stableAmount: {}
+      account: undefined
     };
   }
 
-  async refreshState(): Promise<void> {}
+  async refreshState(): Promise<void> {
+    await this.refreshTransactions();
+    await this.refreshAccount();
+  }
 
   async refreshTransactions(mode?: 'OPEN' | 'CLOSE', paginationToken?: PaginationToken): Promise<{data: TransactionModel[], lastKey: PaginationToken | undefined}> {
     const response = await getTransactions(mode, paginationToken);
@@ -46,11 +50,15 @@ export class WalletState extends State<WalletProperties> {
     return response;
   }
 
-  async refreshStableAvailable() {
+  async refreshAccount() {
     this.set({
-      stableAmount: {
-        BUSD: (await this.getSymbolQty('BUSD'))
-      },
+      account: await (apiG('binance/'+rack.states.currentWallet.val.name, {
+        body: JSON.stringify({
+          path: '/api/v3/account',
+          method: 'GET'
+        }),
+        method: 'POST'
+      })),
     })
   }
 

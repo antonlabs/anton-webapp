@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddToBlacklistComponent } from './add-to-blacklist.component';
+import { PortfolioCardComponent } from './portfolio-card.component';
 
-describe('AddToBlacklistComponent', () => {
-  let component: AddToBlacklistComponent;
-  let fixture: ComponentFixture<AddToBlacklistComponent>;
+describe('PortfolioCardComponent', () => {
+  let component: PortfolioCardComponent;
+  let fixture: ComponentFixture<PortfolioCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddToBlacklistComponent ]
+      declarations: [ PortfolioCardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddToBlacklistComponent);
+    fixture = TestBed.createComponent(PortfolioCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

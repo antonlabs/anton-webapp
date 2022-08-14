@@ -1,0 +1,12 @@
+<div class="container" *ngIf="cryptoMap && symbol">
+  <div class="flex-row title-bar evenly">
+    <div class="flex-row" style="gap: 10px">
+      <img class="crypto-logo" src="https://cryptologos.cc/logos/{{cryptoMap[symbol] ?? ''}}-{{symbol.toLowerCase()}}-logo.svg" onerror="this.src='/assets/unknown-coin.png'" />
+      <h1 class="title">{{cryptoMap[symbol]}} </h1>
+      <span>{{symbol}}</span>
+    </div>
+    <h1>{{price | currency}}</h1>
+  </div>
+
+  <app-symbol-chart [symbol]="symbol"></app-symbol-chart>
+</div>

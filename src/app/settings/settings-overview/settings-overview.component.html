@@ -1,7 +1,14 @@
-<div class="flex-row mt-20px">
-  <ng-icon class="settings-icon" name="jam-cogs"></ng-icon>
-  <h1 i18n>Account Settings</h1>
+<div class="flex-row mt-20px between">
+  <div class="flex-row">
+    <ng-icon class="settings-icon" name="jam-cogs"></ng-icon>
+    <h1 i18n>Account Settings</h1>
+  </div>
+  <button class="anton-button link-button change-credentials primary" [routerLink]="['/settings']" [queryParams]="{modal: 'setCredentials'}">
+    <ng-icon name="jam-plus"></ng-icon>
+    <span i18n>Add a new wallet</span>
+  </button>
 </div>
+
 <div class="flex-row mt-20px mobile-flex-column" style="gap: 15px">
   <div class="card-plain wallet binance">
     <div class="mt-10px mobile-flex-column between">
@@ -15,12 +22,6 @@
         </button>
       </div>
     </div>
-  </div>
-  <div class="card-plain wallet new">
-    <button class="anton-button link-button change-credentials primary" [routerLink]="['/settings']" [queryParams]="{modal: 'setCredentials'}">
-      <ng-icon name="jam-plus"></ng-icon>
-      <span i18n>Add a new wallet</span>
-    </button>
   </div>
 
 </div>

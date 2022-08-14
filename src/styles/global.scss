@@ -10,6 +10,8 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   color: $primary-color-dark;
   font-family: 'arial-rounded-regular', sans-serif;
+  background: rgb(255,255,255);
+  background: linear-gradient(148deg, rgba(255,255,255,1) 0%, rgba(217,217,217,1) 35%, rgba(234,246,255,1) 62%, rgba(100,181,246,1) 100%);
 }
 
 h1, h2, h3, h4, h5 {
@@ -17,8 +19,13 @@ h1, h2, h3, h4, h5 {
   color: $primary-color-strong-dark;
 }
 h1 {
-  font-size: 35px;
+  font-size: 25px;
 }
+
+h2 {
+  font-size: 20px;
+}
+
 
 
 @media only screen and (max-width: 768px) { //mobile
@@ -125,6 +132,11 @@ li {
   &.end{
     justify-content: end;
   }
+
+  &.evenly {
+    justify-content: space-evenly;
+  }
+
   &.between {
     justify-content: space-between;
   }
@@ -358,3 +370,4 @@ a {
   border-radius: 10px;
   background-color: #fff;
 }
+

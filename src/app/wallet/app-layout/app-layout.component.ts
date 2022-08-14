@@ -4,11 +4,12 @@ import {AntiMemLeak} from "../../shared/anti-mem-leak";
 import {AuthService} from "../../auth/auth.service";
 import {UserService} from "../../shared/user.service";
 import {NotificationService} from "../../shared/notification.service";
-import {refreshWallets} from "../../shared/helpers";
+import {getTransactions, refreshWallets} from "../../shared/helpers";
 import {rack} from "../../states/app-state";
 import {WalletStateProps} from "../../states/wallets-state";
 import {getRightMarginFromElement} from "../../core/elements-helper";
 import {ModalService} from "../../modal.service";
+import {TransactionModel} from "../../core/clients/models/transaction.model";
 
 export const scrollPosition = new EventEmitter();
 
@@ -21,7 +22,6 @@ export const scrollPosition = new EventEmitter();
 export class AppLayoutComponent extends AntiMemLeak implements OnInit, AfterViewInit {
   endpoint: string | undefined;
   @ViewChild('setExchangeKeys') setCredentials: TemplateRef<any> | undefined;
-  @ViewChild('addToBlacklist') addToBlacklist: TemplateRef<any> | undefined;
   @ViewChild('inspectOrder') inspectOrder: TemplateRef<any> | undefined;
   @ViewChild('runStrategyDescription') runStrategyDescription: TemplateRef<any> | undefined;
   @ViewChild('deleteBlacklistSymbol') deleteBlacklistSymbol: TemplateRef<any> | undefined;
@@ -32,6 +32,7 @@ export class AppLayoutComponent extends AntiMemLeak implements OnInit, AfterView
   currentDialog: string | undefined;
   currentTimeout: any;
   ordersInterval: any;
+  closedTransactions: TransactionModel[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -44,11 +45,18 @@ export class AppLayoutComponent extends AntiMemLeak implements OnInit, AfterView
     super();
   }
 
+  async loadStates() {
+    await refreshWallets();
+    await Promise.all([
+      rack.states.currentWallet.refreshState(),
+      rack.states.market.refreshState()
+    ]);
+  }
+
 
   ngAfterViewInit(): void {
     this.modalsRoutes = {
       setCredentials: this.setCredentials,
-      addToBlacklist: this.addToBlacklist,
       inspectOrder: this.inspectOrder,
       resetDialog: this.resetDialog,
       runStrategyDescription: this.runStrategyDescription,
@@ -77,7 +85,10 @@ export class AppLayoutComponent extends AntiMemLeak implements OnInit, AfterView
   }
 
   async ngOnInit(): Promise<void> {
-    await refreshWallets();
+    await this.loadStates();
+    getTransactions('CLOSE').then(transactions => {
+      this.closedTransactions = transactions.data.filter(o => o.earnings !== undefined);
+    });
     this.sub.add(
       rack.states.wallets.obs.subscribe((state) => this.checkIntegrityState(state))
     );
@@ -91,6 +102,10 @@ export class AppLayoutComponent extends AntiMemLeak implements OnInit, AfterView
       this.currentDialog = this.activatedRoute.snapshot.queryParams['dialog'];
       this.handleDialogTimeout();
     }
+  }
+
+  slice(elements: any[]) {
+    return elements.slice(0, 10);
   }
 
   handleDialogTimeout() {

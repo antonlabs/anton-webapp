@@ -1,0 +1,15 @@
+<div class="card-plain wallet-card {{walletBalance === undefined || totalEarnings === undefined ? 'skeleton' : ''}}">
+  <div class="content flex-column evenly">
+    <div class="risk">
+      <h4 i18n>Risk level</h4>
+      <div class="bar" style="margin-top: 3px;">
+        <div class="progress"></div>
+      </div>
+    </div>
+    <div class="wallet-balance mt-20px">
+      <h4 i18n>Your Balance</h4>
+      <h1>{{walletBalance | currency}}</h1>
+    </div>
+  </div>
+  <img src="/assets/waves.png" />
+</div>

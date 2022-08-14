@@ -1,44 +1,79 @@
-<div class="sidebar">
-  <app-logo></app-logo>
-  <nav>
-    <div class="flex-row item {{liClass('overview') + ' mobile-mr-10px'}}" [routerLink]="['/']">
-      <ng-icon size="30" name="jam-home-f"></ng-icon>
-      <h2 i18n>Home</h2>
+<div class="workspace">
+  <div class="flex-row between topbar" style="gap: 15px;">
+    <div class="flex-row" style="gap: 10px">
+      <app-logo></app-logo>
+      <nav>
+        <div class="flex-row item {{liClass('overview') + ' mobile-mr-10px'}}" [routerLink]="['/']">
+          <h2 i18n>Home</h2>
+        </div>
+        <div class="flex-row item {{liClass('market') + ' mobile-mr-10px'}}" [routerLink]="['/market']" >
+          <h2 i18n>Market</h2>
+        </div>
+        <div class="flex-row item {{liClass('settings') + ' mobile-mr-10px'}}" [routerLink]="['/settings']" >
+          <h2 i18n>Settings</h2>
+        </div>
+      </nav>
     </div>
-    <div class="flex-row item {{liClass('market') + ' mobile-mr-10px'}}" [routerLink]="['/market']" >
-      <ng-icon size="30" name="jam-coin"></ng-icon>
-      <h2 i18n>Market</h2>
+    <div class="flex-row" style="gap: 10px">
+      <div class="mt-10px languages">
+        <app-language-selector></app-language-selector>
+      </div>
+      <div class="anton-button icon">
+        <ng-icon name="jam-bell"></ng-icon>
+      </div>
+      <div class="anton-button icon">
+        <ng-icon name="jam-close"></ng-icon>
+      </div>
     </div>
-    <div class="flex-row item {{liClass('settings') + ' mobile-mr-10px'}}" [routerLink]="['/settings']" >
-      <ng-icon size="30" name="jam-cogs"></ng-icon>
-      <h2 i18n>Settings</h2>
+  </div>
+  <div class="flex-row mobile-flex-column center" style="gap: 10px;">
+    <div class="card-plain content" style="flex: 2">
+      <div style="max-width: 100em; display: block; margin: 0 auto;">
+        <div class="body">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
     </div>
-  </nav>
-  <div></div>
-</div>
-<div class="workspace" >
-  <div class="card-plain content">
-    <div style="max-width: 100em; display: block; margin: 0 auto;">
-      <div class="header flex-row between">
-        <div></div>
-        <input class="anton-input search-input ml-50px" type="text" i18n-placeholder placeholder="🔍 Search...">
-        <div class="flex-row" style="gap: 15px;">
-          <div class="mt-10px">
-            <app-language-selector></app-language-selector>
-          </div>
-          <div class="anton-button icon">
-            <ng-icon name="jam-bell"></ng-icon>
-          </div>
-          <div class="anton-button icon">
-            <ng-icon name="jam-cogs"></ng-icon>
-          </div>
-          <div class="anton-button icon">
-            <ng-icon name="jam-close"></ng-icon>
+    <div class="flex-column out-panels" style="flex: 1">
+      <div class="card-plain latest-trades">
+        <div class="flex-row center">
+          <div class="text-center">
+            <div class="mt-10px">
+              <h1 i18n>Last trades</h1>
+              <h5 i18n>What trades have done recently</h5>
+            </div>
+            <img class="guard" alt="guard" *ngIf="closedTransactions.length === 0" src="/assets/no-data-found.png">
+            <div class="body">
+              <app-transaction-card
+                class="symbol mt-10px"
+                *ngFor="let transaction of slice((closedTransactions ?? []))"
+                [transaction]="transaction"></app-transaction-card>
+            </div>
+            <ng-container *ngIf="closedTransactions.length === 0">
+              <h2 i18n>No closed trades right now </h2>
+            </ng-container>
           </div>
         </div>
       </div>
-      <div class="body">
-        <router-outlet></router-outlet>
+      <div class="card-plain latest-trades">
+        <div class="flex-row center">
+          <div class="text-center">
+            <div class="mt-10px">
+              <h1 i18n>Last trades</h1>
+              <h5 i18n>What trades have done recently</h5>
+            </div>
+            <img class="guard" alt="guard" *ngIf="closedTransactions.length === 0" src="/assets/no-data-found.png">
+            <div class="body">
+              <app-transaction-card
+                class="symbol mt-10px"
+                *ngFor="let transaction of slice((closedTransactions ?? []))"
+                [transaction]="transaction"></app-transaction-card>
+            </div>
+            <ng-container *ngIf="closedTransactions.length === 0">
+              <h2 i18n>No closed trades right now </h2>
+            </ng-container>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -72,10 +107,6 @@
   <app-connect-wallet></app-connect-wallet>
 </ng-template>
 
-
-<ng-template #addToBlacklist>
-  <app-add-to-blacklist></app-add-to-blacklist>
-</ng-template>
 
 <ng-template #deleteBlacklistSymbol>
   <app-delete-blacklist-symbol></app-delete-blacklist-symbol>

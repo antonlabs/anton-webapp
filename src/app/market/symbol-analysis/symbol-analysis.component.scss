@@ -1,0 +1,23 @@
+@import "../../../styles/palette";
+
+.container {
+
+  .title-bar {
+    margin-top: 15px;
+    width: 100%;
+    .title {
+      font-size: 35px;
+    }
+    span {
+      font-size: 15px;
+      background: $background-color;
+      padding: 5px;
+      height: 15px;
+      border-radius: 3px;
+    }
+    img {
+      width: 40px;
+    }
+  }
+
+}

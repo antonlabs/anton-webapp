@@ -2,7 +2,6 @@
 
 <div class="w-100 flex-column mt-40px">
   <div class="flex-row center wallet-row">
-    <app-wallet-card mode="wizard" (submit)="submit()" (error)="error=$event" [wallet]="wallet"></app-wallet-card>
   </div>
   <div class="alert error" *ngIf="error">{{error}}</div>
 </div>

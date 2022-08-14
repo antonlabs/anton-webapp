@@ -9,10 +9,10 @@
   <div *ngIf="!symbols">
     <div *ngFor="let bar of [].constructor(5)" class="bar skeleton"></div>
   </div>
-  <div *ngFor="let symbol of symbols" class="symbol flex-row between mt-10px">
+  <div *ngFor="let symbol of symbols" class="symbol flex-row between mt-10px" [routerLink]="[symbol.symbol.toUpperCase().replace(market, '')]">
     <div class="flex-row col">
       <img class="crypto-logo" src="https://cryptologos.cc/logos/{{cryptoMap[symbol.symbol.toUpperCase().replace(market, '')] ?? ''}}-{{symbol.symbol.toLowerCase().replace(market.toLowerCase(), '')}}-logo.svg" onerror="this.src='/assets/unknown-coin.png'" />
-      <h2 class="ml-10px mt-10px">{{symbol.symbol}}</h2>
+      <h2>{{symbol.symbol}}</h2>
     </div>
     <h3 class="text-center col flex-row center"><app-price-change [price]="symbol.percentChange" symbolSuffix="%"></app-price-change></h3>
     <h3 class="col flex-row center risk {{symbol.risk}}" *ngIf="symbol.risk">{{symbol.risk}}</h3>
